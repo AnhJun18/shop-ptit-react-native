@@ -1,6 +1,7 @@
-import {host} from "../Const";
+import Const from "../Const";
 async function CreateRequest(url,method='GET',body={}){
-   return await (await fetch(`host${url}`,createOption(method,body))).json()
+  console.log(JSON.stringify(body))
+   return await (await fetch(`${Const.host}${url}`,createOption(method,body))).json()
 }
 function createOption(method,body={}){
     return method!='GET'? {
@@ -9,7 +10,7 @@ function createOption(method,body={}){
             'Content-Type': 'application/json'
           },
           method: method,
-          body: body
+          body: JSON.stringify(body)
        }: {
         headers: {
             'Accept': 'application/json',
