@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { View, Text, Image } from "react-native";
 import ButtonBack from "../../common/components/ButtonBack";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DataStorage from "../../common/utility/DataStorage";
 import style from "./Styles";
-const IconUser = require('../../img/icon/user.png')
+const IconUser = require('../../img/icon/user.png');
+import CreateRequest from "../../common/utility/CreateRequest";
+import { Alert } from "react-native";
 function LoginScreen(props) {
+    const [userName, setUserName] = useState('');
+    const [pass, setPass] = useState('');
+    const [hidePass, setHidePass] = useState(true)
     const navigation = props.navigation
     return (
         <ScrollView>
@@ -15,18 +22,27 @@ function LoginScreen(props) {
             <View style={style.mainLayout}>
                 <Image source={IconUser} style={style.imageUser}></Image>
                 <Text style={style.text}>Login</Text>
-                <KeyboardAvoidingView behavior="height">
-                    <TextInput style={style.input} placeholder="Tên đăng nhập:" autoFocus={false}> </TextInput>
-                    <TextInput style={style.input} placeholder="Mật khẩu: "></TextInput>
+                <KeyboardAvoidingView behavior="">
+                    <TextInput style={style.input}
+                        placeholder="Tên đăng nhập: "
+                        onChangeText={text => { setUserName(text) }}
+                    ></TextInput>
+                    <TextInput style={style.input}
+                        placeholder="Mật khẩu: "
+                        secureTextEntry={hidePass}
+                        onChangeText={text => { setPass(text) }}
+                    ></TextInput>
                 </KeyboardAvoidingView>
-                <TouchableOpacity style={style.buttonLogin}>
+                <TouchableOpacity style={style.buttonLogin}
+                    onPress={Login}
+                >
                     <Text style={[style.text, { fontSize: 20 }]}>Đăng nhập</Text>
                 </TouchableOpacity>
                 <View style={style.bottom}>
                     <TouchableOpacity >
                         <Text style={style.textBlue}>Quên mật khẩu?</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{marginTop:15}}>
+                    <TouchableOpacity style={{ marginTop: 15 }}>
                         <Text>
                             <Text>Chưa có tài khoản?</Text>
                             <Text style={style.textBlue}>Đăng ký</Text>
@@ -36,5 +52,30 @@ function LoginScreen(props) {
             </View>
         </ScrollView>
     )
+    function Login() {
+        CreateRequest('api/auth/user/login', 'POST', { username: userName, password: pass })
+            .then(res => SaveToken(res.data)
+                .then(() => console.log('xong')))
+            .catch(err => console.log(err))
+    }
+    async function SaveToken(data) {
+        if (data.status) {
+            let accessToken = data.accessToken;
+            let refreshToken = data.refreshToken;
+            let user = data.userInfo;
+            return DataStorage.SetDataStorage([{key:'accessToken',value:accessToken },
+             {key:'refreshToken',value:refreshToken }, 
+             { key:'userInfo',value:user }])
+            // return Promise.all([await AsyncStorage.setItem('@accessToken', accessToken),
+            // await AsyncStorage.setItem('@refreshToken', refreshToken),
+            // await AsyncStorage.setItem('@userInfo', JSON.stringify(user)),
+            // ]);
+        }
+        else {
+            Alert.alert('Thông báo', 'Đăng nhập thất bại');
+            return null;
+        }
+    }
 }
+
 export default LoginScreen
