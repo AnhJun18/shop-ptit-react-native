@@ -5,13 +5,15 @@ import { ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { View, Text, Image } from "react-native";
 import ButtonBack from "../../common/components/ButtonBack";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DataStorage from "../../common/utility/DataStorage";
 import style from "./Styles";
 const IconUser = require('../../img/icon/user.png');
 import CreateRequest from "../../common/utility/CreateRequest";
 import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
+
 function LoginScreen(props) {
+    const dispath= useDispatch()
     const [userName, setUserName] = useState('');
     const [pass, setPass] = useState('');
     const [hidePass, setHidePass] = useState(true)
@@ -54,8 +56,7 @@ function LoginScreen(props) {
     )
     function Login() {
         CreateRequest('api/auth/user/login', 'POST', { username: userName, password: pass })
-            .then(res => SaveToken(res.data)
-                .then(() => console.log('xong')))
+            .then(res => SaveToken(res.data))
             .catch(err => console.log(err))
     }
     async function SaveToken(data) {
@@ -63,13 +64,11 @@ function LoginScreen(props) {
             let accessToken = data.accessToken;
             let refreshToken = data.refreshToken;
             let user = data.userInfo;
+            // Alert.alert('Thông báo','Đăng nhập thành công');
+            dispath({type:'login'})
             return DataStorage.SetDataStorage([{key:'accessToken',value:accessToken },
              {key:'refreshToken',value:refreshToken }, 
              { key:'userInfo',value:user }])
-            // return Promise.all([await AsyncStorage.setItem('@accessToken', accessToken),
-            // await AsyncStorage.setItem('@refreshToken', refreshToken),
-            // await AsyncStorage.setItem('@userInfo', JSON.stringify(user)),
-            // ]);
         }
         else {
             Alert.alert('Thông báo', 'Đăng nhập thất bại');
