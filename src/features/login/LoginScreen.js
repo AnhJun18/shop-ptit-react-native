@@ -63,6 +63,7 @@ function LoginScreen(props) {
         if (data.status) {
             let accessToken = data.accessToken;
             let refreshToken = data.refreshToken;
+            console.log(accessToken)
             let user = data.userInfo;
             // Alert.alert('Thông báo','Đăng nhập thành công');
             dispath({type:'login'})

@@ -11,7 +11,15 @@ async function SetDataStorage(listItem){
     })
     return Promise.all(listPromise);
 }
+
+async function RemoveDataStorage(listItem){
+    let listPromise =  listItem.map(item=>{
+        return AsyncStorage.removeItem(item)
+    })
+    return Promise.all(listPromise);
+}
 export default {
     GetDataStorage,
-    SetDataStorage
+    SetDataStorage,
+    RemoveDataStorage
 }

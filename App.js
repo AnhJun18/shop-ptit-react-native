@@ -11,14 +11,18 @@ import MyTabs from './src/navigations/main/Main';
 import { NavigationContainer } from '@react-navigation/native';
 import { store } from './src/reducer';
 import { Provider } from 'react-redux';
-
+import { AuthContextProvider } from './src/context/AuthProvider';
+import { navigationRef } from './src/navigations/RootNavigation';
 function App() {
  
   return (
+    
     <Provider store={store}>
-      <NavigationContainer>
+      <AuthContextProvider>
+      <NavigationContainer ref={navigationRef}>
         <MyTabs></MyTabs>
       </NavigationContainer>
+      </AuthContextProvider>
     </Provider>
   );
  

@@ -1,6 +1,7 @@
 import LoginScreen from '../../features/login/LoginScreen';
 import ProfileScreen from '../../features/profile/ProfileScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { navigationRef } from '../RootNavigation';
 import { connect } from 'react-redux';
 import { useState } from 'react';
 const Stack = createNativeStackNavigator();
