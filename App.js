@@ -13,7 +13,7 @@ import { store } from './src/reducer';
 import { Provider } from 'react-redux';
 
 function App() {
- 
+  console.log(store.getState())
   return (
     <Provider store={store}>
       <NavigationContainer>
