@@ -9,6 +9,11 @@ function HomeNavigation(){
   (async ()=>{
     const [accessToken,refreshToken,userInfo]= await DataStorage.GetDataStorage(['@accessToken','@refreshToken','@userInfo']);
     if (accessToken!=null){
+      dispath({type:'SET_INFO',data:{
+        accessToken:accessToken,
+        refreshToken:refreshToken,
+        userInfo:userInfo,
+      }})
       dispath({type:'login'});
     }
   })().catch(err=>console.log(err))

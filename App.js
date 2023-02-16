@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 import { AuthContextProvider } from './src/context/AuthProvider';
 import { navigationRef } from './src/navigations/RootNavigation';
 function App() {
- 
+  console.log(store.getState())
   return (
     
     <Provider store={store}>
