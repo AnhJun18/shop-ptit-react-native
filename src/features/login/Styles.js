@@ -6,7 +6,8 @@ const style = StyleSheet.create({
         marginBottom: 15
     },
     mainLayout: {
-        alignItems: 'center'
+        alignItems: 'center',
+        bottom:100
     },
     input: {
         width: 300,

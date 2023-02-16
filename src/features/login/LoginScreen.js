@@ -11,15 +11,17 @@ const IconUser = require('../../img/icon/user.png');
 import CreateRequest from "../../common/utility/CreateRequest";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
-
+import Background from "../../common/components/Background";
 function LoginScreen(props) {
-    const dispath= useDispatch()
+    const dispath = useDispatch()
     const [userName, setUserName] = useState('');
     const [pass, setPass] = useState('');
     const [hidePass, setHidePass] = useState(true)
     const navigation = props.navigation
     return (
-        <ScrollView>
+
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            <Background></Background>
             <ButtonBack navigation={navigation} ></ButtonBack>
             <View style={style.mainLayout}>
                 <Image source={IconUser} style={style.imageUser}></Image>
@@ -53,6 +55,7 @@ function LoginScreen(props) {
                 </View>
             </View>
         </ScrollView>
+
     )
     function Login() {
         CreateRequest('api/auth/user/login', 'POST', { username: userName, password: pass })
@@ -65,10 +68,10 @@ function LoginScreen(props) {
             let refreshToken = data.refreshToken;
             let user = data.userInfo;
             // Alert.alert('Thông báo','Đăng nhập thành công');
-            dispath({type:'login'})
-            return DataStorage.SetDataStorage([{key:'accessToken',value:accessToken },
-             {key:'refreshToken',value:refreshToken }, 
-             { key:'userInfo',value:user }])
+            dispath({ type: 'login' })
+            return DataStorage.SetDataStorage([{ key: 'accessToken', value: accessToken },
+            { key: 'refreshToken', value: refreshToken },
+            { key: 'userInfo', value: user }])
         }
         else {
             Alert.alert('Thông báo', 'Đăng nhập thất bại');

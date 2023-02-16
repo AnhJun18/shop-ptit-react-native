@@ -7,7 +7,7 @@ function ButtonBack(props) {
     const navigation = props.navigation;
     const screen = props.screen || null;
     return (
-        <View>
+        <View style={{flex:2}}>
             <TouchableOpacity onPress={() => {
               screen? navigation.navigate(screen) : navigation.goBack()
             }}><Ionicons name={'arrow-back'} size={30} />
