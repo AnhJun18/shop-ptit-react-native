@@ -7,18 +7,21 @@
  */
 
 import React from 'react';
-import { Text, View } from 'react-native';
 import MyTabs from './src/navigations/main/Main';
 import { NavigationContainer } from '@react-navigation/native';
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
+import { store } from './src/reducer';
+import { Provider } from 'react-redux';
+
 function App() {
-  return (
-    <NavigationContainer>
-        <MyTabs></MyTabs>
-    </NavigationContainer>
  
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <MyTabs></MyTabs>
+      </NavigationContainer>
+    </Provider>
   );
+ 
 }
 
 export default App;
