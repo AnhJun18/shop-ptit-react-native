@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-function BackGround() {
+function Background() {
     return (
      
             <LinearGradient
@@ -16,4 +16,4 @@ function BackGround() {
         
     )
 }
-export default BackGround
+export default Background

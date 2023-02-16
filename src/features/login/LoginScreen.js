@@ -11,7 +11,7 @@ const IconUser = require('../../img/icon/user.png');
 import CreateRequest from "../../common/utility/CreateRequest";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import BackGround from "../../common/components/Background";
+import Background from "../../common/components/Background";
 function LoginScreen(props) {
     const dispath = useDispatch()
     const [userName, setUserName] = useState('');
@@ -21,7 +21,7 @@ function LoginScreen(props) {
     return (
 
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            <BackGround></BackGround>
+            <Background></Background>
             <ButtonBack navigation={navigation} ></ButtonBack>
             <View style={style.mainLayout}>
                 <Image source={IconUser} style={style.imageUser}></Image>
