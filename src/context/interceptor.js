@@ -43,11 +43,11 @@ axiosApiInstance.interceptors.response.use(
         else {
           await DataStorage.RemoveDataStorage(['@accessToken', '@refreshToken', '@userInfo']);
           Alert.alert('Thông báo', 'vui long dang nhap ')
-          navigate('ProfileNavigation')
+          navigate('LoginNavigation')
         }
       } else {
         Alert.alert('Thông báo', 'vui long dang nhap ')
-        navigate('ProfileNavigation')
+        navigate('LoginNavigation')
       }
     } else {
       return Promise.reject(error);
