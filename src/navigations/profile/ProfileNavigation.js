@@ -15,6 +15,7 @@ function ProfileNavigation(props) {
       options={{
         headerShown: false
       }}
+      
     />
   </Stack.Navigator> :
     <Stack.Navigator>

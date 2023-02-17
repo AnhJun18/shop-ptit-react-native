@@ -1,33 +1,43 @@
-import React, { useContext, useEffect } from "react";
-import { Text, TouchableOpacity, View ,Button} from 'react-native';
-import axios from "../../../context/axios";
-import axiosApiInstance from "../../../context/interceptor";
-import DataStorage from "../../../common/utility/DataStorage";
-import AuthContext, { AuthContextProvider } from "../../../context/AuthProvider";
-
+import React from "react";
+import { ScrollView } from 'react-native';
+import Header from "../components/Header";
+import Background from "../../../common/components/Background";
+import ComponentsView from "../components/ComponentView";
+import Category from "../components/Category";
+import ListBestSeller from "../components/ListBestSeller";
+import ListAllProduct from "../components/ListAllProduct";
+import ListBrand from "../components/ListBrand";
+import { useEffect } from "react";
+import {LogBox} from 'react-native';
 function HomeScreen(props) {
-    const {logout,login}= useContext(AuthContext)
-    onPressLearnMore= async()=>{
-        // console.log(axios.defaults.baseURL)
-        // const result =await axiosApiInstance.get(axios.defaults.baseURL + `/api/product/best-seller`)
-        // console.log(result)
-        console.log(await DataStorage.GetDataStorage(['@accessToken']))
-    }
-    onPress= async()=>{
-        await logout();
-        console.log(await DataStorage.GetDataStorage(['@accessToken']))
-    }
-    onPressLearn= async()=>{
-         const result =await axiosApiInstance.get(axios.defaults.baseURL + `/api/user/profile`)
-         console.log(result)
-    }
+    useEffect(() => {
+        LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
+      })
     return (
-        <View>
-            <Button title="Home"  onPress={onPressLearnMore}></Button>
-            <Button title="Logout"  onPress={onPress}></Button>
-            <Button title="Call Api"  onPress={onPressLearn}></Button>
-        </View>
-
+        <ScrollView>
+            <Background></Background>
+            <Header></Header>
+            <ComponentsView
+                title={'DANH MỤC SẢN PHẨM'}
+                child={Category}
+            >
+            </ComponentsView>
+            <ComponentsView
+                title={'SẢN PHẨM BÁN CHẠY'}
+                child={ListBestSeller}
+                navigation={props.navigation}
+            >
+            </ComponentsView>
+            <ComponentsView
+             child={ListBrand}
+            >
+            </ComponentsView>
+            <ComponentsView
+                title={'TẤT CẢ SẢN PHẨM'}
+                child={ListAllProduct}
+                navigation={props.navigation}
+            />
+        </ScrollView>
     )
 }
 export default HomeScreen;
