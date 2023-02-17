@@ -19,7 +19,7 @@ function LoginScreen(props) {
     const navigation = props.navigation
     return (
 
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <Background></Background>
             <ButtonBack navigation={navigation} ></ButtonBack>
             <View style={style.mainLayout}>
@@ -67,10 +67,12 @@ function LoginScreen(props) {
             console.log(accessToken)
             let user = data.userInfo;
             // Alert.alert('Thông báo','Đăng nhập thành công');
-            dispath({type:'SET_INFO',data:{
-                accessToken:accessToken,
-                refreshToken:refreshToken,
-              }})
+            dispath({
+                type: 'SET_INFO', data: {
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
+                }
+            })
             dispath({ type: 'login' })
             return DataStorage.SetDataStorage([{ key: '@accessToken', value: accessToken },
             { key: '@refreshToken', value: refreshToken },
