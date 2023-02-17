@@ -13,7 +13,7 @@ function HomeScreen(props) {
     }
     onPress = async () => {
 
-        await DataStorage.RemoveDataStorage(['@accessToken'])
+        await DataStorage.RemoveDataStorage(['@accessToken','@refreshToken'])
     }
     onPressLearn = async () => {
         const result = await axiosApiInstance.get(axios.defaults.baseURL + `/api/user/profile`)

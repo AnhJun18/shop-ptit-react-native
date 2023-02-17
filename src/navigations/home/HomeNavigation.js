@@ -2,21 +2,8 @@ import HomeScreen from "../../features/home/screen/HomeScreen";
 import SettingScreen from "../../features/home/screen/SettingScreen";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-import DataStorage from "../../common/utility/DataStorage";
-import { useDispatch } from 'react-redux';
+
 function HomeNavigation(){
-  const dispath = useDispatch();
-  (async ()=>{
-    const [accessToken,refreshToken,userInfo]= await DataStorage.GetDataStorage(['@accessToken','@refreshToken','@userInfo']);
-    if (accessToken!=null){
-      dispath({type:'SET_INFO',data:{
-        accessToken:accessToken,
-        refreshToken:refreshToken,
-        userInfo:userInfo,
-      }})
-      dispath({type:'login'});
-    }
-  })().catch(err=>console.log(err))
  return <Stack.Navigator>
     <Stack.Screen
         name="Home"
