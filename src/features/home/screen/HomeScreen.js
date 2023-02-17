@@ -11,7 +11,6 @@ function HomeScreen(props) {
         // console.log(axios.defaults.baseURL)
         // const result =await axiosApiInstance.get(axios.defaults.baseURL + `/api/product/best-seller`)
         // console.log(result)
-        await login({username:'pa',password:'12'})
         console.log(await DataStorage.GetDataStorage(['@accessToken']))
     }
     onPress= async()=>{
@@ -19,7 +18,6 @@ function HomeScreen(props) {
         console.log(await DataStorage.GetDataStorage(['@accessToken']))
     }
     onPressLearn= async()=>{
-        console.log("cc")
          const result =await axiosApiInstance.get(axios.defaults.baseURL + `/api/user/profile`)
          console.log(result)
     }

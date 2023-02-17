@@ -7,7 +7,6 @@ import { View, Text, Image } from "react-native";
 import ButtonBack from "../../common/components/ButtonBack";
 import DataStorage from "../../common/utility/DataStorage";
 import style from "./Styles";
-const IconUser = require('../../img/icon/user.png');
 import CreateRequest from "../../common/utility/CreateRequest";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
@@ -24,7 +23,6 @@ function LoginScreen(props) {
             <Background></Background>
             <ButtonBack navigation={navigation} ></ButtonBack>
             <View style={style.mainLayout}>
-                <Image source={IconUser} style={style.imageUser}></Image>
                 <Text style={style.text}>Login</Text>
                 <KeyboardAvoidingView behavior="">
                     <TextInput style={style.input}
@@ -69,10 +67,14 @@ function LoginScreen(props) {
             console.log(accessToken)
             let user = data.userInfo;
             // Alert.alert('Thông báo','Đăng nhập thành công');
+            dispath({type:'SET_INFO',data:{
+                accessToken:accessToken,
+                refreshToken:refreshToken,
+              }})
             dispath({ type: 'login' })
-            return DataStorage.SetDataStorage([{ key: 'accessToken', value: accessToken },
-            { key: 'refreshToken', value: refreshToken },
-            { key: 'userInfo', value: user }])
+            return DataStorage.SetDataStorage([{ key: '@accessToken', value: accessToken },
+            { key: '@refreshToken', value: refreshToken },
+            { key: '@userInfo', value: user }])
         }
         else {
             Alert.alert('Thông báo', 'Đăng nhập thất bại');

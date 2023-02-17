@@ -5,8 +5,12 @@ import { useState } from "react";
 import { Alert } from "react-native";
 //import 'react-toastify/dist/ReactToastify.css';
 import { navigate } from "../navigations/RootNavigation";
+
 const axiosApiInstance = axios.create({});
-axiosApiInstance.interceptors.request.use((config) => {
+axiosApiInstance.interceptors.request.use(async(config) => {
+  
+  const token= await DataStorage.GetDataStorage(['@accessToken']);
+  console.log('tk',token)
   config.headers = {
     'Authorization': `Bearer ${token}`,
     'Accept': 'application/json',
