@@ -3,6 +3,7 @@ import SettingScreen from '../../features/home/screen/SettingScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeNavigation from '../home/HomeNavigation';
 import ProfileNavigation from '../profile/ProfileNavigation';
+import LoginNavigation from '../login/LoginNavigation';
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
@@ -64,6 +65,16 @@ function MyTabs() {
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
           headerShown:false
+        }}
+      />
+      <Tab.Screen
+        name="LoginNavigation"
+        component={LoginNavigation}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
         }}
       />
     </Tab.Navigator>

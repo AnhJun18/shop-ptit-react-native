@@ -4,13 +4,13 @@ import DataStorage from "../common/utility/DataStorage";
 import { useState } from "react";
 import { Alert } from "react-native";
 //import 'react-toastify/dist/ReactToastify.css';
-import { navigate } from "../navigations/RootNavigation";
+import { navigate, navigationRef } from "../navigations/RootNavigation";
+import { ToastAndroid } from "react-native";
 
 const axiosApiInstance = axios.create({});
-axiosApiInstance.interceptors.request.use(async(config) => {
-  
-  const token= await DataStorage.GetDataStorage(['@accessToken']);
-  console.log('tk',token)
+axiosApiInstance.interceptors.request.use(async (config) => {
+
+  const token = await DataStorage.GetDataStorage(['@accessToken']);
   config.headers = {
     'Authorization': `Bearer ${token}`,
     'Accept': 'application/json',
@@ -21,10 +21,35 @@ axiosApiInstance.interceptors.request.use(async(config) => {
 
 
 axiosApiInstance.interceptors.response.use(
-  response  => response,
+  response => response,
   async (error) => {
     if (error.response.status === 401) {
-      navigate('ProfileNavigation')
+      const [refreshToken] = await DataStorage.GetDataStorage(['@refreshToken']);
+      if (refreshToken) {
+        let apiResponse = await axios.get(
+          axios.defaults.baseURL + `/api/auth/user/refresh/${refreshToken}`
+        );
+        if (apiResponse.data.data.status && apiResponse) {
+          DataStorage.SetDataStorage([{ key: '@accessToken', value: apiResponse.data.data.accessToken },
+          { key: '@refreshToken', value: apiResponse.data.data.refreshToken },
+          { key: '@userInfo', value: apiResponse.data.data.userInfo }])
+          error.config.headers = {
+            'Authorization': `Bearer ${apiResponse.data.data.accessToken}`
+          }
+          if (error.config.method === 'get')
+            return axiosApiInstance.get(error.config.url)
+          else (error.config.method === 'post')
+          return axiosApiInstance.post(error.config.url, error.config.data)
+        }
+        else {
+          await DataStorage.RemoveDataStorage(['@accessToken', '@refreshToken', '@userInfo']);
+          ToastAndroid.show('Vui lòng đăng nhập để tiếp tục', ToastAndroid.SHORT)
+          navigate('LoginNavigation')
+        }
+      } else {
+        ToastAndroid.show('Vui lòng đăng nhập để tiếp tục', ToastAndroid.SHORT)
+        navigate('LoginNavigation')
+      }
     } else {
       return Promise.reject(error);
     }
