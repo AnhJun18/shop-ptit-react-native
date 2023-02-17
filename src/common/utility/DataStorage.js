@@ -7,7 +7,7 @@ async function GetDataStorage(listItem){
 }
 async function SetDataStorage(listItem){
     let listPromise =  listItem.map(item=>{
-        return AsyncStorage.setItem(`@${item.key}`,typeof(item.value)==='object'? JSON.stringify(item.value): item.value)
+        return AsyncStorage.setItem(`${item.key}`,typeof(item.value)==='object'? JSON.stringify(item.value): item.value)
     })
     return Promise.all(listPromise);
 }
