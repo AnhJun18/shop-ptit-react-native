@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TextInput } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native";
@@ -7,11 +7,13 @@ import { View, Text, Image } from "react-native";
 import ButtonBack from "../../common/components/ButtonBack";
 import DataStorage from "../../common/utility/DataStorage";
 import style from "./Styles";
-import CreateRequest from "../../common/utility/CreateRequest";
-import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import Background from "../../common/components/Background";
+import AuthContext from "../../context/AuthProvider";
+import { navigate } from "../../navigations/RootNavigation";
+import { ToastAndroid } from "react-native";
 function LoginScreen(props) {
+    const { login } = useContext(AuthContext)
     const dispath = useDispatch()
     const [userName, setUserName] = useState('');
     const [pass, setPass] = useState('');
@@ -55,33 +57,18 @@ function LoginScreen(props) {
         </ScrollView>
 
     )
-    function Login() {
-        CreateRequest('api/auth/user/login', 'POST', { username: userName, password: pass })
-            .then(res => SaveToken(res.data))
-            .catch(err => console.log(err))
-    }
-    async function SaveToken(data) {
-        if (data.status) {
-            let accessToken = data.accessToken;
-            let refreshToken = data.refreshToken;
-            console.log(accessToken)
-            let user = data.userInfo;
-            // Alert.alert('Thông báo','Đăng nhập thành công');
-            dispath({
-                type: 'SET_INFO', data: {
-                    accessToken: accessToken,
-                    refreshToken: refreshToken,
-                }
-            })
-            dispath({ type: 'login' })
-            return DataStorage.SetDataStorage([{ key: '@accessToken', value: accessToken },
-            { key: '@refreshToken', value: refreshToken },
-            { key: '@userInfo', value: user }])
+    async function Login() {
+        const apiResponse = await login({ username: userName, password: pass })
+        if (apiResponse.data.data.status === true) {
+            DataStorage.SetDataStorage([{ key: '@accessToken', value: apiResponse.data.data.accessToken },
+            { key: '@refreshToken', value: apiResponse.data.data.refreshToken },
+            { key: '@userInfo', value: apiResponse.data.data.userInfo }])
+            navigate("HomeNavigation");
         }
-        else {
-            Alert.alert('Thông báo', 'Đăng nhập thất bại');
-            return null;
-        }
+        else
+            apiResponse.data.data.message.startsWith("Invalid") ?
+                ToastAndroid.show('Thông tin đăng nhập không chính xác!', ToastAndroid.SHORT) :
+                ToastAndroid.show(apiResponse.data.data.message, ToastAndroid.SHORT)
     }
 }
 
