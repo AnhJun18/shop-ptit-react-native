@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="ProfileNavigation"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused

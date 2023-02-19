@@ -4,7 +4,7 @@ const img1 = require('../../../assets/images/brand_01.png');
 
 function ListBrand() {
     return (
-        <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', justifyContent:'space-between', alignItems: 'center',paddingHorizontal:10}}>
             <Image
                 style={{ width: 80, height: 50 }}
                 source={img1}

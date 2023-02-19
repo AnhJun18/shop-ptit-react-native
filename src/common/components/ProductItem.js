@@ -17,7 +17,6 @@ function ProductItem(props) {
                 },
                 shadowOpacity: 0.50,
                 shadowRadius: 12.35,
-
                 elevation: 7,
             }}
         >
