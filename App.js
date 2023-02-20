@@ -14,18 +14,16 @@ import { Provider } from 'react-redux';
 import { AuthContextProvider } from './src/context/AuthProvider';
 import { navigationRef } from './src/navigations/RootNavigation';
 function App() {
-  console.log(store.getState())
   return (
-    
     <Provider store={store}>
       <AuthContextProvider>
-      <NavigationContainer ref={navigationRef}>
-        <MyTabs></MyTabs>
-      </NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
+          <MyTabs></MyTabs>
+        </NavigationContainer>
       </AuthContextProvider>
     </Provider>
   );
- 
+
 }
 
 export default App;
