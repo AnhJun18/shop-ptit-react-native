@@ -1,5 +1,6 @@
 import React  from 'react';
 import OrderScreen from '../../features/order/screen/OrderScreen';
+import AddressScreen from '../../features/user/screens/AddressScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 function TestNavigation({ navigation, route }) {
@@ -15,8 +16,8 @@ function TestNavigation({ navigation, route }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="OrderScreen"
-        component={OrderScreen}
+        name="AddressScreen"
+        component={AddressScreen}
         options={{
           headerShown: false,
         }} />
