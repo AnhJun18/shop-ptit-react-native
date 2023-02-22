@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="TestNavigation"
+      initialRouteName="HomeNavigation"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
@@ -38,7 +38,8 @@ function MyTabs() {
         component={HomeNavigation}
         options={{
           tabBarLabel: 'Trang chủ',
-          headerShown:false
+          headerShown:false,
+          tabBarHideOnKeyboard:true
         }}
       />
       <Tab.Screen

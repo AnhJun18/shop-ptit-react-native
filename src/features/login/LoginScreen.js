@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import Background from "../../common/components/Background";
 import AuthContext from "../../context/AuthProvider";
 import { navigate } from "../../navigations/RootNavigation";
+import  Icon  from "react-native-vector-icons/EvilIcons";
 import { ToastAndroid } from "react-native";
 function LoginScreen(props) {
     const { login } = useContext(AuthContext)
@@ -20,12 +21,12 @@ function LoginScreen(props) {
     const [hidePass, setHidePass] = useState(true)
     const navigation = props.navigation
     return (
-
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <Background></Background>
             <ButtonBack navigation={navigation} ></ButtonBack>
             <View style={style.mainLayout}>
-                <Text style={style.text}>Login</Text>
+                <Icon name={'user'} size={385} style={{color:'#87afe7'}}></Icon>
+                <Text style={[style.text,{top:-20}]}>Đăng nhập</Text>
                 <KeyboardAvoidingView behavior="">
                     <TextInput style={style.input}
                         placeholder="Tên đăng nhập: "

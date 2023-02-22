@@ -13,7 +13,6 @@ function SearchView() {
                 searchIcon={{color:'#7cc4f8'}}
                 inputContainerStyle={{backgroundColor:'rgb(255,255,255)',height:40,borderRadius:0}}
                 cancelButtonTitle={'Hủy'}
-
             ></SearchBar>
         </View>
     )

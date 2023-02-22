@@ -1,6 +1,7 @@
 import React  from 'react';
 import OrderScreen from '../../features/order/screen/OrderScreen';
 import AddressScreen from '../../features/user/screens/AddressScreen';
+import LoginScreen from '../../features/login/LoginScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 function TestNavigation({ navigation, route }) {
@@ -16,8 +17,8 @@ function TestNavigation({ navigation, route }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="AddressScreen"
-        component={AddressScreen}
+        name="LoginScreen"
+        component={LoginScreen}
         options={{
           headerShown: false,
         }} />

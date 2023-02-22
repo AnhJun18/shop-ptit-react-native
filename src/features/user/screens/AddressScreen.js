@@ -18,7 +18,7 @@ function AddressScreen(props) {
                 <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: '70%' }}>
                     <TextInput style={style.input} placeholder="Họ và tên"></TextInput>
                     <TextInput style={style.input} placeholder="Điện thoại"></TextInput>
-                    <TextInput style={style.input} placeholder="Tỉnh thành" value={province}></TextInput>
+                    <TextInput style={style.input} placeholder="Tỉnh thành"></TextInput>
                     <TextInput style={style.input} placeholder="Quận huyện"></TextInput>
                     <TextInput style={style.input} placeholder="Phường xã"></TextInput>
                     <TextInput style={style.input} placeholder="Địa chỉ"></TextInput>
