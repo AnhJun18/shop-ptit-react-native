@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeNavigation from '../home/HomeNavigation';
 import ProfileNavigation from '../profile/ProfileNavigation';
 import LoginNavigation from '../login/LoginNavigation';
+import ProductDetailScreen from '../../features/store/ProductDetailScreen';
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
@@ -42,7 +43,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Store"
-        component={SettingScreen}
+        component={ProductDetailScreen}
         options={{
           tabBarLabel: 'Cửa hàng',
           tabBarBadge: 3,
