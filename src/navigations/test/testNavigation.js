@@ -17,8 +17,8 @@ function TestNavigation({ navigation, route }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
+        name="AddressScreen"
+        component={AddressScreen}
         options={{
           headerShown: false,
         }} />
