@@ -4,12 +4,15 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeNavigation from '../home/HomeNavigation';
 import ProfileNavigation from '../profile/ProfileNavigation';
 import LoginNavigation from '../login/LoginNavigation';
+
+import TestNavigation from '../test/testNavigation';
 import ProductDetailScreen from '../../features/store/ProductDetailScreen';
+
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="TestNavigation"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
@@ -38,7 +41,8 @@ function MyTabs() {
         component={HomeNavigation}
         options={{
           tabBarLabel: 'Trang chủ',
-          headerShown:false
+          headerShown:false,
+          tabBarHideOnKeyboard:true
         }}
       />
       <Tab.Screen
@@ -76,6 +80,18 @@ function MyTabs() {
           tabBarBadge: 3,
           headerShown:false,
           tabBarButton:()=>{null}
+        }}
+      />
+       <Tab.Screen
+        name="TestNavigation"
+        component={TestNavigation}
+        options={{
+          tabBarLabel: 'Test new screen',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarStyle: { display: 'none' },
+          
+          // tabBarButton:()=>{null}
         }}
       />
     </Tab.Navigator>

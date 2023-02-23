@@ -7,7 +7,8 @@ const style = StyleSheet.create({
     },
     mainLayout: {
         alignItems: 'center',
-        bottom:100
+        bottom:120,
+       
     },
     input: {
         width: 300,
@@ -15,9 +16,10 @@ const style = StyleSheet.create({
         borderBottomWidth: 1,
     },
     text: {
-        fontSize: 32,
+        fontSize: 30,
         color: 'rgba(131, 122, 122, 1)',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+       
     },
     textBlue:{
       color:'rgba(48, 80, 251, 1)',
