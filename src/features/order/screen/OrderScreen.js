@@ -13,6 +13,7 @@ function OrderScreen(props){
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
       })
+      console.log(props.route.params)
    return (
     <ScrollView contentContainerStyle={{ flexGrow: 1,backgroundColor:'#DDF2F3' }}>
         {/* <Background></Background> */}

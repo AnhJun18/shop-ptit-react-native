@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 
 });
 
-const CartScreen = () => {
+const CartScreen = ({navigation}) => {
     const [cartItems, setCartItems] = useState(1)
     const [listCart, setListCart] = useState([])
 
@@ -137,10 +137,11 @@ const CartScreen = () => {
         const myCart = []
         listCart.forEach((item) => {
             if (item.selected === true) {
-                updatedCartItems.push(item)
+                myCart.push(item)
             }
         });
         console.log(myCart)
+        navigation.navigate('OrderScreen',{data:myCart})
     }
 
     const renderItem = ({ item }) => (

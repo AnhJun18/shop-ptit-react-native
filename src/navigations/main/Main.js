@@ -7,6 +7,7 @@ import LoginNavigation from '../login/LoginNavigation';
 
 import TestNavigation from '../test/testNavigation';
 import ProductDetailScreen from '../../features/store/ProductDetailScreen';
+import OrderScreen from '../../features/order/screen/OrderScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -75,6 +76,16 @@ function MyTabs() {
       <Tab.Screen
         name="LoginNavigation"
         component={LoginNavigation}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
+        name="OrderScreen"
+        component={OrderScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
