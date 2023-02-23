@@ -14,16 +14,18 @@ const styles = StyleSheet.create({
     },
     orderItem: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 20,
-        paddingHorizontal: 5,
+        paddingHorizontal: '8%',
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
     },
     imgProduct: {
-        width: 200,
-        height: 200
+        width: '15%',
+        height: '100%',
+        resizeMode:'contain',
+        backgroundColor:'#ffc'
     },
     infoItem: {
         backgroundColor: "#ccc",
@@ -35,7 +37,12 @@ const styles = StyleSheet.create({
 
 
     },
+    infoProduct:{
+            width:'35%',
+            backgroundColor:'#ff2'
+    },
     itemPrice: {
+        width:'15%',
         fontSize: 14,
         fontWeight: 'bold',
         color: '#ff6347',
@@ -49,9 +56,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     totalPrice: {
-        fontSize: 18,
+        width:'30%',
+        fontSize: 12,
         fontWeight: 'bold',
         marginTop: 20,
+        marginLeft: 40,
+        backgroundColor:'#ccc'
     },
     checkoutButton: {
         backgroundColor: '#ff6347',
@@ -66,8 +76,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     spinner: {
-        width: 100,
-        height: 50,
+        width: '10%',
+        color:'#ccc',
+        opacity:0.5,
+        fontSize:30
     },
     btn: {
         width: '100%',
@@ -146,7 +158,9 @@ const CartScreen = ({navigation}) => {
 
     const renderItem = ({ item }) => (
         <View style={styles.orderItem}>
+            
             {<CheckBox
+                style={{width:'10%',backgroundColor:'#ccc'}}
                 value={item.selected}
                 onValueChange={() => handleItemCheck(item.product.infoProduct.id)}
             />}
@@ -156,7 +170,10 @@ const CartScreen = ({navigation}) => {
                     uri: `${item.product.infoProduct.linkImg}`,
                 }}
             />
-            <Text>{item.product.infoProduct.name}</Text>
+            <View  style={styles.infoProduct}>
+                 <Text>{item.product.infoProduct.name}</Text>
+            </View>
+           
             <InputSpinner
                 max={100}
                 min={0}
@@ -165,10 +182,11 @@ const CartScreen = ({navigation}) => {
                 onChange={(num) => handleChangeAmount(num, item.idCart)}
                 style={styles.spinner}
                 skin={"clean"}
-                colorMax={"#f04048"}
-                colorMin={"#40c5f4"}
                 color={"#000"}
+                fontSize={10}
+                width={1000}
             />
+            
             <Text style={styles.totalPrice}>{(item.product.infoProduct.price * item.amount).toLocaleString('vi', {
                 style: 'currency',
                 currency: 'VND'
@@ -190,11 +208,8 @@ const CartScreen = ({navigation}) => {
                 }}
                 ListFooterComponentStyle={{ alignSelf: 'flex-end' }}
             />
-            <Text>Thành tiền: {totalMoney.toLocaleString('vi', {
-                style: 'currency',
-                currency: 'VND'
-            })}</Text>
-            <TouchableOpacity style={styles.btn} onPress={submitBuy}><Text style={styles.txtBtn}>Dat Hang</Text></TouchableOpacity>
+           
+            <TouchableOpacity style={styles.btn} onPress={submitBuy}><Text style={styles.txtBtn}>Đặt Hàng</Text></TouchableOpacity>
 
         </View>
     );
