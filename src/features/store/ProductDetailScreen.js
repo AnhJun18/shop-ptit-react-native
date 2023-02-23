@@ -7,6 +7,7 @@ import { Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 import axios from "../../context/axios";
+import MainHeader from "../../common/components/MainHeader";
 
 function ProductDetailScreen(props) {
     const styles = StyleSheet.create({
@@ -82,7 +83,7 @@ function ProductDetailScreen(props) {
 
         }
     });
-  
+
     const [product, setProduct] = useState([]);
     const [value, setValue] = useState('first');
 
@@ -102,6 +103,7 @@ function ProductDetailScreen(props) {
 
     return (
         <View style={styles.container}>
+            <MainHeader navigation={props.navigation} title={"Chi tiết sản phẩm"}></MainHeader>
             <View style={styles.imgView}>
                 <Image
                     style={styles.tinyLogo}
@@ -129,7 +131,7 @@ function ProductDetailScreen(props) {
                 <Text style={styles.txtHeader}>
                     Màu sắc
                 </Text>
-                
+
                 <Text style={styles.txtHeader}>
                     Size
                 </Text>

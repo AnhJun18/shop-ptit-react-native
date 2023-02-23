@@ -52,7 +52,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Cửa hàng',
           tabBarBadge: 3,
-          headerShown:false
+          headerShown:false,
+          tabBarStyle: { display: 'none' },
         }}
       />
      <Tab.Screen
@@ -61,7 +62,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Giỏ hàng',
           tabBarBadge: 3,
-          headerShown:false
+          headerShown:false ,
+          
         }}
       />
       <Tab.Screen
