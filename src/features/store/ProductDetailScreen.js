@@ -93,7 +93,7 @@ function ProductDetailScreen(props) {
         txttext: {
             fontSize: 20,
             color: '#777474',
-            fontWeight: 450
+            fontWeight: 400
         }
     });
   
@@ -170,9 +170,7 @@ function ProductDetailScreen(props) {
                         Size
                     </Text>
                 </View>
-                <RadioButtonGroup>
-                    
-                </RadioButtonGroup>
+             
 
             </ScrollView>
             <View style={styles.menu}>
