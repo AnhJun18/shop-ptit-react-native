@@ -5,6 +5,8 @@ import InputSpinner from "react-native-input-spinner";
 import axios from '../../../context/axios';
 import axiosApiInstance from '../../../context/interceptor';
 import { Button } from 'react-native';
+import Background from "../../../common/components/Background";
+import MainHeader from "../../../common/components/MainHeader";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -16,16 +18,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 20,
-        paddingHorizontal: '8%',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        paddingVertical: 30,
+        paddingHorizontal: '4%',
+        borderBottomWidth: 3,
+        borderBottomColor: '#DDF2F3',
     },
     imgProduct: {
-        width: '15%',
-        height: '100%',
+        width: '30%',
+        height: '270%',
         resizeMode:'contain',
-        backgroundColor:'#ffc'
     },
     infoItem: {
         backgroundColor: "#ccc",
@@ -38,8 +39,19 @@ const styles = StyleSheet.create({
 
     },
     infoProduct:{
-            width:'35%',
-            backgroundColor:'#ff2'
+            width:'72%',
+            flexDirection: 'column',
+            marginLeft: 3
+    },
+    txtProduct: {
+        fontSize: 20,
+        fontWeight: 400,
+        color: '#676161'
+    },
+    txtDetail: {
+        color: '#676161',
+        fontSize: 15,
+        fontWeight: 300,
     },
     itemPrice: {
         width:'15%',
@@ -56,13 +68,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     totalPrice: {
-        width:'30%',
-        fontSize: 12,
-        fontWeight: 'bold',
-        marginTop: 20,
-        marginLeft: 40,
-        backgroundColor:'#ccc'
+        width:'75%',
+        fontSize: 18,
+        fontWeight: 400,
+        color: '#676161',
+        marginTop: 13,
+        // flexDirection: 'column-reverse',
+        
+
     },
+    
     checkoutButton: {
         backgroundColor: '#ff6347',
         paddingVertical: 10,
@@ -76,27 +91,45 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     spinner: {
-        width: '10%',
+        flexDirection: 'row',
+        marginLeft: 5,
+        width: '37%',
         color:'#ccc',
         opacity:0.5,
-        fontSize:30
+        fontSize:30,
     },
-    btn: {
+    menu: {
+        flex: 1,
+        backgroundColor: '#B9D8E2',
+        height: 60,
         width: '100%',
-        height: 80,
-        backgroundColor: '#00CD66',
-        borderColor: '#ccc',
-        borderWidth: 2,
-        borderStyle: 'solid',
+        position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row',
+        bottom:0,
+    },
+    btn: {
+        
+        width: '95%',
+        height: '70%',
+        borderRadius: 5,
+        backgroundColor: '#4ACBD3',
+        borderStyle: 'solid',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     txtBtn: {
         marginLeft: 10,
         fontSize: 25,
-        fontWeight: 600,
+        fontWeight: 500,
+        color: '#676161',
     },
+    checkBox: {
+        height: '30%',             
+        width: '8%',       
+        backgroundColor: '#FFF',  
+        
+    }
 
 });
 
@@ -160,8 +193,9 @@ const CartScreen = ({navigation}) => {
         <View style={styles.orderItem}>
             
             {<CheckBox
-                style={{width:'10%',backgroundColor:'#ccc'}}
+                style={styles.checkBox}
                 value={item.selected}
+                tintColors={{ true: '#4ACBD3', false: '#777474' }}
                 onValueChange={() => handleItemCheck(item.product.infoProduct.id)}
             />}
             <Image
@@ -171,26 +205,32 @@ const CartScreen = ({navigation}) => {
                 }}
             />
             <View  style={styles.infoProduct}>
-                 <Text>{item.product.infoProduct.name}</Text>
+                 <Text style={styles.txtProduct}>{item.product.infoProduct.name}</Text>
+                 <Text style={styles.txtDetail}>Màu: Đen - Size: XL</Text>
+                 <View style= {{flexDirection: 'row'}}>
+                    <InputSpinner
+                        max={100}
+                        min={0}
+                        step={1}
+                        value={item.amount}
+                        onChange={(num) => handleChangeAmount(num, item.idCart)}
+                        style={styles.spinner}
+                        skin={"clean"}
+                        color={"#000"}
+                        fontSize={14}
+                        width={100}
+                    />
+                    <View style={{ alignItems: 'flex-end', width: '53%'}}>
+                   <Text style={styles.totalPrice}>x {(item.product.infoProduct.price * item.amount).toLocaleString('vi', {
+                        style: 'currency',
+                        currency: 'VND'
+                    })}</Text></View> 
+                </View>
             </View>
-           
-            <InputSpinner
-                max={100}
-                min={0}
-                step={1}
-                value={item.amount}
-                onChange={(num) => handleChangeAmount(num, item.idCart)}
-                style={styles.spinner}
-                skin={"clean"}
-                color={"#000"}
-                fontSize={10}
-                width={1000}
-            />
             
-            <Text style={styles.totalPrice}>{(item.product.infoProduct.price * item.amount).toLocaleString('vi', {
-                style: 'currency',
-                currency: 'VND'
-            })}</Text>
+            
+            
+            
 
 
         </View>
@@ -198,19 +238,19 @@ const CartScreen = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <FlatList
+            <FlatList 
                 data={listCart}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.idCart.toString()
                 }
                 ListFooterComponent={() => {
-                    return <Text style={styles.txtBtn}>Thành tiền: {totalMoney}</Text>
+                    return <Text style={[styles.txtBtn, {marginBottom: 70}]}>Thành tiền: {totalMoney}</Text>
                 }}
                 ListFooterComponentStyle={{ alignSelf: 'flex-end' }}
             />
-           
-            <TouchableOpacity style={styles.btn} onPress={submitBuy}><Text style={styles.txtBtn}>Đặt Hàng</Text></TouchableOpacity>
-
+           <View style={styles.menu}>
+                <TouchableOpacity style={styles.btn} onPress={submitBuy}><Text style={styles.txtBtn}>Tiến Hành Đặt Hàng</Text></TouchableOpacity>
+            </View>
         </View>
     );
 };
