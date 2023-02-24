@@ -8,12 +8,14 @@ import LoginNavigation from '../login/LoginNavigation';
 import TestNavigation from '../test/testNavigation';
 import ProductDetailScreen from '../../features/store/ProductDetailScreen';
 import OrderScreen from '../../features/order/screen/OrderScreen';
+import ForgotPassScreen from '../../features/auth/ForgotPassScreen';
+import ChangePassScreen from '../../features/auth/ChangePassScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="ForgotPass"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
@@ -78,6 +80,26 @@ function MyTabs() {
       <Tab.Screen
         name="LoginNavigation"
         component={LoginNavigation}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
+        name="ForgotPass"
+        component={ForgotPassScreen}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
+        name="ChangePass"
+        component={ChangePassScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
