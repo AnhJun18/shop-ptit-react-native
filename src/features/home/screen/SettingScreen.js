@@ -171,7 +171,7 @@ const CartScreen = ({ navigation }) => {
     const handleItemCheck = (id) => {
         const updatedCartItems = listCart.map((item) => {
             if (item.idCart === id) {
-                if(!item.selected)
+                if(item.selected)
                     setSelectAll(false)
                 return { ...item, selected: !item.selected };
             }

@@ -8,12 +8,13 @@ import LoginNavigation from '../login/LoginNavigation';
 import TestNavigation from '../test/testNavigation';
 import ProductDetailScreen from '../../features/store/ProductDetailScreen';
 import OrderScreen from '../../features/order/screen/OrderScreen';
+import OrderHistoryScreen from '../../features/profile/OrderHistoryScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="OrderHistory"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
@@ -97,10 +98,10 @@ function MyTabs() {
         }}
       />
        <Tab.Screen
-        name="TestNavigation"
-        component={TestNavigation}
+        name="OrderHistory"
+        component={OrderHistoryScreen}
         options={{
-          tabBarLabel: 'Test new screen',
+          tabBarLabel: 'History new screen',
           tabBarBadge: 3,
           headerShown:false,
           tabBarStyle: { display: 'none' },
