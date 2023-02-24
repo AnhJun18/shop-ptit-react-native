@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RadioGroup } from "react-native-radio-buttons-group";
+import NarBar from "./NarBar";
 
 const styles = StyleSheet.create({
     container: {
@@ -11,7 +12,7 @@ const styles = StyleSheet.create({
     },
 })
 function OrderHistoryScreen(props) {
-    const radioNavBar = [
+    const dataNavBar = [
         {
             id: '1',
             label:'Chờ xác nhận',
@@ -28,7 +29,9 @@ function OrderHistoryScreen(props) {
     return (
         <View style={styles.container}>
             
-
+            <NarBar data={dataNavBar}>
+                
+            </NarBar>
         </View>
     )
 }

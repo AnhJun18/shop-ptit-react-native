@@ -4,11 +4,11 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeNavigation from '../home/HomeNavigation';
 import ProfileNavigation from '../profile/ProfileNavigation';
 import LoginNavigation from '../login/LoginNavigation';
-
-import TestNavigation from '../test/testNavigation';
 import ProductDetailScreen from '../../features/store/ProductDetailScreen';
 import OrderScreen from '../../features/order/screen/OrderScreen';
 import OrderHistoryScreen from '../../features/profile/OrderHistoryScreen';
+import ForgotPassScreen from '../../features/auth/ForgotPassScreen';
+import ChangePassScreen from '../../features/auth/ChangePassScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
