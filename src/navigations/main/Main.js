@@ -87,6 +87,26 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
+        name="ForgotPass"
+        component={ForgotPassScreen}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
+        name="ChangePass"
+        component={ChangePassScreen}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
         name="OrderScreen"
         component={OrderScreen}
         options={{
