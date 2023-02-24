@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import InputSpinner from "react-native-input-spinner";
 import axios from '../../../context/axios';
 import axiosApiInstance from '../../../context/interceptor';
+import { useFocusEffect } from '@react-navigation/native';
 import { Button } from 'react-native';
 const styles = StyleSheet.create({
     container: {
@@ -16,8 +17,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
     },
@@ -68,54 +69,79 @@ const styles = StyleSheet.create({
     spinner: {
         width: 100,
         height: 50,
-    }
+    },
+    btn: {
+        width: '100%',
+        height: 80,
+        backgroundColor: '#00CD66',
+        borderColor: '#ccc',
+        borderWidth: 2,
+        borderStyle: 'solid',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    txtBtn: {
+        marginLeft: 10,
+        fontSize: 25,
+        fontWeight: 600,
+    },
+
 });
 
-const CartScreen = () => {
+const CartScreen = ({navigation}) => {
     const [cartItems, setCartItems] = useState(1)
     const [listCart, setListCart] = useState([])
-
-    const [value, setValue] = useState(1);
+    const [totalMoney, setTotalMoney] = useState(0);
     getCart = async () => {
         const result = await axiosApiInstance.get(axios.defaults.baseURL + '/api/cart/all')
-        setListCart(result.data)
+        setListCart(result.data);
     }
     useEffect(() => {
+        let tmpMoney = 0
+        listCart.forEach((item) => {
+            if (item.selected === true) {
+                tmpMoney += item.amount * item.product.infoProduct.price
+            }
+            setTotalMoney(tmpMoney.toLocaleString('vi', {
+                style: 'currency',
+                currency: 'VND'
+            }))
+        });
+    }, [listCart])
+
+    useFocusEffect(React.useCallback(()=> {
         getCart()
-    }, [])
-
-
+    },[]))
     const handleItemCheck = (id) => {
         const updatedCartItems = listCart.map((item) => {
-            console.log(id)
             if (item.product.infoProduct.id === id) {
-
                 return { ...item, selected: !item.selected };
             }
             return item;
         });
-        console.log(updatedCartItems)
         setListCart(updatedCartItems);
     };
-    const handleChangeAmount = (id,itemChange) => {
+    const handleChangeAmount = (id, itemChange) => {
         const updatedCartItems = listCart.map((item) => {
             if (item.idCart === itemChange) {
-                item.amount=id
-                return { ...item};
+                item.amount = id
+                return { ...item };
             }
             return item;
         });
         setListCart(updatedCartItems);
     };
 
-    submitBuy=()=>{
+  const submitBuy = () => {
         const myCart = []
         listCart.forEach((item) => {
             if (item.selected === true) {
-                updatedCartItems.push(item)
+                myCart.push(item)
             }
         });
-       console.log(myCart)
+       // console.log(myCart)
+        navigation.navigate('OrderScreen',{data:myCart})
     }
 
     const renderItem = ({ item }) => (
@@ -130,35 +156,46 @@ const CartScreen = () => {
                     uri: `${item.product.infoProduct.linkImg}`,
                 }}
             />
-           
+            <Text>{item.product.infoProduct.name}</Text>
             <InputSpinner
-                max={10}
-                min={1}
+                max={100}
+                min={0}
                 step={1}
                 value={item.amount}
-                onChange={(num)=> handleChangeAmount(num,item.idCart)}
+                onChange={(num) => handleChangeAmount(num, item.idCart)}
                 style={styles.spinner}
                 skin={"clean"}
                 colorMax={"#f04048"}
                 colorMin={"#40c5f4"}
                 color={"#000"}
             />
-            <Text style={styles.totalPrice}>{item.product.infoProduct.price * item.amount}</Text>
-            
-            
+            <Text style={styles.totalPrice}>{(item.product.infoProduct.price * item.amount).toLocaleString('vi', {
+                style: 'currency',
+                currency: 'VND'
+            })}</Text>
+
+
         </View>
     );
 
     return (
         <View style={styles.container}>
-
             <FlatList
                 data={listCart}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.idCart.toString()}
+                keyExtractor={(item) => item.idCart.toString()
+                }
+                ListFooterComponent={() => {
+                    return <Text style={styles.txtBtn}>Thành tiền: {totalMoney}</Text>
+                }}
+                ListFooterComponentStyle={{ alignSelf: 'flex-end' }}
             />
+            <Text>Thành tiền: {totalMoney.toLocaleString('vi', {
+                style: 'currency',
+                currency: 'VND'
+            })}</Text>
             <TouchableOpacity style={styles.btn} onPress={submitBuy}><Text style={styles.txtBtn}>Dat Hang</Text></TouchableOpacity>
-           
+
         </View>
     );
 };

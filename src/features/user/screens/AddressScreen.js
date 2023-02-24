@@ -17,13 +17,13 @@ function AddressScreen(props) {
     const [listDistrict, setListDistrict] = useState([]);
     const [listWard, setListWard] = useState([]);
     const [dataApi, setDataApi] = useState([]);
-    const [spinner,setSprinner]=useState(true)
+    const [spinner, setSprinner] = useState(true)
     useEffect(() => {
         (async () => {
             const data = await (await fetch('https://provinces.open-api.vn/api/?depth=3')).json()
             setDataApi([...data]);
             setListProvince([...data])
-        })().then().catch(err => console.log(err)).finally(()=>setSprinner(!spinner))
+        })().then().catch(err => console.log(err)).finally(() => setSprinner(!spinner))
     }, [])
     useEffect(() => {
     }, [province, district])
@@ -34,7 +34,7 @@ function AddressScreen(props) {
                 textContent={'Đang tải...'}
                 cancelable={true}
                 animation={'slide'}
-                // customIndicator={()=><ActivityIndicator size={'large'} color="#0000ff"/>}
+            // customIndicator={()=><ActivityIndicator size={'large'} color="#0000ff"/>}
             />
             <MainHeader title={"Thêm địa chỉ mới"}></MainHeader>
             <View style={style.container}>
@@ -72,7 +72,6 @@ function AddressScreen(props) {
                         onValueChange={(itemValue, itemIndex) => {
                             setWar(itemValue);
                         }
-
                         }>
                         {Ward()}
                     </Picker>

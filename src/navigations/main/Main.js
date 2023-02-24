@@ -7,6 +7,7 @@ import LoginNavigation from '../login/LoginNavigation';
 
 import TestNavigation from '../test/testNavigation';
 import ProductDetailScreen from '../../features/store/ProductDetailScreen';
+import OrderScreen from '../../features/order/screen/OrderScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -51,7 +52,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Cửa hàng',
           tabBarBadge: 3,
-          headerShown:false
+          headerShown:false,
+          tabBarStyle: { display: 'none' },
         }}
       />
      <Tab.Screen
@@ -60,7 +62,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Giỏ hàng',
           tabBarBadge: 3,
-          headerShown:false
+          headerShown:false ,
+          
         }}
       />
       <Tab.Screen
@@ -80,6 +83,17 @@ function MyTabs() {
           tabBarBadge: 3,
           headerShown:false,
           tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
+        name="OrderScreen"
+        component={OrderScreen}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null},
+          tabBarStyle: { display: 'none' },
         }}
       />
        <Tab.Screen

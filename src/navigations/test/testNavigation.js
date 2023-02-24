@@ -3,6 +3,7 @@ import OrderScreen from '../../features/order/screen/OrderScreen';
 import AddressScreen from '../../features/user/screens/AddressScreen';
 import LoginScreen from '../../features/login/LoginScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SettingScreen from '../../features/home/screen/SettingScreen'
 const Stack = createNativeStackNavigator();
 function TestNavigation({ navigation, route }) {
   // React.useLayoutEffect(() => {
@@ -17,8 +18,8 @@ function TestNavigation({ navigation, route }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="AddressScreen"
-        component={AddressScreen}
+        name="SettingScreen"
+        component={SettingScreen}
         options={{
           headerShown: false,
         }} />
