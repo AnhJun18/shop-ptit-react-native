@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 400,
         color: '#676161',
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     btn: {
         flex: 3,
@@ -177,8 +177,8 @@ const CartScreen = ({ navigation }) => {
         });
         setListCart(updatedCartItems);
     };
-    
-    const handleChangeAmount = (num, itemChange,idProduct) => {
+
+    const handleChangeAmount = (num, itemChange, idProduct) => {
         const updatedCartItems = listCart.map((item) => {
             if (item.idCart === itemChange) {
                 item.amount = num
@@ -187,29 +187,29 @@ const CartScreen = ({ navigation }) => {
             return item;
         });
         setListCart(updatedCartItems);
-        handleUpdateCart(idProduct,num)
+        handleUpdateCart(idProduct, num)
 
     };
 
-   const handleCheckAll=(()=>{
-        
+    const handleCheckAll = (() => {
+
         const updatedCartItems = listCart.map((item) => {
-                return { ...item, selected: !selectAll };
+            return { ...item, selected: !selectAll };
 
             return item;
         });
         setListCart(updatedCartItems);
         setSelectAll(!selectAll)
-   })
+    })
 
-   handleUpdateCart =async(idCart,amountNew)=>{
-    const body = {
-        "productID": idCart,
-        "amount": amountNew
+    handleUpdateCart = async (idCart, amountNew) => {
+        const body = {
+            "productID": idCart,
+            "amount": amountNew
+        }
+        await axiosApiInstance.put(axiosApiInstance.defaults.baseURL + `/api/cart/update`, body);
+
     }
-   const a= await axiosApiInstance.put( axiosApiInstance.defaults.baseURL + `/api/cart/update`,body);
-    console.log(a.data)
-   }
     submitBuy = () => {
         const myCart = []
         listCart.forEach((item) => {
@@ -217,13 +217,12 @@ const CartScreen = ({ navigation }) => {
                 myCart.push(item)
             }
         });
-        console.log(myCart)
-        // navigation.navigate('OrderScreen',{data:myCart})
+        navigation.navigate('OrderScreen',{data:myCart})
     }
 
     const renderItem = ({ item }) => (
         <View style={styles.orderItem}>
-           
+
             {<CheckBox
                 style={styles.checkBox}
                 value={item.selected}
@@ -245,7 +244,7 @@ const CartScreen = ({ navigation }) => {
                         min={0}
                         step={1}
                         value={item.amount}
-                        onChange={(num) => handleChangeAmount(num, item.idCart,item.product.id)}
+                        onChange={(num) => handleChangeAmount(num, item.idCart, item.product.id)}
                         style={styles.spinner}
                         skin={"clean"}
                         color={"#000"}
@@ -264,7 +263,7 @@ const CartScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-             <MainHeader title="Giỏ hàng"></MainHeader>
+            <MainHeader title="Giỏ hàng"></MainHeader>
             <FlatList
                 data={listCart}
                 renderItem={renderItem}
@@ -277,13 +276,13 @@ const CartScreen = ({ navigation }) => {
             />
             <View style={styles.menu}>
                 <View style={styles.infoPay}>
-                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                      {<CheckBox
-                        value={selectAll}
-                        tintColors={{ true: '#4ACBD3', false: '#777474' }}
-                        onValueChange={() => handleCheckAll()}
-                    />}
-                     <Text>Tất cả</Text>  
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        {<CheckBox
+                            value={selectAll}
+                            tintColors={{ true: '#4ACBD3', false: '#777474' }}
+                            onValueChange={() => handleCheckAll()}
+                        />}
+                        <Text>Tất cả</Text>
                     </View>
                     <Text style={styles.totalPay}>Thành tiền: {totalMoney}</Text>
                 </View>
