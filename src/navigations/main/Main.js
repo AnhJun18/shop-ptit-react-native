@@ -8,19 +8,19 @@ import LoginNavigation from '../login/LoginNavigation';
 import TestNavigation from '../test/testNavigation';
 import ProductDetailScreen from '../../features/store/screens/ProductDetailScreen';
 import OrderScreen from '../../features/order/screen/OrderScreen';
-
+import StoreNavigation from '../store/StoreNavigation';
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="TestNavigation"
+      initialRouteName="Store"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
                 ? '#0d99ff'
                 : '#333';
           switch (route.name) {
-            case 'Home':  
+            case 'HomeNavigation':  
               return <Icon name={'home'} size={25} color={color} />;
             case 'Store':
               return <Icon name={'shopping-bag'} size={25} color={color} />;    
@@ -48,12 +48,13 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Store"
-        component={ProductDetailScreen}
+        component={StoreNavigation}
         options={{
           tabBarLabel: 'Cửa hàng',
           tabBarBadge: 3,
           headerShown:false,
-          tabBarStyle: { display: 'none' },
+          tabBarHideOnKeyboard:true
+          // tabBarStyle: { display: 'none' },
         }}
       />
      <Tab.Screen
@@ -78,6 +79,16 @@ function MyTabs() {
       <Tab.Screen
         name="LoginNavigation"
         component={LoginNavigation}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+       <Tab.Screen
+        name="ProductDetail"
+        component={ProductDetailScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,

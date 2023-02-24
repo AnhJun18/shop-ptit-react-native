@@ -150,7 +150,8 @@ async function SendOrder(){
         axios.defaults.baseURL + "/api/order/create",
         body
     ).then(res=>{
-        Alert.alert('Thông báo','Đặt hàng thành công');
+        console.log(res)
+        // Alert.alert('Thông báo','Đặt hàng thành công');
     }).catch(err=>{
         Alert.alert('Thông báo','Đặt hàng thất bại');
     })

@@ -5,7 +5,9 @@ import axios from "../../../context/axios";
 import axiosApiInstance from "../../../context/interceptor";
 import ProductItem from "../../../common/components/ProductItem";
 import { Text } from "react-native";
+import { View } from "react-native";
 function ListAllProduct(props) {
+
   const [listAllProduct, setAllListProduct] = useState([]);
   useEffect(() => {
     (async () => {
@@ -25,13 +27,19 @@ function ListAllProduct(props) {
       horizontal={false}
       numColumns={3}
       initialNumToRender={10}
-      ListFooterComponent={ButtonGoStore}
+      ListFooterComponent={props.screen != 'Store' ? ButtonGoStore : null}
+      ListFooterComponentStyle={{ justifyContent: 'center', alignItems: 'center',backgroundColor:'black',width:'100%' }}
+      style={props.screen != 'Store' ? {} : { marginBottom: 150 }}
     />
   )
   function ButtonGoStore() {
-    return (<TouchableOpacity style={{marginTop:10, height: 40, width: 120, backgroundColor: '#D9D9D9', borderRadius: 15, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 16 }}>Đến cửa hàng</Text>
-    </TouchableOpacity>)
+    return (
+      <View style={{width:'100%'}}>
+        <TouchableOpacity
+          style={{ marginTop: 10, height: 40, width: 120, backgroundColor: '#D9D9D9', borderRadius: 15, justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ fontSize: 16 }}>Đến cửa hàng</Text>
+        </TouchableOpacity>
+      </View>)
   }
 }
 
