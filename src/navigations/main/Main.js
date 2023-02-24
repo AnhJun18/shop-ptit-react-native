@@ -92,7 +92,8 @@ function MyTabs() {
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
           headerShown:false,
-          tabBarButton:()=>{null}
+          tabBarButton:()=>{null},
+          tabBarStyle: { display: 'none' },
         }}
       />
        <Tab.Screen

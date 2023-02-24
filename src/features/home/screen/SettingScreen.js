@@ -4,6 +4,7 @@ import CheckBox from '@react-native-community/checkbox';
 import InputSpinner from "react-native-input-spinner";
 import axios from '../../../context/axios';
 import axiosApiInstance from '../../../context/interceptor';
+import { useFocusEffect } from '@react-navigation/native';
 import { Button } from 'react-native';
 import Background from "../../../common/components/Background";
 import MainHeader from "../../../common/components/MainHeader";
@@ -136,11 +137,10 @@ const styles = StyleSheet.create({
 const CartScreen = ({navigation}) => {
     const [cartItems, setCartItems] = useState(1)
     const [listCart, setListCart] = useState([])
-
     const [totalMoney, setTotalMoney] = useState(0);
     getCart = async () => {
         const result = await axiosApiInstance.get(axios.defaults.baseURL + '/api/cart/all')
-        setListCart(result.data)
+        setListCart(result.data);
     }
     useEffect(() => {
         let tmpMoney = 0
@@ -155,9 +155,9 @@ const CartScreen = ({navigation}) => {
         });
     }, [listCart])
 
-    useEffect(() => {
+    useFocusEffect(React.useCallback(()=> {
         getCart()
-    }, [])
+    },[]))
     const handleItemCheck = (id) => {
         const updatedCartItems = listCart.map((item) => {
             if (item.product.infoProduct.id === id) {
@@ -178,14 +178,14 @@ const CartScreen = ({navigation}) => {
         setListCart(updatedCartItems);
     };
 
-    submitBuy = () => {
+  const submitBuy = () => {
         const myCart = []
         listCart.forEach((item) => {
             if (item.selected === true) {
                 myCart.push(item)
             }
         });
-        console.log(myCart)
+       // console.log(myCart)
         navigation.navigate('OrderScreen',{data:myCart})
     }
 
