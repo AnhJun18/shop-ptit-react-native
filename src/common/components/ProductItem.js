@@ -8,7 +8,7 @@ function ProductItem(props) {
     const price = props.price;
     const navigation = props.navigation;
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Setting', { id: id })}
+        <TouchableOpacity onPress={() => navigation.navigate('Store', { itemID: id })}
             style={{
                 backgroundColor: 'rgba(237, 237, 237, 1)', margin: 5, shadowColor: "#000",
                 shadowOffset: {
