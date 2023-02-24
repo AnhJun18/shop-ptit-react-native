@@ -6,7 +6,7 @@ import ProfileNavigation from '../profile/ProfileNavigation';
 import LoginNavigation from '../login/LoginNavigation';
 
 import TestNavigation from '../test/testNavigation';
-import ProductDetailScreen from '../../features/store/ProductDetailScreen';
+import ProductDetailScreen from '../../features/store/screens/ProductDetailScreen';
 import OrderScreen from '../../features/order/screen/OrderScreen';
 
 const Tab = createBottomTabNavigator();

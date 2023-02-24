@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View, Button, Alert, ToastAndroid, ScrollView } from 'react-native';
 
-import axiosApiInstance from "../../context/interceptor";
+import axiosApiInstance from "../../../context/interceptor";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
-import axios from "../../context/axios";
-import MainHeader from "../../common/components/MainHeader";
+import axios from "../../../context/axios";
+import MainHeader from "../../../common/components/MainHeader";
 
 function ProductDetailScreen(props) {
     const styles = StyleSheet.create({
