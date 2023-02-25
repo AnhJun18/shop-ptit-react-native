@@ -5,18 +5,11 @@ import { ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { View, Text, Image } from "react-native";
 import ButtonBack from "../../common/components/ButtonBack";
-import DataStorage from "../../common/utility/DataStorage";
 import style from "./Styles";
-import { useDispatch } from "react-redux";
 import Background from "../../common/components/Background";
-import AuthContext from "../../context/AuthProvider";
-import { navigate } from "../../navigations/RootNavigation";
-import { ToastAndroid } from "react-native";
-import RadioButton from "rn-radio-button";
+
 
 function RegisterScreen(props) {
-    const { register } = useContext(AuthContext)
-    const dispath = useDispatch()
     const [userName, setUserName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -65,7 +58,7 @@ function RegisterScreen(props) {
                             <Text>Giới tính:</Text>
                         </View>
                         <View style={style.inputWrap}>
-                            <RadioButton
+                            {/* <RadioButton
                                 style={{flex:1,flexDirection: 'row'}}
                                 outerWidth={15}
                                 innerWidth={10}
@@ -74,7 +67,7 @@ function RegisterScreen(props) {
                                 data={listData}
                                 color={"steelblue"}
                                 onPress={pressCircle}
-                                />
+                                /> */}
                         </View>
                         
                     </View>
@@ -116,12 +109,8 @@ function RegisterScreen(props) {
 
     )
     async function Register() {
-        const apiResponse = await register({firstName: firstName, lastName: lastName, username: userName, gender: gender, email: email,phone: phone, password: pass, roleName: 'ROLE_USER' })
-        if (apiResponse.data.data.status === false) {
-            apiResponse.data.data.message.startsWith("Invalid") ?
-                ToastAndroid.show('Tài khoản đã tồn tại', ToastAndroid.SHORT) :
-                ToastAndroid.show(apiResponse.data.data.message, ToastAndroid.SHORT)
-        }
+        
+
     }
     
 }
