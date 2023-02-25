@@ -15,20 +15,22 @@ function AddressButton() {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     })().catch(err=>console.log(err))
     }, [])
-    return <TouchableOpacity style={style.container}>
-        <Text style={style.title}>
-            Địa chỉ nhận hàng
-        </Text>
-        <Text>
-        {`${userInfo.firstName} ${userInfo.lastName}`} 
-        </Text>
-        <Text>
-         {userInfo.phone}
-        </Text>
-        <Text>
-            {userInfo.address}
-        </Text>
-       <Icon name={'angle-right'} size={30} style={{right:-350,top:-60}}></Icon>
+    return <TouchableOpacity style={[style.container, style.containerDC]}>
+        <View style={{flexDirection: 'column', flex: 9.5}}>
+            <Text style={style.title}>
+                Địa chỉ nhận hàng
+            </Text>
+            <Text style={style.text}>
+            {`${userInfo.firstName} ${userInfo.lastName}`} 
+            </Text>
+            <Text style={style.text}>
+            {userInfo.phone}
+            </Text>
+            <Text style={style.text}>
+                {userInfo.address}
+            </Text >
+        </View>
+       <Icon name={'angle-right'} size={30} style={{ flex: 0.5, color: '#B9ADAD'}}></Icon>
     </TouchableOpacity>
 }
 export default AddressButton;
