@@ -12,14 +12,27 @@ import Background from "../../common/components/Background";
 import AuthContext from "../../context/AuthProvider";
 import { navigate } from "../../navigations/RootNavigation";
 import { ToastAndroid } from "react-native";
+import RadioButton from "rn-radio-button";
+
 function RegisterScreen(props) {
     const { register } = useContext(AuthContext)
     const dispath = useDispatch()
     const [userName, setUserName] = useState('');
-    const [familyName, setFamilyName] = useState('');
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [gender, setGender] = useState('');
+
+ 
+    function pressCircle(i) {
+        setGender(i);
+    }
+
+    const listData = [
+        { label: "Nam", value:'Nam' },
+        { label: "Nữ", value: 'Nữ' },
+      ];
 
     const [pass, setPass] = useState('');
     const [hidePass, setHidePass] = useState(true)
@@ -36,14 +49,32 @@ function RegisterScreen(props) {
                         <View style={style.inputWrap}>
                             <TextInput style={style.inputName}
                                 placeholder="Họ đệm: "
-                                onChangeText={text => { setFamilyName(text) }}
+                                onChangeText={text => { setFirstName(text) }}
                             ></TextInput>
                         </View>
                         <View style={style.inputWrap}>
                             <TextInput style={style.inputName}
                                 placeholder="Tên: "
-                                onChangeText={text => { setName(text) }}
+                                onChangeText={text => { setLastName(text) }}
                             ></TextInput>
+                        </View>
+                    </View>
+
+                    <View style={style.row}>
+                        <View style={style.inputWrap}>
+                            <Text>Giới tính:</Text>
+                        </View>
+                        <View style={style.inputWrap}>
+                            <RadioButton
+                                style={{flex:1,flexDirection: 'row'}}
+                                outerWidth={15}
+                                innerWidth={10}
+                                borderWidth={1}
+                                wrapperStyle={{ padding: 3 }}
+                                data={listData}
+                                color={"steelblue"}
+                                onPress={pressCircle}
+                                />
                         </View>
                         
                     </View>
@@ -54,6 +85,7 @@ function RegisterScreen(props) {
                     ></TextInput>
                     <TextInput style={style.input}
                         placeholder="SĐT: "
+                        keyboardType="numeric"
                         onChangeText={text => { setPhone(text) }}
                     ></TextInput>
                     <TextInput style={style.input}
@@ -67,6 +99,7 @@ function RegisterScreen(props) {
                     ></TextInput>
                 </KeyboardAvoidingView>
                 <TouchableOpacity style={style.buttonLogin}
+                    onPress={Register}
                 >
                     <Text style={[style.text, { fontSize: 20 }]}>Đăng ký</Text>
                 </TouchableOpacity>
@@ -82,6 +115,14 @@ function RegisterScreen(props) {
         </ScrollView>
 
     )
+    async function Register() {
+        const apiResponse = await register({firstName: firstName, lastName: lastName, username: userName, gender: gender, email: email,phone: phone, password: pass, roleName: 'ROLE_USER' })
+        if (apiResponse.data.data.status === false) {
+            apiResponse.data.data.message.startsWith("Invalid") ?
+                ToastAndroid.show('Tài khoản đã tồn tại', ToastAndroid.SHORT) :
+                ToastAndroid.show(apiResponse.data.data.message, ToastAndroid.SHORT)
+        }
+    }
     
 }
 
