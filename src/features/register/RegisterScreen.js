@@ -33,10 +33,24 @@ function RegisterScreen(props) {
         { label: "Nam", value:'Nam' },
         { label: "Nữ", value: 'Nữ' },
       ];
+      
 
     const [pass, setPass] = useState('');
     const [hidePass, setHidePass] = useState(true)
     const navigation = props.navigation
+    async function handleRegister() {
+       try { 
+       const apiResponse = await register({firstName: firstName, lastName: lastName, username: userName, gender: gender, email: email,phone: phone, password: pass, roleName: 'ROLE_USER' })
+       if (apiResponse.data.data.status === false) {
+           apiResponse.data.data.message.startsWith("Invalid") ?
+               ToastAndroid.show('Tài khoản đã tồn tại', ToastAndroid.SHORT) :
+               ToastAndroid.show(apiResponse.data.data.message, ToastAndroid.SHORT)
+       }  
+       } catch (error) {
+        console.log(error)
+        
+       }
+    }
     return (
 
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -99,7 +113,7 @@ function RegisterScreen(props) {
                     ></TextInput>
                 </KeyboardAvoidingView>
                 <TouchableOpacity style={style.buttonLogin}
-                    onPress={Register}
+                    onPress={handleRegister}
                 >
                     <Text style={[style.text, { fontSize: 20 }]}>Đăng ký</Text>
                 </TouchableOpacity>
@@ -115,14 +129,7 @@ function RegisterScreen(props) {
         </ScrollView>
 
     )
-    async function Register() {
-        const apiResponse = await register({firstName: firstName, lastName: lastName, username: userName, gender: gender, email: email,phone: phone, password: pass, roleName: 'ROLE_USER' })
-        if (apiResponse.data.data.status === false) {
-            apiResponse.data.data.message.startsWith("Invalid") ?
-                ToastAndroid.show('Tài khoản đã tồn tại', ToastAndroid.SHORT) :
-                ToastAndroid.show(apiResponse.data.data.message, ToastAndroid.SHORT)
-        }
-    }
+
     
 }
 
