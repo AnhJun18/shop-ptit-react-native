@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Store"
+      initialRouteName="HomeNavigation"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
