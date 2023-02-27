@@ -12,7 +12,13 @@ function StoreNavigation(){
           headerShown:false
         }}
       />
-    
+     <Stack.Screen
+        name="ProductDetailScreen"
+        component={ProductDetailScreen}
+        options={{
+          headerShown:false
+        }}
+      />
  </Stack.Navigator>
 }
 export default StoreNavigation;

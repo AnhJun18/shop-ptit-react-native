@@ -4,10 +4,13 @@ import { useState } from "react";
 import axios from "../../../context/axios";
 import axiosApiInstance from "../../../context/interceptor";
 import ProductItem from "../../../common/components/ProductItem";
+import { useFocusEffect } from "@react-navigation/native";
 import { Text } from "react-native";
 import { View } from "react-native";
+import { connect } from "react-redux";
 function ListAllProduct(props) {
-
+  let search = props.SearchReducer;
+  console.log(props)
   const [listAllProduct, setAllListProduct] = useState([]);
   useEffect(() => {
     (async () => {
@@ -17,7 +20,9 @@ function ListAllProduct(props) {
   }, [])
   return (
     <FlatList
-      data={listAllProduct}
+      data={listAllProduct.filter(item=>{
+        return item.name.toLowerCase().includes(search.toLowerCase())
+      })}
       renderItem={({ item, index }) => <ProductItem id={item.id}
         name={item.name}
         price={item.price}
@@ -43,4 +48,6 @@ function ListAllProduct(props) {
   }
 }
 
-export default ListAllProduct;
+export default connect(state=>{
+ return state
+})(ListAllProduct);

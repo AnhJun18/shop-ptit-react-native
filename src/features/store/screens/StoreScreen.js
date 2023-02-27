@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { SafeAreaView } from "react-native";
-import { ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { View, Text } from "react-native";
 import { SearchBar } from 'react-native-elements';
@@ -9,10 +7,14 @@ import Background from "../../../common/components/Background";
 import ListAllProduct from "../../home/components/ListAllProduct";
 import { Modal } from "react-native";
 import styleStore from "../style/Store";
+import { TextInput } from "react-native";
+import { useDispatch } from "react-redux";
 function StoreScreen(props) {
     const navigation = props.navigation;
     const [button, setButton] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [searchText,setSearchText]= useState('');
+    const dispatch = useDispatch();
     return (
         <View style={{ minHeight: '100%' }}>
             <Modal
@@ -20,20 +22,17 @@ function StoreScreen(props) {
                 onRequestClose={() => setModalVisible(false)}
                 visible={modalVisible}
                 style={{ backgroundColor: 'rgba(255,255,255,0.9)' }}
-            
             >
                 <View style={{ height: 90 }}></View>
             </Modal>
             <Background />
-            <SearchBar
-                containerStyle={{ backgroundColor: 'rgba(255,255,255,0.8)', height: 70, justifyContent: 'center' }}
-                placeholder="Tìm kiếm..."
-                platform="ios"
-                cancelButtonProps={{ color: 'orange' }}
-                searchIcon={{ color: '#7cc4f8' }}
-                inputContainerStyle={{ backgroundColor: 'rgb(255,255,255)', height: 40, borderRadius: 0, borderWidth: 0.4, borderBottomColor: 'black' }}
-                cancelButtonTitle={'Hủy'}
-            />
+            <View style={styleStore.searchBar}>
+                <Icon name="search" size={30}></Icon>
+                <TextInput style={styleStore.searchInput} onChangeText={value=>{
+                    setSearchText(value);
+                    dispatch({type:'SEARCH',payload:value})
+                }}/>
+            </View>
             <View style={styleStore.navbar}>
                 <View style={{ flex: 1.5, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Icon name={'filter'} size={35} style={{ backgroundColor: 'white' }}></Icon>
@@ -58,7 +57,7 @@ function StoreScreen(props) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <ListAllProduct key={1} screen={'Store'} ></ListAllProduct>
+            <ListAllProduct key={1} screen={'Store'} search={searchText}></ListAllProduct>
         </View>
     )
 }

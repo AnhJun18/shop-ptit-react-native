@@ -10,6 +10,7 @@ import ListBrand from "../components/ListBrand";
 import { useEffect } from "react";
 import {LogBox} from 'react-native';
 function HomeScreen(props) {
+    
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
       })
@@ -34,9 +35,9 @@ function HomeScreen(props) {
             </ComponentsView>
             <ComponentsView
                 title={'TẤT CẢ SẢN PHẨM'}
-                child={ListAllProduct}
                 navigation={props.navigation}
             />
+            <ListAllProduct/>
         </ScrollView>
     )
 }

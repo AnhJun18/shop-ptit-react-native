@@ -23,6 +23,24 @@ const styleStore = StyleSheet.create({
     textButton: {
         textAlign: 'center',
         fontSize:14
+    },
+    searchBar:{
+        alignSelf:'center',
+        width:'90%',
+        borderColor:'rgba(0,0,0,0.2)',
+        borderWidth:0.8,
+        justifyContent:'center',
+        height:40,
+        flexDirection:'row',
+        alignItems:'stretch',
+        top:10,
+        borderRadius:10,
+    },
+
+    searchInput:{
+        width:'90%',
+        alignSelf:'center',
+        zIndex:1,
     }
 })
 export default styleStore

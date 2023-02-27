@@ -30,15 +30,18 @@ function OrderScreen(props) {
             <AddressButton></AddressButton>
             <View style={style.container}>
                 <Text style={style.title}>Hình thức vận chuyển</Text>
-                <Text>Giao hàng tận nơi: 30.000đ</Text>
-                <Text>Thời gian giao hàng dự kiến từ 3 ~ 4 ngày, có thể lâu hơn vì các vấn đề bất khả kháng, mong Quý KH đợi đơn hàng giúp shop. Chân thành cảm ơn</Text>
+                <Text  style={style.text}>Giao hàng tận nơi: 30.000đ</Text>
+                <Text  style={style.text}>Thời gian giao hàng dự kiến từ 3 ~ 4 ngày, có thể lâu hơn vì các vấn đề bất khả kháng, mong Quý KH đợi đơn hàng giúp shop. Chân thành cảm ơn</Text>
             </View>
             <View style={style.container}>
                 <Text style={style.title}>Hình thức thanh toán</Text>
-                <Text>Thanh toán khi nhận hàng</Text>
+                <Text  style={style.text}>Thanh toán khi nhận hàng</Text>
             </View>
             <Text style={[style.title, { margin: 10 }]}>Thông tin đơn hàng</Text>
-            {InfoOrder()}
+            
+                {InfoOrder()}
+            
+            
         </ScrollView>
     )
     function InfoOrder() {  
@@ -47,34 +50,34 @@ function OrderScreen(props) {
                 renderItem={({ item, index }) => <OrderItem item={item}/>}
                 horizontal={false}
                 ListFooterComponent={Order}
-                ListFooterComponentStyle={{ width: '100%', marginTop: 30 }}
+                ListFooterComponentStyle={{ width: '100%', marginTop: 30}}
             >
                 {/* {listItem.map((item,index)=> <OrderItem item={item}/>)} */}
             </FlatList>
         
         function Order() {
-            return (<View style={{ justifyContent: "center", alignItems: "center" }}>
-                <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, }]}>
-                    <Text style={{ marginRight: 40 }}>Tạm tính</Text>
-                    <Text>300.000đ</Text>
+            return (<View style={{alignContent: 'center', alignItems:'center'}} >
+                <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, width: '90%' }]}>
+                    <Text style={ [style.textDH, {marginRight: 70}]}>Tạm tính:</Text>
+                    <Text  style={style.textDH}>300.000đ</Text>
                 </View>
-                <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, }]}>
-                    <Text style={{ marginRight: 45 }}>Phí ship</Text>
-                    <Text>300.000đ</Text>
+                <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, width: '90%'}]}>
+                    <Text style={ [style.textDH, {marginRight: 70}]}>Phí ship:</Text>
+                    <Text style={style.textDH}>30.000đ</Text>
                 </View>
-                <View style={styleOrder.textItem}>
-                    <Text style={{ marginRight: 37 }}>Tổng tiền</Text>
-                    <Text>300.000đ</Text>
+                <View style={[styleOrder.textItem, {width: "90%"}]}>
+                    <Text style={ [style.textDH, {marginRight: 70}]}>Tổng tiền:</Text>
+                    <Text style={style.textDH}>300.000đ</Text>
                 </View>
-                <View>
+                <View style={{width: '100%',marginLeft: 7}}>
                     <TouchableOpacity style={{
                         backgroundColor: '#4ACBD3',
-                        height: 33, width: 250, justifyContent: "center", alignItems: 'center', marginBottom: 10,
+                        height: 45, width: '97%', justifyContent: "center", alignItems: 'center', marginBottom: 10,
                         borderRadius: 10
                     }}
                     onPress={SendOrder}
                     >
-                        <Text style={{ fontSize: 19, fontWeight: '600', textAlign: 'justify' }}>Đặt hàng</Text>
+                        <Text style={{ fontSize: 19, fontWeight: '600', textAlign: 'justify', color:'#4E4B4B' }}>Đặt hàng</Text>
                     </TouchableOpacity>
                 </View>
             </View>)
