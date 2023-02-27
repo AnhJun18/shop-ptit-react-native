@@ -9,8 +9,9 @@ import { Text } from "react-native";
 import { View } from "react-native";
 import { connect } from "react-redux";
 function ListAllProduct(props) {
-  let search = props.SearchReducer;
-  console.log(props)
+  let searchText = props.SearchReducer;
+  let filter = [...props.FilterReducer]
+  console.log(filter,searchText)
   const [listAllProduct, setAllListProduct] = useState([]);
   useEffect(() => {
     (async () => {
@@ -18,11 +19,14 @@ function ListAllProduct(props) {
       setAllListProduct([...res.data])
     })()
   }, [])
+  function search(){
+    return listAllProduct.filter(item=>{
+      return (item.name.toLowerCase().includes(searchText.toLowerCase()) && filter[0]<item.price && item.price<filter[1])
+    })
+  }
   return (
     <FlatList
-      data={listAllProduct.filter(item=>{
-        return item.name.toLowerCase().includes(search.toLowerCase())
-      })}
+      data={search()}
       renderItem={({ item, index }) => <ProductItem id={item.id}
         name={item.name}
         price={item.price}

@@ -9,36 +9,40 @@ import { Modal } from "react-native";
 import styleStore from "../style/Store";
 import { TextInput } from "react-native";
 import { useDispatch } from "react-redux";
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import MenuComponent from "../components/MenuComponent";
 function StoreScreen(props) {
     const navigation = props.navigation;
     const [button, setButton] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
-    const [searchText,setSearchText]= useState('');
+    const [visible, setVisible] = useState(true);
+    const [searchText, setSearchText] = useState('');
     const dispatch = useDispatch();
+    const hideMenu = () => setVisible(false);
+
+    const showMenu = () => setVisible(true);
     return (
-        <View style={{ minHeight: '100%' }}>
-            <Modal
-                animationType="slide"
-                onRequestClose={() => setModalVisible(false)}
-                visible={modalVisible}
-                style={{ backgroundColor: 'rgba(255,255,255,0.9)' }}
+        <View style={{ minHeight: '100%', }}>
+            <Menu
+                visible={visible}
+                onRequestClose={hideMenu}
+                style={styleStore.menu}
             >
-                <View style={{ height: 90 }}></View>
-            </Modal>
+                <MenuComponent/>
+            </Menu>
             <Background />
             <View style={styleStore.searchBar}>
                 <Icon name="search" size={30}></Icon>
-                <TextInput style={styleStore.searchInput} onChangeText={value=>{
+                <TextInput style={styleStore.searchInput} onChangeText={value => {
                     setSearchText(value);
-                    dispatch({type:'SEARCH',payload:value})
-                }}/>
+                    dispatch({ type: 'SEARCH', payload: value })
+                }} />
             </View>
             <View style={styleStore.navbar}>
                 <View style={{ flex: 1.5, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Icon name={'filter'} size={35} style={{ backgroundColor: 'white' }}></Icon>
                     <TouchableOpacity style={styleStore.buttonNav}
                         onPress={() => {
-                            setModalVisible(!modalVisible)
+                            setVisible(!visible)
                         }}
                     >
                         <Text numberOfLines={2} style={[styleStore.textButton, { fontWeight: 'bold', fontSize: 20 }]}>Lọc</Text>

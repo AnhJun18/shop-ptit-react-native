@@ -36,11 +36,16 @@ const styleStore = StyleSheet.create({
         top:10,
         borderRadius:10,
     },
-
     searchInput:{
         width:'90%',
         alignSelf:'center',
         zIndex:1,
+    },
+    menu:{
+        height:'92.5%',
+        width:'80%',
+        right:100,
+        position:'relative'
     }
 })
 export default styleStore
