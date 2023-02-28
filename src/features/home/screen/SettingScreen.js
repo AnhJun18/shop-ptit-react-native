@@ -4,8 +4,6 @@ import CheckBox from '@react-native-community/checkbox';
 import InputSpinner from "react-native-input-spinner";
 import axios from '../../../context/axios';
 import axiosApiInstance from '../../../context/interceptor';
-import { Button } from 'react-native';
-import Background from "../../../common/components/Background";
 import MainHeader from "../../../common/components/MainHeader";
 const styles = StyleSheet.create({
     container: {

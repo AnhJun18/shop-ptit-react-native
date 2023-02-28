@@ -216,3 +216,26 @@ export const trackMarkStyles = StyleSheet.create({
         left: -borderWidth / 2,
     },
 });
+export const button = StyleSheet.create({
+    category:{
+        height:30,
+        minWidth:90,
+        marginRight:10,
+        borderWidth:1.5,
+        borderRadius:10,
+        alignItems:'center',
+        justifyContent:'center',
+        marginBottom:10,
+        borderColor:'rgba(0,0,0,0.1)'
+    },
+    feat:{
+        height:40,
+        minWidth:90,
+        marginRight:10,
+        borderWidth:1.5,
+        borderRadius:10,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'#4ACBD3'
+    }
+})

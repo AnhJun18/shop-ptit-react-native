@@ -10,7 +10,7 @@ function ProductItem(props) {
     const navigation = props.navigation;
     return (
         <TouchableOpacity
-         onPress={() => navigate('ProductDetail', { itemID: id })}
+            onPress={() => navigate('ProductDetail', { itemID: id })}
             style={{
                 backgroundColor: 'rgba(237, 237, 237, 1)', margin: 5, shadowColor: "#000",
                 shadowOffset: {
@@ -31,7 +31,10 @@ function ProductItem(props) {
                     }}
                 ></Image>
                 <Text style={{ maxWidth: 114, marginBottom: 10 }} numberOfLines={1}>{name}</Text>
-                <Text>{price} đ</Text>
+                <Text>{price.toLocaleString('vi', {
+                    style: 'currency',
+                    currency: 'VND'
+                })} </Text>
             </View>
         </TouchableOpacity>
     )

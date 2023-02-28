@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { View, Text } from "react-native";
 import { SearchBar } from 'react-native-elements';
@@ -13,15 +13,17 @@ import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import MenuComponent from "../components/MenuComponent";
 function StoreScreen(props) {
     const navigation = props.navigation;
-    const [button, setButton] = useState('');
     const [visible, setVisible] = useState(true);
     const [searchText, setSearchText] = useState('');
     const dispatch = useDispatch();
     const hideMenu = () => setVisible(false);
+    // const [refresh,setRefresh] = useState('')
+    // console.log('refresh')
+    // useEffect(()=>{
 
-    const showMenu = () => setVisible(true);
+    // },[refresh])
     return (
-        <View style={{ minHeight: '100%', }}>
+        <View style={{ minHeight: '100%'}}>
             <Menu
                 visible={visible}
                 onRequestClose={hideMenu}

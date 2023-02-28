@@ -15,21 +15,21 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="HomeNavigation"
+      initialRouteName="Store"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
-                ? '#0d99ff'
-                : '#333';
+            ? '#0d99ff'
+            : '#333';
           switch (route.name) {
-            case 'Home':  
+            case 'Home':
               return <Icon name={'home'} size={25} color={color} />;
             case 'Store':
-              return <Icon name={'shopping-bag'} size={25} color={color} />;    
+              return <Icon name={'shopping-bag'} size={25} color={color} />;
             case 'Cart':
-              return <Icon name={'shopping-cart'} size={25} color={color} />;    
+              return <Icon name={'shopping-cart'} size={25} color={color} />;
             case 'ProfileNavigation':
-              return <Icon name={'user'} size={25} color={color} />;    
+              return <Icon name={'user'} size={25} color={color} />;
             default:
               return <Icon name={'home'} size={25} color={color} />;
           }
@@ -44,8 +44,8 @@ function MyTabs() {
         component={HomeNavigation}
         options={{
           tabBarLabel: 'Trang chủ',
-          headerShown:false,
-          tabBarHideOnKeyboard:true
+          headerShown: false,
+          tabBarHideOnKeyboard: true
         }}
       />
       <Tab.Screen
@@ -54,19 +54,19 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Cửa hàng',
           tabBarBadge: 3,
-          headerShown:false,
+          headerShown: false,
           // tabBarStyle: { display: 'none' },
-        tabBarHideOnKeyboard:true
+          tabBarHideOnKeyboard: true
         }}
       />
-     <Tab.Screen
+      <Tab.Screen
         name="Cart"
         component={SettingScreen}
         options={{
           tabBarLabel: 'Giỏ hàng',
           tabBarBadge: 3,
-          headerShown:false ,
-          
+          headerShown: false,
+
         }}
       />
       <Tab.Screen
@@ -75,7 +75,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
-          headerShown:false
+          headerShown: false
         }}
       />
       <Tab.Screen
@@ -84,8 +84,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
-          headerShown:false,
-          tabBarButton:()=>{null}
+          headerShown: false,
+          tabBarButton: () => { null }
         }}
       />
       <Tab.Screen
@@ -94,8 +94,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
-          headerShown:false,
-          tabBarButton:()=>{null}
+          headerShown: false,
+          tabBarButton: () => { null }
         }}
       />
       <Tab.Screen
@@ -104,8 +104,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
-          headerShown:false,
-          tabBarButton:()=>{null}
+          headerShown: false,
+          tabBarButton: () => { null }
         }}
       />
       <Tab.Screen
@@ -114,8 +114,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
-          headerShown:false,
-          tabBarButton:()=>{null}
+          headerShown: false,
+          tabBarButton: () => { null }
         }}
       />
       <Tab.Screen
@@ -124,8 +124,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
-          headerShown:false,
-          tabBarButton:()=>{null},
+          headerShown: false,
+          tabBarButton: () => { null },
           tabBarStyle: { display: 'none' },
         }}
       />
@@ -135,20 +135,20 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
-          headerShown:false,
-          tabBarButton:()=>{null},
+          headerShown: false,
+          tabBarButton: () => { null },
           tabBarStyle: { display: 'none' },
         }}
       />
-       <Tab.Screen
+      <Tab.Screen
         name="OrderHistory"
         component={OrderHistoryScreen}
         options={{
           tabBarLabel: 'History new screen',
           tabBarBadge: 3,
-          headerShown:false,
+          headerShown: false,
           tabBarStyle: { display: 'none' },
-          
+
           // tabBarButton:()=>{null}
         }}
       />

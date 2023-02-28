@@ -43,7 +43,7 @@ const styleStore = StyleSheet.create({
     },
     menu:{
         height:'92.5%',
-        width:'80%',
+        width:'60%',
         right:100,
         position:'relative'
     }
