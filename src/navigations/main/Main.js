@@ -11,13 +11,14 @@ import ChangePassScreen from '../../features/auth/ChangePassScreen';
 import ForgotPassScreen from '../../features/auth/ForgotPassScreen';
 import UserInforScreen from '../../features/profile/UserInforScreen';
 import RegisterScreen from '../../features/register/RegisterScreen';
+import ProfileScreen from '../../features/profile/ProfileScreen';
 
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Register"
+      initialRouteName="Profile"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
@@ -71,8 +72,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="ProfileNavigation"
-        component={ProfileNavigation}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,

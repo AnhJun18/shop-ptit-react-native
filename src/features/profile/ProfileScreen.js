@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Background from "../../common/components/Background";
 import MainHeader from "../../common/components/MainHeader";
+import axiosApiInstance from "../../context/interceptor";
+import { navigate } from "../../navigations/RootNavigation";
 function ProfileScreen(props) {
+
+    const [user,setUser]= useState([])
+    getProfile =async()=>{
+        const result = await axiosApiInstance.get("/api/user/profile");
+        setUser(result.data)
+    } 
+    
+    useEffect(()=>{
+            getProfile();
+    },[])
+
     return (
         <View style={{ height: '100%' }}>
             <Background></Background>
@@ -11,10 +24,12 @@ function ProfileScreen(props) {
             <TouchableOpacity style={[style.container, {}]}>
                 <Icon name={'user-circle-o'} size={60} style={{}}></Icon>
                 <View style={{ marginLeft: 30 }}>
-                    <Text>Lê Phương Anh</Text>
+                    <Text>{user.userInfo?.firstName + " "  +user.userInfo?.lastName}</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={style.button}>
+            <TouchableOpacity style={style.button} onPress={()=>{
+                navigate("UserInfor",params=user)
+            }}>
                 <View style={{ marginLeft: 30 }}>
                     <Text>Thông tin cá nhân</Text>
                 </View>
