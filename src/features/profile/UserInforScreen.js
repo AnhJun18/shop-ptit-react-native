@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, KeyboardAvoidingView, TouchableOpacity, 
 import { TextInput } from "react-native-gesture-handler";
 import { RadioGroup } from "react-native-radio-buttons-group";
 import Background from "../../common/components/Background";
+import MainHeader from "../../common/components/MainHeader";
 import axiosApiInstance from "../../context/interceptor";
 const styles = StyleSheet.create({
     container: {
@@ -84,7 +85,7 @@ function UserInforScreen(props) {
     }
     return (
         <View style={styles.container}>
-            <Background></Background>
+            <MainHeader title={"Thông tin cá nhân"} />
             <View style={styles.mainLayout}>
                 <KeyboardAvoidingView behavior="">
                     <Text style={styles.text}>Họ và Tên</Text>
@@ -95,9 +96,10 @@ function UserInforScreen(props) {
                         keyboardType="numeric"  >{userInfo?.userInfo?.phone}</TextInput>
                     <Text style={styles.text}>Giới Tính</Text>
                     <RadioGroup
-                        radioButtons={radioGender} 
-                        onPress={(value) => { 
-                            handleChangeInfo("gender", value.filter(i=>i.selected===true)[0].id) }}
+                        radioButtons={radioGender}
+                        onPress={(value) => {
+                            handleChangeInfo("gender", value.filter(i => i.selected === true)[0].id)
+                        }}
                         layout='row' />
                     <Text style={styles.text}>Email</Text>
                     <TextInput style={styles.input} editable={false}
