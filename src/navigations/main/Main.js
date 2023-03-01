@@ -127,7 +127,8 @@ function MyTabs() {
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
           headerShown:false,
-          tabBarButton:()=>{null}
+          tabBarButton:()=>{null},
+          tabBarStyle: { display: 'none' },
         }}
       />
       <Tab.Screen
@@ -148,6 +149,7 @@ function MyTabs() {
           tabBarLabel: 'History new screen',
           tabBarBadge: 3,
           headerShown:false,
+          tabBarButton:()=>{null},
           tabBarStyle: { display: 'none' },
           
           // tabBarButton:()=>{null}
