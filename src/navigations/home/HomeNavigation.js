@@ -1,6 +1,6 @@
 import HomeScreen from "../../features/home/screen/HomeScreen";
-import SettingScreen from "../../features/home/screen/SettingScreen";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CartScreen from "../../features/cart/CartScreen";
 const Stack = createNativeStackNavigator();
 
 function HomeNavigation(){
@@ -13,8 +13,8 @@ function HomeNavigation(){
         }}
       />
     <Stack.Screen
-        name="Setting"
-        component={SettingScreen}
+        name="Cart"
+        component={CartScreen}
         options={{
           headerShown:false
         }}

@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SettingScreen from '../../features/home/screen/SettingScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeNavigation from '../home/HomeNavigation';
 import ProfileNavigation from '../profile/ProfileNavigation';
@@ -12,6 +11,7 @@ import ForgotPassScreen from '../../features/auth/ForgotPassScreen';
 import UserInforScreen from '../../features/profile/UserInforScreen';
 import RegisterScreen from '../../features/register/RegisterScreen';
 import ProfileScreen from '../../features/profile/ProfileScreen';
+import CartScreen from '../../features/cart/CartScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -63,7 +63,7 @@ function MyTabs() {
       />
      <Tab.Screen
         name="Cart"
-        component={SettingScreen}
+        component={CartScreen}
         options={{
           tabBarLabel: 'Giỏ hàng',
           tabBarBadge: 3,
