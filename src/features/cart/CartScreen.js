@@ -7,6 +7,7 @@ import axiosApiInstance from '../../context/interceptor';
 import { Button } from 'react-native';
 import Background from "../../common/components/Background";
 import MainHeader from "../../common/components/MainHeader";
+import { ToastAndroid } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -219,7 +220,10 @@ const CartScreen = ({ navigation }) => {
                 myCart.push(item)
             }
         });
-        navigation.navigate('OrderScreen',{data:myCart})
+        if(myCart.length)
+             navigation.navigate('OrderScreen',{data:myCart})
+        else
+            ToastAndroid.show("Chọn sản phẩm để tiếp tục",ToastAndroid.BOTTOM)
     }
 
     const renderItem = ({ item }) => (
