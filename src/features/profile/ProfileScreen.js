@@ -11,7 +11,7 @@ function ProfileScreen(props) {
     const [user, setUser] = useState([])
     const [loaded, setLoad] = useState(false)
     getProfile = async () => {
-        setLoad(false)
+        // setLoad(false)
         const result = await axiosApiInstance.get("/api/user/profile");
         setUser(result.data)
         setLoad(true);
@@ -19,7 +19,7 @@ function ProfileScreen(props) {
 
     useEffect(() => {
         getProfile();
-    }, [])
+    }, [loaded])
 
     return (
         <View style={{ height: '100%' }}>
