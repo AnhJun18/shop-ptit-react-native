@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, FlatList,Image} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, StyleSheet, FlatList, Image, TextInput } from 'react-native';
 import MainHeader from '../../../common/components/MainHeader';
 import { ScrollView } from 'react-native';
 import AddressButton from '../components/AddressButton';
@@ -9,91 +9,111 @@ import { TouchableOpacity } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LogBox } from 'react-native';
 import axios from '../../../context/axios';
-import axiosApiInstance from '../../../context/interceptor'
+import axiosApiInstance from '../../../context/interceptor';
+import { connect } from 'react-redux';
 import { Alert } from 'react-native';
 function OrderScreen(props) {
-    const [listItem, setListItem] = useState([]);
-    const [userInfo,setUserInfo] = useState({});
+    const listItem = props.state.OrderReducer;
+    const navigation = props.navigation;
+    console.log(listItem)
+    let money=0
+    listItem.forEach((item=> money += item.amount * item.product.infoProduct.price))
+    const [userInfo, setUserInfo] = useState({});
+    const [note, setNote] = useState({});    
+    const totalMoney = props.state.MoneyReducer.total
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-        (async ()=>{
-         setUserInfo(JSON.parse(await AsyncStorage.getItem('@userInfo')));
-        LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    })().catch(err=>console.log(err))
+        (async () => {
+            setUserInfo(JSON.parse(await AsyncStorage.getItem('@userInfo')));
+            LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+        })().catch(err => console.log(err))
     }, [])
-    useFocusEffect(React.useCallback(() =>{ 
-        setListItem([...props.route.params.data])
-    }, [props.route.params.data[0].product.id]))
+    // useFocusEffect(React.useCallback(() => {
+    //     setListItem([...props.route.params.data])
+    // }, [props.route.params.data[0].product.id]));
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: '#DDF2F3' }}>
             <MainHeader title={'Đặt hàng'}></MainHeader>
-            <AddressButton></AddressButton>
+            <AddressButton navigation={navigation}></AddressButton>
             <View style={style.container}>
                 <Text style={style.title}>Hình thức vận chuyển</Text>
-                <Text  style={style.text}>Giao hàng tận nơi: 30.000đ</Text>
-                <Text  style={style.text}>Thời gian giao hàng dự kiến từ 3 ~ 4 ngày, có thể lâu hơn vì các vấn đề bất khả kháng, mong Quý KH đợi đơn hàng giúp shop. Chân thành cảm ơn</Text>
+                <Text style={style.text}>Giao hàng tận nơi: 30.000đ</Text>
+                <Text style={style.text}>Thời gian giao hàng dự kiến từ 3 ~ 4 ngày, có thể lâu hơn vì các vấn đề bất khả kháng, mong Quý KH đợi đơn hàng giúp shop. Chân thành cảm ơn</Text>
+            </View>
+            <View style={style.container}>
+                <TextInput
+                placeholder='Ghi chú'
+                multiline
+                numberOfLines={2}
+                onChange={text=>{setNote(text)}}></TextInput>
             </View>
             <View style={style.container}>
                 <Text style={style.title}>Hình thức thanh toán</Text>
-                <Text  style={style.text}>Thanh toán khi nhận hàng</Text>
+                <Text style={style.text}>Thanh toán khi nhận hàng</Text>
             </View>
             <Text style={[style.title, { margin: 10 }]}>Thông tin đơn hàng</Text>
-            
-                {InfoOrder()}
-            
-            
+
+            {InfoOrder()}
         </ScrollView>
     )
-    function InfoOrder() {  
-        return  <FlatList
-                data={listItem}
-                renderItem={({ item, index }) => <OrderItem item={item}/>}
-                horizontal={false}
-                ListFooterComponent={Order}
-                ListFooterComponentStyle={{ width: '100%', marginTop: 30}}
-            >
-                {/* {listItem.map((item,index)=> <OrderItem item={item}/>)} */}
-            </FlatList>
-        
+    function InfoOrder() {
+        return <FlatList
+            data={listItem}
+            renderItem={({ item, index }) => <OrderItem item={item} />}
+            horizontal={false}
+            ListFooterComponent={Order}
+            ListFooterComponentStyle={{ width: '100%', marginTop: 30 }}
+        >
+            {/* {listItem.map((item,index)=> <OrderItem item={item}/>)} */}
+        </FlatList>
+
         function Order() {
-            return (<View style={{alignContent: 'center', alignItems:'center'}} >
+            return (<View style={{ alignContent: 'center', alignItems: 'center' }} >
                 <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, width: '90%' }]}>
-                    <Text style={ [style.textDH, {marginRight: 70}]}>Tạm tính:</Text>
-                    <Text  style={style.textDH}>300.000đ</Text>
+                    <Text style={[style.textDH, { marginRight: 70 }]}>Tạm tính:</Text>
+                    <Text style={style.textDH}>{(totalMoney).toLocaleString('vi', {
+                        style: 'currency',
+                        currency: 'VND'
+                    })}</Text>
                 </View>
-                <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, width: '90%'}]}>
-                    <Text style={ [style.textDH, {marginRight: 70}]}>Phí ship:</Text>
-                    <Text style={style.textDH}>30.000đ</Text>
+                <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, width: '90%' }]}>
+                    <Text style={[style.textDH, { marginRight: 70 }]}>Phí ship:</Text>
+                    <Text style={style.textDH}>{(30000).toLocaleString('vi', {
+                        style: 'currency',
+                        currency: 'VND'
+                    })}</Text>
                 </View>
-                <View style={[styleOrder.textItem, {width: "90%"}]}>
-                    <Text style={ [style.textDH, {marginRight: 70}]}>Tổng tiền:</Text>
-                    <Text style={style.textDH}>300.000đ</Text>
+                <View style={[styleOrder.textItem, { width: "90%" }]}>
+                    <Text style={[style.textDH, { marginRight: 70 }]}>Tổng tiền:</Text>
+                    <Text style={style.textDH}>{(totalMoney+30000).toLocaleString('vi', {
+                        style: 'currency',
+                        currency: 'VND'
+                    })}</Text>
                 </View>
-                <View style={{width: '100%',marginLeft: 7}}>
+                <View style={{ width: '100%', marginLeft: 7 }}>
                     <TouchableOpacity style={{
                         backgroundColor: '#4ACBD3',
                         height: 45, width: '97%', justifyContent: "center", alignItems: 'center', marginBottom: 10,
                         borderRadius: 10
                     }}
-                    onPress={SendOrder}
+                        onPress={SendOrder}
                     >
-                        <Text style={{ fontSize: 19, fontWeight: '600', textAlign: 'justify', color:'#4E4B4B' }}>Đặt hàng</Text>
+                        <Text style={{ fontSize: 19, fontWeight: '600', textAlign: 'justify', color: '#4E4B4B' }}>Đặt hàng</Text>
                     </TouchableOpacity>
                 </View>
             </View>)
-    
+
         }
     }
-    function OrderItem({item}) {
-        const info= item.product.infoProduct
+    function OrderItem({ item }) {
+        const info = item.product.infoProduct
         const name = info.name;
         const linkImg = info.linkImg;
-        const amout =item.amount;
+        const amout = item.amount;
         const id = item.product.id;
         const price = info.price;
-        const size= item.product.size;
-        const color= item.product.color;
-       
+        const size = item.product.size;
+        const color = item.product.color;
         return (
             <TouchableOpacity
                 style={{
@@ -126,39 +146,49 @@ function OrderScreen(props) {
                                 <Text style={styleItem.textItem} numberOfLines={1}>Màu: {color}</Text>
                             </View>
                             <View style={{ right: -50 }}>
-                                <Text style={styleItem.textItem} numberOfLines={1}>{amout} x {price}đ</Text>
+                                <Text style={styleItem.textItem} numberOfLines={1}>{amout} x {price.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                })}</Text>
                             </View>
                         </View>
                     </View>
                 </View>
-    
+
             </TouchableOpacity>
         )
     }
-async function SendOrder(){
-      let body = {
-        nameReceiver: userInfo.firstName+' '+userInfo.lastName,
-        address: userInfo.address,
-        phoneReceiver: userInfo.phone,
-        feeShip: 30.000,
-        note: '',
-        listProduct: listItem.map((item,index)=>{
-            return {
-                product_id: item.product.id,
-                amount: item.amount
-            }
-        })
-      }
-      axiosApiInstance.post(
-        axios.defaults.baseURL + "/api/order/create",
-        body
-    ).then(res=>{
-        console.log(res)
-        // Alert.alert('Thông báo','Đặt hàng thành công');
-    }).catch(err=>{
-        Alert.alert('Thông báo','Đặt hàng thất bại');
-    })
-   }
+   
+    async function SendOrder() {
+
+        let body = {
+            nameReceiver: userInfo.firstName + ' ' + userInfo.lastName,
+            address: userInfo.address,
+            phoneReceiver: userInfo.phone,
+            feeShip: 30.000,
+            note: '',
+            listProduct: listItem.map((item, index) => {
+                return {
+                    product_id: item.product.id,
+                    amount: item.amount
+                }
+            })
+        }
+        axiosApiInstance.post(
+            axios.defaults.baseURL + "/api/order/create",
+            body)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.status) {
+                    Alert.alert('Thông báo', 'Đặt hàng thành công');
+                } else {
+                    Alert.alert('Thông báo', res.data.message);
+                }
+                // Alert.alert('Thông báo','Đặt hàng thành công');
+            }).catch(err => {
+                Alert.alert('Thông báo', 'Đặt hàng thất bại');
+            })
+    }
 }
 const styleOrder = StyleSheet.create({
     textItem: {
@@ -170,11 +200,11 @@ const styleOrder = StyleSheet.create({
     }
 })
 const styleItem = StyleSheet.create({
-    textItem: { 
+    textItem: {
         maxWidth: 114,
-        fontSize: 15 ,
-        color:'black'
+        fontSize: 15,
+        color: 'black'
     }
 
 })
-export default OrderScreen;
+export default connect((state)=>{return {state:state}})(OrderScreen)

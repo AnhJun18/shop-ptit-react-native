@@ -45,7 +45,7 @@ function ProductItem({item}) {
                             <Text style={style.textItem} numberOfLines={1}>Màu: {color}</Text>
                         </View>
                         <View style={{ right: -50 }}>
-                            <Text style={style.textItem} numberOfLines={1}>{amout} x {price}đ</Text>
+                            <Text style={style.textItem} numberOfLines={1}>{amout} x {price}</Text>
                         </View>
                     </View>
                 </View>
