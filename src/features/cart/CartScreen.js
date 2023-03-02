@@ -7,7 +7,9 @@ import axiosApiInstance from '../../context/interceptor';
 import MainHeader from "../../common/components/MainHeader";
 import { ToastAndroid } from 'react-native';
 import { useFocusEffect } from '@react-navigation/core';
+import { useDispatch } from 'react-redux';
 const CartScreen = ({ navigation }) => {
+    const dispatch = useDispatch()
     const [cartItems, setCartItems] = useState(1)
     const [listCart, setListCart] = useState([])
     const [selectAll, setSelectAll] = useState(false)
@@ -42,9 +44,6 @@ const CartScreen = ({ navigation }) => {
             });
         })
     }, []))
-    useEffect(() => {
-        getCart()
-    }, [])
     const handleItemCheck = (id) => {
         const updatedCartItems = listCart.map((item) => {
             if (item.idCart === id) {
@@ -97,7 +96,11 @@ const CartScreen = ({ navigation }) => {
             }
         });
         if (myCart.length)
+        {   let money=0;
+            myCart.forEach((item=> money += item.amount * item.product.infoProduct.price))
+            dispatch({type:'CHANGE_TOTAL_MONEY',payload:money})
             navigation.navigate('OrderScreen', { data: myCart })
+        } 
         else
             ToastAndroid.show("Chọn sản phẩm để tiếp tục", ToastAndroid.BOTTOM)
     }
