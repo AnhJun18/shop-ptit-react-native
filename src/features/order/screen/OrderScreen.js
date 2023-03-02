@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, FlatList, Image } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, FlatList, Image, TextInput } from 'react-native';
 import MainHeader from '../../../common/components/MainHeader';
 import { ScrollView } from 'react-native';
 import AddressButton from '../components/AddressButton';
@@ -19,7 +19,8 @@ function OrderScreen(props) {
     let money=0
     listItem.forEach((item=> money += item.amount * item.product.infoProduct.price))
     const [userInfo, setUserInfo] = useState({});
-    const totalMoney = money 
+    const [note, setNote] = useState({});    
+    const totalMoney = props.state.MoneyReducer.total
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
         (async () => {
@@ -38,6 +39,13 @@ function OrderScreen(props) {
                 <Text style={style.title}>Hình thức vận chuyển</Text>
                 <Text style={style.text}>Giao hàng tận nơi: 30.000đ</Text>
                 <Text style={style.text}>Thời gian giao hàng dự kiến từ 3 ~ 4 ngày, có thể lâu hơn vì các vấn đề bất khả kháng, mong Quý KH đợi đơn hàng giúp shop. Chân thành cảm ơn</Text>
+            </View>
+            <View style={style.container}>
+                <TextInput
+                placeholder='Ghi chú'
+                multiline
+                numberOfLines={2}
+                onChange={text=>{setNote(text)}}></TextInput>
             </View>
             <View style={style.container}>
                 <Text style={style.title}>Hình thức thanh toán</Text>
