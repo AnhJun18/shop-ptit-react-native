@@ -39,43 +39,50 @@ function AddressScreen(props) {
             <MainHeader title={"Thêm địa chỉ mới"}></MainHeader>
             <View style={style.container}>
                 <Background></Background>
-                <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: '70%' }}>
-                    <TextInput style={style.input} placeholder="Họ và tên"></TextInput>
-                    <TextInput style={style.input} placeholder="Điện thoại"></TextInput>
-                    <Picker
+                <View style={{ alignItems: 'center', height: '70%' }}>
+                    <View style={style.inputContainer}>
+                        <Text style={style.title}>Liên hệ:</Text>
+                        <TextInput style={style.input} placeholder="Họ và tên"></TextInput>
+                        <TextInput style={style.input} placeholder="Điện thoại"></TextInput>
+                    </View>
+                    
+                    <View style={style.inputContainer}>
+                        <Text style={style.title}>Địa chỉ:</Text>
+                        <Picker
+                            style={{ width: 300, height: 'auto'}}
+                            selectedValue={province}
+                            onValueChange={(itemValue, itemIndex) => {
+                                setProvince(itemValue);
+                                setListDistrict([...dataApi.find(item => item.name == itemValue).districts])
+                                setListWard([...listDistrict.find(item => item)?.wards || []])
+                            }
 
-                        style={{ width: 300, height: 100 }}
-                        selectedValue={province}
-                        onValueChange={(itemValue, itemIndex) => {
-                            setProvince(itemValue);
-                            setListDistrict([...dataApi.find(item => item.name == itemValue).districts])
-                            setListWard([...listDistrict.find(item => item)?.wards || []])
-                        }
+                            }>
+                            {Province()}
+                        </Picker>
+                        <Picker
+                            style={{ width: 300, height: 'auto' }}
+                            selectedValue={district}
+                            onValueChange={(itemValue, itemIndex) => {
+                                setDistrict(itemValue);
+                                setListWard([...listDistrict.find(item => item.name == itemValue).wards])
+                            }
 
-                        }>
-                        {Province()}
-                    </Picker>
-                    <Picker
-                        style={{ width: 300, height: 100 }}
-                        selectedValue={district}
-                        onValueChange={(itemValue, itemIndex) => {
-                            setDistrict(itemValue);
-                            setListWard([...listDistrict.find(item => item.name == itemValue).wards])
-                        }
-
-                        }>
-                        {District()}
-                    </Picker>
-                    <Picker
-                        style={{ width: 300, height: 100 }}
-                        selectedValue={ward}
-                        onValueChange={(itemValue, itemIndex) => {
-                            setWar(itemValue);
-                        }
-                        }>
-                        {Ward()}
-                    </Picker>
-                    <TextInput style={style.input} placeholder="Địa chỉ"></TextInput>
+                            }>
+                            {District()}
+                        </Picker>
+                        <Picker
+                            style={{ width: 300, height: 'auto' }}
+                            selectedValue={ward}
+                            onValueChange={(itemValue, itemIndex) => {
+                                setWar(itemValue);
+                            }
+                            }>
+                            {Ward()}
+                        </Picker>
+                        <TextInput style={style.input} placeholder="Tên đường, tòa nhà, số nhà"></TextInput>
+                    </View>
+                    
 
                     <TouchableOpacity style={style.buttonAdd}><Text
                         style={{ color: 'black', fontWeight: '600', fontSize: 16, color: '#676161' }}
