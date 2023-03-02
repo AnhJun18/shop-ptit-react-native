@@ -136,6 +136,7 @@ function OrderScreen(props) {
         )
     }
 async function SendOrder(){
+    console.log('call')
       let body = {
         nameReceiver: userInfo.firstName+' '+userInfo.lastName,
         address: userInfo.address,
@@ -151,9 +152,14 @@ async function SendOrder(){
       }
       axiosApiInstance.post(
         axios.defaults.baseURL + "/api/order/create",
-        body
-    ).then(res=>{
-        console.log(res)
+        body)
+    .then(res=>{
+        console.log(res.data)
+        if (res.data.status) {
+            Alert.alert('Thông báo','Đặt hàng thành công');
+        } else {
+            Alert.alert('Thông báo',res.data.message);
+        }
         // Alert.alert('Thông báo','Đặt hàng thành công');
     }).catch(err=>{
         Alert.alert('Thông báo','Đặt hàng thất bại');
