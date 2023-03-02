@@ -41,7 +41,7 @@ function ProfileScreen(props) {
     useEffect(async() => {
        await getAccessToken();
         getProfile();
-    }, [])
+    }, [loaded])
 
     return (
         <View style={{ height: '100%' }}>
