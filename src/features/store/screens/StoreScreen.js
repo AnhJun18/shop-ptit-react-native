@@ -23,7 +23,7 @@ function StoreScreen(props) {
 
     // },[refresh])
     return (
-        <View style={{ minHeight: '100%'}}>
+        <View style={styleStore.container}>
             <Menu
                 visible={visible}
                 onRequestClose={hideMenu}

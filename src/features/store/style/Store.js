@@ -42,10 +42,11 @@ const styleStore = StyleSheet.create({
         zIndex:1,
     },
     menu:{
+        position:'absolute',
         height:'92.5%',
         width:'60%',
-        right:100,
-        position:'relative'
+        top:0,
+        left:"40%",
     }
 })
 export default styleStore
