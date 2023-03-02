@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SettingScreen from '../../features/home/screen/SettingScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeNavigation from '../home/HomeNavigation';
 import ProfileNavigation from '../profile/ProfileNavigation';
@@ -8,14 +7,20 @@ import OrderScreen from '../../features/order/screen/OrderScreen';
 import OrderHistoryScreen from '../../features/profile/OrderHistoryScreen';
 import ChangePassScreen from '../../features/auth/ChangePassScreen';
 import ForgotPassScreen from '../../features/auth/ForgotPassScreen';
+import UserInforScreen from '../../features/profile/UserInforScreen';
 import RegisterScreen from '../../features/register/RegisterScreen';
 import StoreScreen from '../../features/store/screens/StoreScreen';
 import ProductDetailScreen from '../../features/store/screens/ProductDetailScreen';
+import ProfileScreen from '../../features/profile/ProfileScreen';
+import CartScreen from '../../features/cart/CartScreen';
+import AddressScreen from '../../features/user/screens/AddressScreen';
+
+
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Store"
+      initialRouteName="Profile"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let color = focused
@@ -61,7 +66,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Cart"
-        component={SettingScreen}
+        component={CartScreen}
         options={{
           tabBarLabel: 'Giỏ hàng',
           tabBarBadge: 3,
@@ -70,8 +75,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="ProfileNavigation"
-        component={ProfileNavigation}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
@@ -109,6 +114,16 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
+        name="AddressScreen"
+        component={AddressScreen}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
         name="ChangePass"
         component={ChangePassScreen}
         options={{
@@ -116,6 +131,17 @@ function MyTabs() {
           tabBarBadge: 3,
           headerShown: false,
           tabBarButton: () => { null }
+        }}
+      />
+      <Tab.Screen
+        name="UserInfor"
+        component={UserInforScreen}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null},
+          tabBarStyle: { display: 'none' },
         }}
       />
       <Tab.Screen
@@ -146,7 +172,8 @@ function MyTabs() {
         options={{
           tabBarLabel: 'History new screen',
           tabBarBadge: 3,
-          headerShown: false,
+          headerShown:false,
+          tabBarButton:()=>{null},
           tabBarStyle: { display: 'none' },
 
           // tabBarButton:()=>{null}

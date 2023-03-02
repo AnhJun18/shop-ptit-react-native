@@ -44,10 +44,10 @@ function LoginScreen(props) {
                     <Text style={[style.text, { fontSize: 20 }]}>Đăng nhập</Text>
                 </TouchableOpacity>
                 <View style={style.bottom}>
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={()=>navigate("ForgotPass")}>
                         <Text style={style.textBlue}>Quên mật khẩu?</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ marginTop: 15 }}>
+                    <TouchableOpacity style={{ marginTop: 15 }} onPress={()=>navigate("Register")}>
                         <Text>
                             <Text>Chưa có tài khoản?</Text>
                             <Text style={style.textBlue}>Đăng ký</Text>
