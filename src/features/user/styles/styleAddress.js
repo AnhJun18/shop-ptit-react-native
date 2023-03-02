@@ -10,7 +10,8 @@ const style= StyleSheet.create({
         borderBottomWidth: 1,
         fontSize:17,
         marginLeft:12,
-        marginRight:14
+        marginRight:14,
+        marginBottom:10
     },
     inputContainer:{
         marginTop:10
