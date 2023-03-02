@@ -2,12 +2,18 @@ import React, { Component, useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import InputSpinner from "react-native-input-spinner";
+<<<<<<< HEAD:src/features/home/screen/SettingScreen.js
+import axios from '../../../context/axios';
+import axiosApiInstance from '../../../context/interceptor';
+import MainHeader from "../../../common/components/MainHeader";
+=======
 import axios from '../../context/axios';
 import axiosApiInstance from '../../context/interceptor';
 import { Button } from 'react-native';
 import Background from "../../common/components/Background";
 import MainHeader from "../../common/components/MainHeader";
 import { ToastAndroid } from 'react-native';
+>>>>>>> 3697580321abdab4d04159ce935c2af9ec648e11:src/features/cart/CartScreen.js
 const styles = StyleSheet.create({
     container: {
         flex: 1,
