@@ -6,6 +6,7 @@ import style from "../style/address";
 import { useEffect,useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LogBox } from "react-native";
+import { navigate } from "../../../navigations/RootNavigation";
 function AddressButton() {
     const [userInfo,setUserInfo] = useState({});
     useEffect(() => {
@@ -15,7 +16,11 @@ function AddressButton() {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     })().catch(err=>console.log(err))
     }, [])
-    return <TouchableOpacity style={[style.container, style.containerDC]}>
+
+    handleChangeAddress=()=>{
+        navigate("AddressScreen")
+    }
+    return <TouchableOpacity style={[style.container, style.containerDC]} onPress={handleChangeAddress}>
         <View style={{flexDirection: 'column', flex: 9.5}}>
             <Text style={style.title}>
                 Địa chỉ nhận hàng

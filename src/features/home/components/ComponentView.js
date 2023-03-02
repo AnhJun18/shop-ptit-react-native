@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, SafeAreaView } from "react-native";
+import ListAllProduct from "./ListAllProduct";
 function ComponentsView(props) {
     const title = props.title;
     const child= props.child;
