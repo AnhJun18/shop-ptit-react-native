@@ -12,6 +12,7 @@ import UserInforScreen from '../../features/profile/UserInforScreen';
 import RegisterScreen from '../../features/register/RegisterScreen';
 import ProfileScreen from '../../features/profile/ProfileScreen';
 import CartScreen from '../../features/cart/CartScreen';
+import AddressScreen from '../../features/user/screens/AddressScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -103,6 +104,16 @@ function MyTabs() {
       <Tab.Screen
         name="Register"
         component={RegisterScreen}
+        options={{
+          tabBarLabel: 'Trang cá nhân',
+          tabBarBadge: 3,
+          headerShown:false,
+          tabBarButton:()=>{null}
+        }}
+      />
+      <Tab.Screen
+        name="AddressScreen"
+        component={AddressScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
