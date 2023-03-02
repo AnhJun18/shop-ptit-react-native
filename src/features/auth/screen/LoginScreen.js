@@ -2,16 +2,17 @@ import React, { useContext, useState } from "react";
 import { Dimensions, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import DataStorage from "../../common/utility/DataStorage";
-import AuthContext from "../../context/AuthProvider";
-import { navigate } from "../../navigations/RootNavigation";
+import DataStorage from "../../../common/utility/DataStorage";
+import AuthContext from "../../../context/AuthProvider";
+import { navigate } from "../../../navigations/RootNavigation";
+
 
 const {height}= Dimensions.get("screen")
 const height_logo = height*0.1
 const styles = StyleSheet.create({
    container:{
     flex:1,
-    backgroundColor:'#1697A9'
+    backgroundColor:"#1697A9"
    },
    header:{
     flex:1,
@@ -96,7 +97,7 @@ function LoginScreen(props) {
           <Text style={styles.txt_header}>Xin chào,</Text>
           <Animatable.Image
                 animation="bounceIn"
-                source={require('../../assets/images/logo.png')}
+                source={require('../../../assets/images/logo.png')}
                 resizeMode="stretch"
                 style={styles.logo}
                 ></Animatable.Image>

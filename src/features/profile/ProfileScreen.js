@@ -65,7 +65,7 @@ function ProfileScreen(props) {
                                         uri: `https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.6435-9/94490914_251126279594068_206153920492339200_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=174925&_nc_ohc=4LiMGrst1JIAX9yARQL&_nc_ht=scontent.fsgn8-4.fna&oh=00_AfDISEZ5Q3ccLF5lOSVikPVMIaTNbVBxdMSmG_be0vNHcQ&oe=6427C1F8`,
                                     }}
                                 />
-                                : <Icon name={'user-circle-o'} size={60} style={{}}></Icon>}
+                                : <Icon name={'user-circle-o'} size={60} style={{color:"#fff"}}></Icon>}
                             {
                                 logged ?
                                     <View style={{ marginLeft: 30 }}>
@@ -127,7 +127,7 @@ function ProfileScreen(props) {
 }
 const style = StyleSheet.create({
     main: {
-        backgroundColor: '#88DDE2'
+        backgroundColor: '#1697A9'
 
     },
     container: {

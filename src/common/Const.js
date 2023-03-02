@@ -1,5 +1,5 @@
 export default {
     host:'https://pa-shop-service.azurewebsites.net/',
     primaryColor:'',
-    backgroundColor:''
+    backgroundColor:'#1697A9'
 }

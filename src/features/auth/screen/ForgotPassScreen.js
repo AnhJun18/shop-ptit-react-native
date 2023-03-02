@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import { View, Text, Image, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Background from "../../common/components/Background";
-import { navigate } from "../../navigations/RootNavigation";
+import { navigate } from "../../../navigations/RootNavigation";
 function ForgotPassScreen(props) {
     const [yourEmail,setYourEmail]= useState()
     handleSubmit =()=>{
@@ -10,7 +9,7 @@ function ForgotPassScreen(props) {
     }
     return (
         <View style={styles.container}>
-            <Background></Background>
+          
             <View>
                 <Text style={styles.text}>Email đăng ký</Text>
                 <KeyboardAvoidingView behavior="" >
