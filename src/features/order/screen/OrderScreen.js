@@ -13,7 +13,11 @@ import axiosApiInstance from '../../../context/interceptor';
 import { connect } from 'react-redux';
 import { Alert } from 'react-native';
 function OrderScreen(props) {
-    const [listItem, setListItem] = useState([]);
+    const listItem = props.state.OrderReducer;
+    const navigation = props.navigation;
+    console.log(listItem)
+    let money=0
+    listItem.forEach((item=> money += item.amount * item.product.infoProduct.price))
     const [userInfo, setUserInfo] = useState({});
     const [note, setNote] = useState({});    
     const totalMoney = props.state.MoneyReducer.total
@@ -24,13 +28,13 @@ function OrderScreen(props) {
             LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
         })().catch(err => console.log(err))
     }, [])
-    useFocusEffect(React.useCallback(() => {
-        setListItem([...props.route.params.data])
-    }, [props.route.params.data[0].product.id]));
+    // useFocusEffect(React.useCallback(() => {
+    //     setListItem([...props.route.params.data])
+    // }, [props.route.params.data[0].product.id]));
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: '#DDF2F3' }}>
             <MainHeader title={'Đặt hàng'}></MainHeader>
-            <AddressButton></AddressButton>
+            <AddressButton navigation={navigation}></AddressButton>
             <View style={style.container}>
                 <Text style={style.title}>Hình thức vận chuyển</Text>
                 <Text style={style.text}>Giao hàng tận nơi: 30.000đ</Text>

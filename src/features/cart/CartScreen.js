@@ -97,9 +97,10 @@ const CartScreen = ({ navigation }) => {
         });
         if (myCart.length)
         {   let money=0;
-            myCart.forEach((item=> money += item.amount * item.product.infoProduct.price))
-            dispatch({type:'CHANGE_TOTAL_MONEY',payload:money})
-            navigation.navigate('OrderScreen', { data: myCart })
+            
+            console.log('call')
+            dispatch({type:'SET_ORDER',payload:myCart})
+            navigation.navigate('OrderScreen')
         } 
         else
             ToastAndroid.show("Chọn sản phẩm để tiếp tục", ToastAndroid.BOTTOM)
