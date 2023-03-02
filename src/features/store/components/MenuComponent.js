@@ -12,7 +12,7 @@ const SliderContainer = (props) => {
     const [value, setValue] = useState([0, 5000000]);
     const [listFilter, setListFilter] = useState([])
     let renderTrackMarkComponent;
-    useEffect(() => {}, [listFilter,value])
+    useEffect(() => { }, [listFilter, value])
     if (trackMarks?.length && (!Array.isArray(value) || value?.length === 1)) {
         renderTrackMarkComponent = (index) => {
             const currentMarkValue = trackMarks[index];
@@ -46,22 +46,15 @@ const SliderContainer = (props) => {
 
     function createButtonCategory() {
         const [isRefresh, setIsRefresh] = useState(false);
-        const [listCategory,setListCategory]= useState( ['Áo thun', 'Áo sơ mi', 'Áo mũ trùm', 'Áo mũ trùm', 'Đầm', 'Váy', 'Quần tây', 'Quần què']);
-        const [listCategoryObj,setListCategoryObj]= useState(listCategory.map((item) => {
-                return {
-                    name: item,
-                    isPicked: false
-                }
-            }))
-        // const listCategory = ['Áo thun', 'Áo sơ mi', 'Áo mũ trùm', 'Áo mũ trùm', 'Đầm', 'Váy', 'Quần tây', 'Quần què'];
-        // const listCategoryObj = listCategory.map((item) => {
-        //     return {
-        //         name: item,
-        //         isPicked: false
-        //     }
-        // })
+        const [listCategory, setListCategory] = useState(['Áo thun', 'Áo sơ mi', 'Áo mũ trùm', 'Áo mũ trùm', 'Đầm', 'Váy', 'Quần tây', 'Quần què']);
+        const [listCategoryObj, setListCategoryObj] = useState(listCategory.map((item) => {
+            return {
+                name: item,
+                isPicked: false
+            }
+        }))
         useEffect(() => {
-            // console.log(listCategoryObj)
+
         }, [isRefresh])
         return (
             <View style={{ justifyContent: 'space-evenly', alignItems: 'center', top: 10 }}>
@@ -75,7 +68,7 @@ const SliderContainer = (props) => {
                             setIsRefresh(!isRefresh)
                             console.log(listFilter)
                         }
-                        return <TouchableOpacity style={item.isPicked ? [button.category,{ backgroundColor: '#4ACBD3' }] : button.category} onPress={setData}>
+                        return <TouchableOpacity style={item.isPicked ? [button.category, { backgroundColor: '#4ACBD3' }] : button.category} onPress={setData}>
                             <Text style={{ color: 'rgba(0,0,0,0.55)', fontSize: 16, fontWeight: '600' }}>{item.name}</Text>
                         </TouchableOpacity>
                     }
@@ -131,10 +124,10 @@ const SliderContainer = (props) => {
     }
 };
 function MenuComponent(props) {
-    const [refreshFake,setRefreshFake]= useState('')
-    useEffect(()=>{
+    const [refreshFake, setRefreshFake] = useState('')
+    useEffect(() => {
 
-    },[refreshFake])
+    }, [refreshFake])
     return <View style={{ backgroundColor: 'rgba(173, 231, 244, 1)', height: '100%' }}>
         <View style={{ height: 40, padding: 10, backgroundColor: '#1697A9' }}>
             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Lọc sản phẩm</Text>

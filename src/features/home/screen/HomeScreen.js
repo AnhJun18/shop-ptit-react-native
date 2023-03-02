@@ -59,7 +59,6 @@ function ListAllProduct(props) {
     }
   }
 function HomeScreen(props) {
-    
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
       })
