@@ -8,6 +8,7 @@ import MainHeader from "../../common/components/MainHeader";
 import { ToastAndroid } from 'react-native';
 import { useFocusEffect } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
+import { Dimensions } from 'react-native';
 const CartScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const [cartItems, setCartItems] = useState(1)
@@ -108,7 +109,6 @@ const CartScreen = ({ navigation }) => {
 
     const renderItem = ({ item }) => (
         <View style={styles.orderItem}>
-
             {<CheckBox
                 style={styles.checkBox}
                 value={item.selected}
@@ -133,12 +133,10 @@ const CartScreen = ({ navigation }) => {
                         onChange={(num) => handleChangeAmount(num, item.idCart, item.product.id)}
                         style={styles.spinner}
                         skin={"clean"}
-                        color={"#000"}
-                        fontSize={14}
-                        width={100}
                     />
-                    <View style={{ alignItems: 'flex-end', width: '53%' }}>
-                        <Text style={styles.totalPrice}>x {(item.product.infoProduct.price * item.amount).toLocaleString('vi', {
+                    <View style={styles.disPrices}>
+                        <Text>x</Text>
+                        <Text style={styles.totalPrice}> {(item.product.infoProduct.price * item.amount).toLocaleString('vi', {
                             style: 'currency',
                             currency: 'VND'
                         })}</Text></View>
@@ -152,6 +150,7 @@ const CartScreen = ({ navigation }) => {
             <MainHeader title="Giỏ hàng"></MainHeader>
             <FlatList
                 data={listCart}
+                style={{paddingHorizontal:2}}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.idCart.toString()
                 }
@@ -164,23 +163,27 @@ const CartScreen = ({ navigation }) => {
                 <View style={styles.infoPay}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         {<CheckBox
+                            style={{marginLeft:4}}
                             value={selectAll}
                             tintColors={{ true: '#4ACBD3', false: '#777474' }}
                             onValueChange={() => handleCheckAll()}
                         />}
                         <Text>Tất cả</Text>
                     </View>
-                    <Text style={styles.totalPay}>Thành tiền: {totalMoney}</Text>
+                    <Text style={styles.totalPay}>Tổng: {totalMoney}</Text>
                 </View>
                 <TouchableOpacity style={styles.btn} onPress={submitBuy}><Text style={styles.txtBtn}>Đặt Hàng</Text></TouchableOpacity>
             </View>
         </View>
     );
 };
+
+
+const {width, height } = Dimensions.get("screen")
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f5f5f5',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -188,64 +191,49 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 30,
-        paddingHorizontal: '4%',
-        borderBottomWidth: 3,
-        borderBottomColor: '#DDF2F3',
+        paddingVertical:6,
+        paddingHorizontal: height*0.01,
+        marginBottom:8,
+        backgroundColor:'#fff',
+        borderBottomWidth:1,
+        borderColor:'#ccc',
+        shadowOffset:{width:0,height:10},
+        shadowOpacity:1,
+        shadowRadius:2,
+        shadowColor:'#000'
+        
     },
     imgProduct: {
-        width: '30%',
-        height: '270%',
+        width:width*0.2,
+        height:height*0.12,
         resizeMode: 'contain',
-    },
-    infoItem: {
-        backgroundColor: "#ccc",
-        width: '40%'
     },
     itemTitle: {
         fontSize: 16,
         fontWeight: 'bold',
-
-
     },
     infoProduct: {
-        width: '72%',
+        width: width*0.66,
         flexDirection: 'column',
-        marginLeft: 3
+        padding:5
     },
     txtProduct: {
+        flexWrap:'wrap',
         fontSize: 20,
         fontWeight: 400,
-        color: '#676161'
+        color: '#212121'
     },
     txtDetail: {
         color: '#676161',
-        fontSize: 15,
-        fontWeight: 300,
-    },
-    itemPrice: {
-        width: '15%',
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#ff6347',
-
-    },
-    itemQuantity: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    quantityText: {
-        marginHorizontal: 10,
+        fontSize: 12,
+        fontWeight: 400,
+        fontStyle:'italic'
     },
     totalPrice: {
-        width: '75%',
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: 400,
-        color: '#676161',
-        marginTop: 13,
-        // flexDirection: 'column-reverse',
-
-
+        color: '#434',
+        fontStyle:'italic'
     },
 
     checkoutButton: {
@@ -263,10 +251,12 @@ const styles = StyleSheet.create({
     spinner: {
         flexDirection: 'row',
         marginLeft: 5,
-        width: '37%',
-        color: '#ccc',
+        width: width*0.2,
         opacity: 0.5,
         fontSize: 30,
+        fontWeight:'600',
+        backgroundColor:'#ffffff00',
+        color:'#212121'
     },
     menu: {
         flex: 1,
@@ -286,10 +276,10 @@ const styles = StyleSheet.create({
     },
 
     totalPay: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 400,
-        color: '#676161',
-        alignSelf: 'center'
+        color: '#212121',
+        alignSelf: 'center',
     },
     btn: {
         flex: 3,
@@ -297,18 +287,19 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center'
-
-
     },
     txtBtn: {
         fontSize: 18,
         fontWeight: 500,
+        color:'#212121'
     },
-    checkBox: {
-        height: '30%',
-        width: '8%',
-        backgroundColor: '#FFF',
-
+    disPrices:{
+        flex:1,
+        width: width*0.3,
+        flexDirection:'row',
+        flexWrap:'nowrap',
+        justifyContent:'flex-end',
+        alignItems:'center'
     }
 
 });
