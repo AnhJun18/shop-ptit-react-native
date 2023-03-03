@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
         paddingHorizontal: 30,
-        paddingVertical: 50,
+        paddingVertical: 30,
     },
     logo: {
         height: height_logo,
@@ -41,15 +41,15 @@ const styles = StyleSheet.create({
         fontSize: 30
     },
     txt_main: {
+        marginTop: 10,
         color: '#05375a',
         fontSize: 18
     },
     action: {
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#f2f2f2',
-        paddingBottom: 5,
         alignItems: 'center'
     },
     txt_input: {
