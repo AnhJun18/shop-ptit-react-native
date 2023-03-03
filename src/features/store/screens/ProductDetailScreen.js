@@ -9,12 +9,15 @@ import MainHeader from "../../../common/components/MainHeader";
 import RadioGroup from 'react-native-radio-buttons-group';
 import InputSpinner from "react-native-input-spinner";
 import { useFocusEffect } from "@react-navigation/native";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { navigate } from "../../../navigations/RootNavigation";
 
 const styles = StyleSheet.create({
     container: {
         position: 'relative',
         height: '100%',
         backgroundColor: '#CDF1F1',
+        position: 'relative'
     },
     tinyLogo: {
         width: '100%',
@@ -107,11 +110,20 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         fontSize: 12,
         fontWeight: 300
+    },
+    btn_cart: {
+        position: 'absolute',
+        top: 52,
+        zIndex: 100,
+        right: 7,
+        padding: 10,
+        backgroundColor: "#ccc",
+        borderRadius: 50
     }
 });
 function ProductDetailScreen(props) {
     const [itemID, setItemID] = useState(null)
-    const navigation =props.navigation
+    const navigation = props.navigation
     const [load, setLoad] = useState(false)
     const [product, setProduct] = useState([]);
     const [radioColor, setRadioColor] = useState([]);
@@ -205,7 +217,18 @@ function ProductDetailScreen(props) {
 
     return (
         <View style={styles.container}>
+
+            <TouchableOpacity
+                style={styles.btn_cart}
+                onPress={() => { navigate("Cart") }}>
+                <FontAwesome5Icon
+                    name="shopping-cart"
+                    style={{ fontSize: 15,color:"#fff" }}
+                />
+
+            </TouchableOpacity>
             <MainHeader title='Chi tiết sản phẩm' navigation={navigation} ></MainHeader>
+
             {load ?
                 <ScrollView >
                     <View style={styles.imgView}>
@@ -263,16 +286,19 @@ function ProductDetailScreen(props) {
                         </Text>
                         <InputSpinner
                             max={100}
-                            min={1}
+                            min={0}
                             step={1}
                             value={quantity}
                             onChange={(num) => { setQuantity(num) }}
                             style={styles.spinner}
-                            skin={"clean"}
-                            color={"#000"}
-                            fontSize={10}
-                            width={1000}
+                            skin={"square"}
+                            height={40}
+                            buttonFontSize={15}
+                            fontSize={12}
+                            fontWeight={500}
+
                         />
+
                     </View>
                     <View style={[styles.productDetail, styles.mb]}>
                         <Text style={styles.txtHeader}>
@@ -285,13 +311,15 @@ function ProductDetailScreen(props) {
                     </View>
                 </ScrollView>
 
-            : <Text>Loading</Text>}
+                :
+                <Text>Loading</Text>}
             <View style={styles.menu}>
                 <TouchableOpacity style={styles.btn} onPress={addToCart}>
                     <Icon name={'cart-plus'} size={25} />
                     <Text style={styles.txtBtn}>Giỏ hàng</Text></TouchableOpacity>
                 <TouchableOpacity style={styles.btn}><Text style={styles.txtBtn}>Mua Ngay</Text></TouchableOpacity>
             </View>
+
         </View>
 
 
