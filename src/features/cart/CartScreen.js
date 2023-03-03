@@ -9,6 +9,10 @@ import { ToastAndroid } from 'react-native';
 import { useFocusEffect } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
 import { Dimensions } from 'react-native';
+import * as Animatable from "react-native-animatable";
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 const CartScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const [cartItems, setCartItems] = useState(1)
@@ -19,19 +23,20 @@ const CartScreen = ({ navigation }) => {
         const result = await axiosApiInstance.get(axios.defaults.baseURL + '/api/cart/all')
         setListCart(result.data)
     }
-    // useEffect(() => {
-    //     let tmpMoney = 0
-    //     listCart.forEach((item) => {
-    //         if (item.selected === true) {
-    //             tmpMoney += item.amount * item.product.infoProduct.price
-    //         }
-    //         setTotalMoney(tmpMoney.toLocaleString('vi', {
-    //             style: 'currency',
-    //             currency: 'VND'
-    //         }))
-    //     });
-    // }, [listCart])
+    useEffect(() => {
+        let tmpMoney = 0
+        listCart.forEach((item) => {
+            if (item.selected === true) {
+                tmpMoney += item.amount * item.product.infoProduct.price
+            }
+            setTotalMoney(tmpMoney.toLocaleString('vi', {
+                style: 'currency',
+                currency: 'VND'
+            }))
+        });
+    }, [listCart])
     useFocusEffect(React.useCallback(() => {
+        setSelectAll(false)
         getCart().then(() => {
             let tmpMoney = 0
             listCart.forEach((item) => {
@@ -89,6 +94,11 @@ const CartScreen = ({ navigation }) => {
         await axiosApiInstance.put(axiosApiInstance.defaults.baseURL + `/api/cart/update`, body);
 
     }
+    handleDeleteItem= async(item)=>{
+        const apiResponse= await axiosApiInstance.delete(`/api/cart/${item}`)
+        console.log(apiResponse.data)
+        getCart();
+    }
     submitBuy = () => {
         const myCart = []
         listCart.forEach((item) => {
@@ -100,13 +110,14 @@ const CartScreen = ({ navigation }) => {
         {   
             dispatch({type:'SET_ORDER',payload:myCart})
             navigation.navigate('OrderScreen')
-        } 
+        }
         else
             ToastAndroid.show("Chọn sản phẩm để tiếp tục", ToastAndroid.BOTTOM)
     }
 
     const renderItem = ({ item }) => (
-        <View style={styles.orderItem}>
+        <Animatable.View style={styles.orderItem}
+            animation="fadeInUp">
             {<CheckBox
                 style={styles.checkBox}
                 value={item.selected}
@@ -130,7 +141,12 @@ const CartScreen = ({ navigation }) => {
                         value={item.amount}
                         onChange={(num) => handleChangeAmount(num, item.idCart, item.product.id)}
                         style={styles.spinner}
-                        skin={"clean"}
+                        skin={"square"}
+                        height={30}
+                        buttonFontSize={12}
+                        fontSize={8}
+                        fontWeight={500}
+
                     />
                     <View style={styles.disPrices}>
                         <Text>x</Text>
@@ -140,7 +156,10 @@ const CartScreen = ({ navigation }) => {
                         })}</Text></View>
                 </View>
             </View>
-        </View>
+            <TouchableOpacity style={styles.btn_delete} onPress={()=>handleDeleteItem(item.product.id)}>
+                <Icon name="close" color={"red"} fontSize={18}/>
+            </TouchableOpacity>
+        </Animatable.View>
     );
 
     return (
@@ -148,7 +167,7 @@ const CartScreen = ({ navigation }) => {
             <MainHeader title="Giỏ hàng" navigation={navigation} screen={'HomeNavigation'}></MainHeader>
             <FlatList
                 data={listCart}
-                style={{paddingHorizontal:2,marginBottom:50}}
+                style={{ paddingHorizontal: 2, marginBottom: 50 }}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.idCart.toString()
                 }
@@ -161,7 +180,7 @@ const CartScreen = ({ navigation }) => {
                 <View style={styles.infoPay}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         {<CheckBox
-                            style={{marginLeft:4}}
+                            style={{ marginLeft: 4 }}
                             value={selectAll}
                             tintColors={{ true: '#4ACBD3', false: '#777474' }}
                             onValueChange={() => handleCheckAll()}
@@ -177,7 +196,7 @@ const CartScreen = ({ navigation }) => {
 };
 
 
-const {width, height } = Dimensions.get("screen")
+const { width, height } = Dimensions.get("screen")
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -189,21 +208,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical:6,
-        paddingHorizontal: height*0.01,
-        marginBottom:8,
-        backgroundColor:'#fff',
-        borderBottomWidth:1,
-        borderColor:'#ccc',
-        shadowOffset:{width:0,height:10},
-        shadowOpacity:1,
-        shadowRadius:2,
-        shadowColor:'#000'
-        
+        paddingVertical: 6,
+        paddingHorizontal: height * 0.01,
+        marginBottom: 8,
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderColor: '#ccc',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        shadowColor: '#000',
     },
     imgProduct: {
-        width:width*0.2,
-        height:height*0.12,
+        width: width * 0.2,
+        height: height * 0.12,
         resizeMode: 'contain',
     },
     itemTitle: {
@@ -211,12 +229,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     infoProduct: {
-        width: width*0.66,
+        width: width * 0.66,
         flexDirection: 'column',
-        padding:5
+        padding: 5
     },
     txtProduct: {
-        flexWrap:'wrap',
+        flexWrap: 'wrap',
         fontSize: 20,
         fontWeight: 400,
         color: '#212121'
@@ -225,13 +243,13 @@ const styles = StyleSheet.create({
         color: '#676161',
         fontSize: 12,
         fontWeight: 400,
-        fontStyle:'italic'
+        fontStyle: 'italic'
     },
     totalPrice: {
         fontSize: 14,
         fontWeight: 400,
         color: '#434',
-        fontStyle:'italic'
+        fontStyle: 'italic'
     },
 
     checkoutButton: {
@@ -247,15 +265,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     spinner: {
-        flexDirection: 'row',
-        marginLeft: 5,
-        width: width*0.2,
-        opacity: 0.5,
-        fontSize: 30,
-        fontWeight:'600',
-        backgroundColor:'#ffffff00',
-        color:'#212121'
+        marginLeft: 2,
+        width: width * 0.2,
     },
+    input_spinner: {
+        color: '#212121',
+        fontSize: 20
+    },
+
     menu: {
         flex: 1,
         position: 'absolute',
@@ -289,15 +306,21 @@ const styles = StyleSheet.create({
     txtBtn: {
         fontSize: 18,
         fontWeight: 500,
-        color:'#212121'
+        color: '#212121'
     },
-    disPrices:{
-        flex:1,
-        width: width*0.3,
-        flexDirection:'row',
-        flexWrap:'nowrap',
-        justifyContent:'flex-end',
-        alignItems:'center'
+    disPrices: {
+        flex: 1,
+        width: width * 0.3,
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    btn_delete: {
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        padding: 6
     }
 
 });
