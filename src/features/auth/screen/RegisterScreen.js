@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import style from "../style/Styles";
+import styles from "../style/Styles";
 
 function RegisterScreen(props) {
     const [userName, setUserName] = useState('');

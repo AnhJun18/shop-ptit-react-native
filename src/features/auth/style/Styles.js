@@ -1,55 +1,86 @@
+import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
-const style = StyleSheet.create({
-    imageUser: {
-        width: 276,
-        height: 279,
-        marginBottom: 15
+
+
+const { height } = Dimensions.get("screen")
+const height_logo = height * 0.1
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#0e8ba9"
     },
-    mainLayout: {
+    text:{
+        color:'#05375a'
+    }
+    ,
+    header: {
+        flex: 2,
+        flexDirection: 'row',
+        justifyContent: "space-evenly",
+        paddingHorizontal: 20,
+        paddingBottom: 20,
+        alignItems: 'flex-end',
+        alignContent: 'flex-end',
+        paddingBottom:30
+    },
+    main: {
+        flex: 5,
+        backgroundColor: "#fff",
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
+        paddingHorizontal: 30,
+        paddingVertical: 50,
+    },
+    logo: {
+        height: height_logo,
+        width: height_logo
+    },
+    txt_header: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 30
+    },
+    txt_main: {
+        color: '#05375a',
+        fontSize: 18
+    },
+    action: {
+        flexDirection: 'row',
+        marginTop: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f2f2f2',
+        paddingBottom: 5,
+        alignItems: 'center'
+    },
+    txt_input: {
+        flex: 1,
+        paddingLeft: 10,
+        color: '#05375a'
+    },
+    button: {
         alignItems: 'center',
-        bottom:100
+        marginTop: 20,
+        backgroundColor: "#0e8ba9",
+        borderRadius: 5,
+        height: 40,
+        justifyContent: 'center'
     },
-    input: {
-        width: 300,
-        borderBottomColor: '#000000',
-        borderBottomWidth: 1,
+    txt_btn: {
+        alignSelf: 'center',
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16
     },
-    row:{
-        flex:0,
-        flexDirection:'row',
-    },
-    inputWrap:{
-        flex:1,
-        justifyContent: 'space-between',
-    },
-    inputName: {
-        width: 130,
-        borderBottomColor: '#000000',
-        borderBottomWidth: 1,
-    },
-    text: {
-        fontSize: 32,
-        color: 'rgba(131, 122, 122, 1)',
-        fontWeight: 'bold'
-    },
-    textBlue:{
-      color:'rgba(48, 80, 251, 1)',
-      textDecorationLine: 'underline',
-    },
-    buttonLogin: {
-        marginTop: 15,
-        borderWidth: 1,
-        width: 200,
-        height: 38,
+    bottom: {
+        marginTop: 30,
         justifyContent: "center",
         alignItems: 'center',
-        borderRadius:20,
+
     },
-    bottom:{
-          marginTop:30,
-          justifyContent: "center",
-          alignItems: 'center',
-        
-    }
+    textBlue: {
+        color: 'rgba(48, 80, 251, 1)',
+        textDecorationLine: 'underline',
+    },
+    
 })
-export default style;
+export default styles;
