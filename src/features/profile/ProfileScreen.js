@@ -50,7 +50,7 @@ function ProfileScreen(props) {
     }, []))
 
     return (
-        <View style={{ height: '100%' }}>
+        <View>
             {loaded ?
                 <View>
                     <View style={style.main} >
@@ -62,11 +62,12 @@ function ProfileScreen(props) {
                                         uri: `https://scontent.fsgn8-4.fna.fbcdn.net/v/t1.6435-9/94490914_251126279594068_206153920492339200_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=174925&_nc_ohc=4LiMGrst1JIAX9yARQL&_nc_ht=scontent.fsgn8-4.fna&oh=00_AfDISEZ5Q3ccLF5lOSVikPVMIaTNbVBxdMSmG_be0vNHcQ&oe=6427C1F8`,
                                     }}
                                 />
-                                : <Icon name={'user-circle'} size={90} style={{color:"#fff", marginLeft: 20}}></Icon>}
+                                : <Icon name={'user-circle'} size={90} style={{ color: "#fff", marginLeft: 20 }}></Icon>}
                             {
                                 logged ?
                                     <View style={{ marginLeft: 20 }}>
                                         <Text style={style.txtname}>{user?.userInfo?.firstName + " " + user?.userInfo?.lastName}</Text>
+                                        <Text style={{fontSize:16,fontStyle:"italic"}}>@{user?.userInfo?.account.username}</Text>
                                     </View> :
                                     <View style={style.option}>
                                         <TouchableOpacity style={style.btn} onPress={() => { navigate("LoginNavigation") }}>
@@ -79,50 +80,57 @@ function ProfileScreen(props) {
                             }
                         </View>
                     </View>
-                    <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 18 }}>
                         <TouchableOpacity style={style.button} onPress={() => {
-                            if(logged)
+                            if (logged)
                                 navigate("UserInfor", params = user)
                             else
                                 navigate("LoginNavigation")
 
                         }}>
-                        <View style={{flexDirection: 'row'}}>
-                            <FontAwesome
-                                style={{marginTop: 3}}
-                                name="user-o"
-                                color="#05375a"
-                                size={22}
-                            ></FontAwesome>
-                            <Text style={style.txt}>Thông tin cá nhân</Text>
-                        </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={style.button} onPress={() => { navigate("OrderHistory") }}>
-                        <View style={{flexDirection: 'row'}}>
-                            <FontAwesome
-                                style={{marginTop: 3}}
-                                name="file-o"
-                                color="#05375a"
-                                size={22}
-                            ></FontAwesome>
-                            <Text style={style.txt}>Quản lý đơn hàng</Text>
-                        </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={style.button} >
-                            <View style={{flexDirection: 'row'}}>
+                            <View style={{ flexDirection: 'row' }}>
                                 <FontAwesome
-                                    style={{marginTop: 3}}
-                                    name="info"
+                                    style={{ padding: 3 }}
+                                    name="user-o"
                                     color="#05375a"
                                     size={22}
+                                    paddingHorizontal={1}
                                 ></FontAwesome>
+                                <Text style={style.txt}>Thông tin cá nhân</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={style.button} onPress={() => { navigate("OrderHistory") }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <FontAwesome
+                                    style={{ marginTop: 3 }}
+                                    name="file-o"
+                                    color="#05375a"
+                                    size={22}
+                                    paddingHorizontal={1}
+
+                                ></FontAwesome>
+                                <Text style={style.txt}>Đơn hàng</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={style.button} >
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ minWidth: 18 }}>
+                                    <FontAwesome
+                                        style={{ marginTop: 3 }}
+                                        name="info"
+                                        color="#05375a"
+                                        size={22}
+                                    />
+
+                                </View>
+
                                 <Text style={style.txt}>Trung tâm trợ giúp</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity style={style.button} >
-                            <View style={{flexDirection: 'row'}}>
+                            <View style={{ flexDirection: 'row' }}>
                                 <FontAwesome
-                                    style={{marginTop: 3}}
+                                    style={{ marginTop: 3 }}
                                     name="tag"
                                     color="#05375a"
                                     size={22}
@@ -135,18 +143,18 @@ function ProfileScreen(props) {
                                 setLogged(false)
                             })
                         }}>
-                            <View style={{flexDirection: 'row'}}>
+                            <View style={{ flexDirection: 'row' }}>
                                 <FontAwesome
-                                    style={{marginTop: 3}}
+                                    style={{ marginTop: 3 }}
                                     name="outdent"
                                     color="#05375a"
-                                    size={22}
+                                    size={20}
                                 ></FontAwesome>
                                 <Text style={style.txt}>Đăng xuất</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
-                    
+
                 </View>
                 : <ActivityIndicator
                     color="#DE0F3F"
@@ -176,12 +184,11 @@ const style = StyleSheet.create({
         minHeight: 150,
     },
     button: {
-        width: '85%',
+        width: '100%',
         minHeight: 50,
         justifyContent: 'center',
         borderBottomWidth: 1,
         borderStyle: 'solid',
-        borderBottomColor: '#ccc'
     },
     option: {
         flexDirection: 'row'
@@ -200,10 +207,10 @@ const style = StyleSheet.create({
         color: '#736D6D',
         fontSize: 15
     },
-    imgUser:{
-        width:80,
-        height:80,
-        borderRadius:50,
+    imgUser: {
+        width: 80,
+        height: 80,
+        borderRadius: 50,
         marginLeft: 20
     },
     txtname: {
@@ -214,7 +221,7 @@ const style = StyleSheet.create({
     txt: {
         color: '#787171',
         fontSize: 18,
-        marginLeft: 10
+        marginLeft: 10,
     }
 })
 export default ProfileScreen
