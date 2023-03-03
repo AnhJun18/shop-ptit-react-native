@@ -58,7 +58,7 @@ function MyTabs() {
         component={StoreScreen}
         options={{
           tabBarLabel: 'Cửa hàng',
-          tabBarBadge: 3,
+          
           headerShown: false,
           // tabBarStyle: { display: 'none' },
           tabBarHideOnKeyboard: true
@@ -79,7 +79,6 @@ function MyTabs() {
         component={ProfileScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
-          tabBarBadge: 3,
           headerShown: false
         }}
       />

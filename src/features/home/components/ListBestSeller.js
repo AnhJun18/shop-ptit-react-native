@@ -5,8 +5,11 @@ import axiosApiInstance from "../../../context/interceptor";
 import axios from "../../../context/axios";
 import ProductItem from "../../../common/components/ProductItem";
 import { View } from "react-native";
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 function ListBestSeller(props) {
-  console.log(props.refreshing)
+  const refresh= props.state.RefreshHome;
+  const navigation = props.navigation;
   const [listProduct, setListProduct] = useState([]);
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
@@ -16,7 +19,7 @@ function ListBestSeller(props) {
       setLoaded(true)
       setListProduct([...res.data])
     })()
-  }, [])
+  }, [refresh.refresh])
   return (
     <View>
       {listProduct.length ?
@@ -27,7 +30,7 @@ function ListBestSeller(props) {
               name={item.name}
               price={item.price}
               linkImg={item.linkImg}
-              navigation={props.navigation}
+              navigation={navigation}
             />}
           horizontal={true}
         />
@@ -43,4 +46,4 @@ function ListBestSeller(props) {
 
 
 }
-export default ListBestSeller;
+export default connect(state=>{return {state:state}})(ListBestSeller)

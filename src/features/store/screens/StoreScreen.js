@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { View, Text } from "react-native";
-import { SearchBar } from 'react-native-elements';
 import Icon from "react-native-vector-icons/Feather";
 import Background from "../../../common/components/Background";
 import ListAllProduct from "../../home/components/ListAllProduct";
-import { Modal } from "react-native";
 import styleStore from "../style/Store";
 import { TextInput } from "react-native";
 import { useDispatch } from "react-redux";
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import { Menu } from 'react-native-material-menu';
 import MenuComponent from "../components/MenuComponent";
+import { RefreshControl } from "react-native";
 function StoreScreen(props) {
     const navigation = props.navigation;
     const [visible, setVisible] = useState(true);
     const [searchText, setSearchText] = useState('');
     const dispatch = useDispatch();
     const hideMenu = () => setVisible(false);
-    // const [refresh,setRefresh] = useState('')
-    // console.log('refresh')
-    // useEffect(()=>{
-
-    // },[refresh])
+    let num = 1;
+   
     return (
-        <View style={styleStore.container}>
+        <View style={styleStore.container}
+      
+        >
             <Menu
                 visible={visible}
                 onRequestClose={hideMenu}
