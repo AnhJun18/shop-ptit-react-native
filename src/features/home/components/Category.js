@@ -16,9 +16,10 @@ function Category() {
                     <View
                         key={index}
                         style={{
-                            flex: 1,
+                            flex: 0,
                             flexDirection: 'column',
-                            marginBottom:10
+                            marginBottom:10,
+                            marginRight:10,
                         }}>
 
                         <Image
