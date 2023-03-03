@@ -44,7 +44,7 @@ function ListAllProduct(props) {
         numColumns={3}
         initialNumToRender={10}
         ListFooterComponent={props.screen != 'Store' ? ButtonGoStore : null}
-        ListFooterComponentStyle={{ justifyContent: 'center', alignItems: 'center',backgroundColor:'black',width:'100%' }}
+        ListFooterComponentStyle={{ justifyContent: 'center', alignSelf: 'center' }}
         style={[props.screen != 'Store' ? {} : { marginBottom: 150 }]}
       /> 
     )

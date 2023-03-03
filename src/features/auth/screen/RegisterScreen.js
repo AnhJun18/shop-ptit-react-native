@@ -1,13 +1,6 @@
-import React, { useContext, useState } from "react";
-import { TextInput } from "react-native";
-import { KeyboardAvoidingView } from "react-native";
-import { ScrollView } from "react-native";
-import { TouchableOpacity } from "react-native";
-import { View, Text, Image } from "react-native";
-import ButtonBack from "../../common/components/ButtonBack";
-import style from "./Styles";
-import Background from "../../common/components/Background";
-
+import React, { useState } from "react";
+import { KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import style from "../style/Styles";
 
 function RegisterScreen(props) {
     const [userName, setUserName] = useState('');
@@ -33,8 +26,6 @@ function RegisterScreen(props) {
     return (
 
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <Background></Background>
-            <ButtonBack navigation={navigation} ></ButtonBack>
             <View style={style.mainLayout}>
                 <Text style={style.text}>Register</Text>
                 <KeyboardAvoidingView behavior="">

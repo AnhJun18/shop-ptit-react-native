@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { View, Text, Image, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Background from "../../common/components/Background";
 function ChangePassScreen(props) {
     const styles = StyleSheet.create({
         container: {
@@ -33,7 +32,7 @@ function ChangePassScreen(props) {
     });
     return (
         <View style={styles.container}>
-            <Background></Background>
+          
             <View>
                 <KeyboardAvoidingView behavior="" style={{marginBottom:30}}>
                     <TextInput  style={styles.input}

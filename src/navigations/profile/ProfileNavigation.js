@@ -1,4 +1,4 @@
-import LoginScreen from '../../features/login/LoginScreen';
+import LoginScreen from '../../features/auth/screen/LoginScreen';
 import ProfileScreen from '../../features/profile/ProfileScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { navigationRef } from '../RootNavigation';

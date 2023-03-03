@@ -12,9 +12,9 @@ function ProductItem(props) {
         <TouchableOpacity
             onPress={() => navigate('ProductDetail', { itemID: id })}
             style={{
-                backgroundColor: 'rgba(237, 237, 237, 1)', margin: 5, shadowColor: "#000",
+                backgroundColor: 'rgba(237, 237, 237, 1)', margin: 5, shadowColor: "#ccc",
                 shadowOffset: {
-                    width: 0,
+                    width: 10,
                     height: 9,
                 },
                 shadowOpacity: 0.50,
@@ -30,11 +30,14 @@ function ProductItem(props) {
 
                     }}
                 ></Image>
-                <Text style={{ maxWidth: 114, marginBottom: 10 }} numberOfLines={1}>{name}</Text>
-                <Text>{price.toLocaleString('vi', {
-                    style: 'currency',
-                    currency: 'VND'
-                })} </Text>
+                <View style={{backgroundColor:'#ffffff',alignItems:'center',width:114,paddingVertical:6,paddingHorizontal:2}}>
+                    <Text style={{ maxWidth: 114,color:'#756f6f' }} numberOfLines={1}>{name}</Text>
+                    <Text style={{ color:'#e47864' }}>{price.toLocaleString('vi', {
+                        style: 'currency',
+                        currency: 'VND'
+                    })} </Text>
+                </View>
+
             </View>
         </TouchableOpacity>
     )
