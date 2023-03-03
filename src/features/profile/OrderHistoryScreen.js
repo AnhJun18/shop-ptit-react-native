@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Image } from "react-native";
+import { Alert, Image, ToastAndroid } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { RadioGroup } from "react-native-radio-buttons-group";
 import Moment from 'moment';
 import MainHeader from "../../common/components/MainHeader";
 import axiosApiInstance from "../../context/interceptor";
-
-
 function OrderHistoryScreen(props) {
     const navigation = props.navigation;
-    const [referesh,setRefresh]= useState(false)
+    const [refresh,setRefresh]= useState(false)
     const [dataNavBar, setDataNavBar] = useState([
         {
             id: '1',
@@ -37,6 +35,7 @@ function OrderHistoryScreen(props) {
         }
     ])
     const [listOrder, setlistOrder] = useState([])
+    const [status,setStatus] = useState('0')
     getCart = async () => {
         const statusSelected = (dataNavBar.filter((i) => {
             if (i.selected === true) return true
@@ -44,10 +43,11 @@ function OrderHistoryScreen(props) {
         })[0].label)
         const result = await axiosApiInstance.get(axiosApiInstance.defaults.baseURL + `/api/order/status=${statusSelected}`)
         setlistOrder(result.data)
+        setStatus(statusSelected);
     }
     useEffect(() => {
         getCart()
-    }, [dataNavBar,referesh])
+    }, [dataNavBar,status,refresh])
 
     handleNav = (labelSelected) => {
         setDataNavBar(dataNavBar.map((i) => {
@@ -68,7 +68,7 @@ function OrderHistoryScreen(props) {
                     keyExtractor={(i) => i.id.toString()}
                     ListFooterComponent={
                         <TouchableOpacity style={styles.btn} onPress={()=>CancelOrder(item.id)}>
-                            <Text style={styles.txtBtn}>Hủy Đơn</Text>
+                            <Text style={styles.txtBtn}>{status =='Đã Hủy'? 'Đặt lại':'Hủy Đơn'}</Text>
                         </TouchableOpacity>}
                 />
             </View>
@@ -105,10 +105,25 @@ function OrderHistoryScreen(props) {
     )
   
     function CancelOrder(id){
-        (async ()=>{
-            const result = await axiosApiInstance.delete(`/api/order/cancel_order?order_id=${id}`);
-           setRefresh(!referesh)
-        })().catch(err=>console.log(err))
+            Alert.alert('Xác nhận','Are you sủe', [
+                {
+                  text: 'Hủy',
+                  style: 'cancel',
+                },
+                {
+                    text: 'Ok',
+                    onPress: ()=>{
+                        axiosApiInstance.delete(`/api/order/cancel_order?order_id=${id}`).then(
+                            data=> ToastAndroid.show('Xóa thành công',ToastAndroid.CENTER)
+                        )
+                        .catch(err=>{
+                            ToastAndroid.show('Có lỗi xảy ra',ToastAndroid.CENTER)
+                        })
+                        .finally(()=>setRefresh(!refresh))
+                    },
+                    style: 'default',
+                  },
+              ],)  
     }
 
 }
@@ -202,7 +217,7 @@ const styles = StyleSheet.create({
     },
     txtBtn: {
         fontSize: 20,
-        fontWeight: 450,
+        fontWeight: '450',
         color: '#676161',
         marginRight: 45,
         marginLeft: 45,
