@@ -10,7 +10,7 @@ function MainHeader(props) {
     return (
         <View style={style.container}>
             <View style={{ flex: 2, maxWidth: 30 }}>
-                <TouchableOpacity onPress={() => { navigation.navigate(nameScreen)
+                <TouchableOpacity onPress={() => { navigation.navigate(nameScreen?nameScreen:"Home")
                 }}><Ionicons name={'arrow-back'} size={30} />
                 </TouchableOpacity>
             </View>

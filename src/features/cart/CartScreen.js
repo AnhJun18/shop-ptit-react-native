@@ -10,7 +10,6 @@ import { useFocusEffect } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
 import { Dimensions } from 'react-native';
 import * as Animatable from "react-native-animatable";
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const CartScreen = ({ navigation }) => {
@@ -119,7 +118,6 @@ const CartScreen = ({ navigation }) => {
         <Animatable.View style={styles.orderItem}
             animation="fadeInUp">
             {<CheckBox
-                style={styles.checkBox}
                 value={item.selected}
                 tintColors={{ true: '#4ACBD3', false: '#777474' }}
                 onValueChange={() => handleItemCheck(item.idCart)}
@@ -223,6 +221,7 @@ const styles = StyleSheet.create({
         width: width * 0.2,
         height: height * 0.12,
         resizeMode: 'contain',
+        backgroundColor:'#ccc'
     },
     itemTitle: {
         fontSize: 16,
@@ -231,7 +230,9 @@ const styles = StyleSheet.create({
     infoProduct: {
         width: width * 0.66,
         flexDirection: 'column',
-        padding: 5
+        padding: 5,
+        justifyContent:'space-between',
+        paddingLeft:10
     },
     txtProduct: {
         flexWrap: 'wrap',
@@ -321,6 +322,9 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         padding: 6
+    },
+    checkBox:{
+        backgroundColor:'#000'
     }
 
 });

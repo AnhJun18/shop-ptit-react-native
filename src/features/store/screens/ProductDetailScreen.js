@@ -110,9 +110,8 @@ const styles = StyleSheet.create({
     }
 });
 function ProductDetailScreen(props) {
-
-
     const [itemID, setItemID] = useState(null)
+    const navigation =props.navigation
     const [load, setLoad] = useState(false)
     const [product, setProduct] = useState([]);
     const [radioColor, setRadioColor] = useState([]);
@@ -206,7 +205,7 @@ function ProductDetailScreen(props) {
 
     return (
         <View style={styles.container}>
-            <MainHeader title='Chi tiết sản phẩm'></MainHeader>
+            <MainHeader title='Chi tiết sản phẩm' navigation={navigation} ></MainHeader>
             {load ?
                 <ScrollView >
                     <View style={styles.imgView}>
