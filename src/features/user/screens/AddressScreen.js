@@ -42,7 +42,7 @@ function AddressScreen(props) {
                 animation={'slide'}
             // customIndicator={()=><ActivityIndicator size={'large'} color="#0000ff"/>}
             /> */}
-            <MainHeader title={"Thêm địa chỉ mới"}></MainHeader>
+            <MainHeader title={"Thêm địa chỉ mới"} navigation={navigation} screen={'OrderScreen'}></MainHeader>
             <View style={style.container}>
                 <Background></Background>
                 <View style={{ alignItems: 'center', height: '70%' }}>
@@ -135,12 +135,10 @@ function AddressScreen(props) {
            dispatch({type:'SET_ADDRESS',payload:{
             name,
             phone,
-            detailAddress,
-            province,
-            district,
-            ward
+            address: `${detailAddress}, ${ward}, ${district}, ${province}`
            }})
-           navigation.navigate('OrderScreen')
+           console.log()
+          navigation.navigate('OrderScreen')
         }
         else{
             Alert.alert('Thông báo',message)

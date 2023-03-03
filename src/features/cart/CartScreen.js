@@ -97,9 +97,7 @@ const CartScreen = ({ navigation }) => {
             }
         });
         if (myCart.length)
-        {   let money=0;
-            
-            console.log('call')
+        {   
             dispatch({type:'SET_ORDER',payload:myCart})
             navigation.navigate('OrderScreen')
         } 
@@ -147,7 +145,7 @@ const CartScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <MainHeader title="Giỏ hàng"></MainHeader>
+            <MainHeader title="Giỏ hàng" navigation={navigation} screen={'HomeNavigation'}></MainHeader>
             <FlatList
                 data={listCart}
                 style={{paddingHorizontal:2,marginBottom:50}}

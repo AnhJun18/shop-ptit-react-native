@@ -51,7 +51,6 @@ function ProfileScreen(props) {
 
     return (
         <View style={{ height: '100%' }}>
-            
             {loaded ?
                 <View>
                     <View style={style.main} >

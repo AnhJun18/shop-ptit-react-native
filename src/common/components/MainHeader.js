@@ -1,15 +1,21 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
-import ButtonBack from "./ButtonBack";
+import { TouchableOpacity } from "react-native";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 function MainHeader(props) {
     const title = props.title;
-    const navigation=props.navigation;
+    const navigation = props.navigation;
+    const nameScreen= props.screen;
     return (
         <View style={style.container}>
-            <ButtonBack></ButtonBack>
-            <View style={{alignItems:'center',width:'80%'}}>
-                <Text style={{fontSize:20,fontWeight:'600',color:'black'}}>
+            <View style={{ flex: 2, maxWidth: 30 }}>
+                <TouchableOpacity onPress={() => { navigation.navigate(nameScreen)
+                }}><Ionicons name={'arrow-back'} size={30} />
+                </TouchableOpacity>
+            </View>
+            <View style={{ alignItems: 'center', width: '80%' }}>
+                <Text style={{ fontSize: 20, fontWeight: '600', color: 'black' }}>
                     {title}
                 </Text>
             </View>

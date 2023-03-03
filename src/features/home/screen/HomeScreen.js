@@ -23,7 +23,6 @@ function ListAllProduct(props) {
     })
   }, [])
   return (
-
     <FlatList
       data={listAllProduct}
       renderItem={({ item }) => <ProductItem id={item.id}
@@ -54,6 +53,7 @@ function HomeScreen(props) {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+  
     setRefreshing(false);
   }, []);
   useEffect(() => {
@@ -78,8 +78,6 @@ function HomeScreen(props) {
         refreshing={refreshing}
         >
       </ComponentsView>
-
-
       <ComponentsView
         child={ListBrand}
       >

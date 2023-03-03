@@ -15,12 +15,11 @@ import { Alert } from 'react-native';
 function OrderScreen(props) {
     const listItem = props.state.OrderReducer;
     const navigation = props.navigation;
-    console.log(listItem)
+    const Address =  props.state.AddressReducer;
     let money=0
     listItem.forEach((item=> money += item.amount * item.product.infoProduct.price))
     const [userInfo, setUserInfo] = useState({});
     const [note, setNote] = useState({});    
-    const totalMoney = props.state.MoneyReducer.total
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
         (async () => {
@@ -28,13 +27,10 @@ function OrderScreen(props) {
             LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
         })().catch(err => console.log(err))
     }, [])
-    // useFocusEffect(React.useCallback(() => {
-    //     setListItem([...props.route.params.data])
-    // }, [props.route.params.data[0].product.id]));
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: '#DDF2F3' }}>
-            <MainHeader title={'Đặt hàng'}></MainHeader>
-            <AddressButton navigation={navigation}></AddressButton>
+            <MainHeader title={'Đặt hàng'} navigation={navigation} screen={'Cart'}></MainHeader>
+            <AddressButton navigation={navigation}></AddressButton> 
             <View style={style.container}>
                 <Text style={style.title}>Hình thức vận chuyển</Text>
                 <Text style={style.text}>Giao hàng tận nơi: 30.000đ</Text>
@@ -52,7 +48,6 @@ function OrderScreen(props) {
                 <Text style={style.text}>Thanh toán khi nhận hàng</Text>
             </View>
             <Text style={[style.title, { margin: 10 }]}>Thông tin đơn hàng</Text>
-
             {InfoOrder()}
         </ScrollView>
     )
@@ -64,14 +59,13 @@ function OrderScreen(props) {
             ListFooterComponent={Order}
             ListFooterComponentStyle={{ width: '100%', marginTop: 30 }}
         >
-            {/* {listItem.map((item,index)=> <OrderItem item={item}/>)} */}
         </FlatList>
 
         function Order() {
             return (<View style={{ alignContent: 'center', alignItems: 'center' }} >
                 <View style={[styleOrder.textItem, { borderBottomWidth: 0.5, width: '90%' }]}>
                     <Text style={[style.textDH, { marginRight: 70 }]}>Tạm tính:</Text>
-                    <Text style={style.textDH}>{(totalMoney).toLocaleString('vi', {
+                    <Text style={style.textDH}>{(money).toLocaleString('vi', {
                         style: 'currency',
                         currency: 'VND'
                     })}</Text>
@@ -85,7 +79,7 @@ function OrderScreen(props) {
                 </View>
                 <View style={[styleOrder.textItem, { width: "90%" }]}>
                     <Text style={[style.textDH, { marginRight: 70 }]}>Tổng tiền:</Text>
-                    <Text style={style.textDH}>{(totalMoney+30000).toLocaleString('vi', {
+                    <Text style={style.textDH}>{(money+30000).toLocaleString('vi', {
                         style: 'currency',
                         currency: 'VND'
                     })}</Text>
@@ -162,9 +156,9 @@ function OrderScreen(props) {
     async function SendOrder() {
 
         let body = {
-            nameReceiver: userInfo.firstName + ' ' + userInfo.lastName,
-            address: userInfo.address,
-            phoneReceiver: userInfo.phone,
+            nameReceiver: Address?.address? Address.name: userInfo.firstName + ' ' + userInfo.lastName,
+            address: Address?.address? Address.address: userInfo.address,
+            phoneReceiver: Address?.address? Address.phone: userInfo.phone,
             feeShip: 30.000,
             note: '',
             listProduct: listItem.map((item, index) => {
@@ -184,7 +178,6 @@ function OrderScreen(props) {
                 } else {
                     Alert.alert('Thông báo', res.data.message);
                 }
-                // Alert.alert('Thông báo','Đặt hàng thành công');
             }).catch(err => {
                 Alert.alert('Thông báo', 'Đặt hàng thất bại');
             })
