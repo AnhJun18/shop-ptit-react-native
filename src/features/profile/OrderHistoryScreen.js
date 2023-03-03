@@ -3,6 +3,7 @@ import { Image } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { RadioGroup } from "react-native-radio-buttons-group";
+import Moment from 'moment';
 import MainHeader from "../../common/components/MainHeader";
 import axiosApiInstance from "../../context/interceptor";
 
@@ -25,9 +26,15 @@ const styles = StyleSheet.create({
         borderColor: '#ff0000',
         borderBottomWidth: 1,
     },
+    noOrderView:{
+        flex:1,
+        justifyContent: 'center',
+        textAlign:"center",
+    },
     orderContain: {
         backgroundColor: '#DDF2F3',
         marginBottom: 15,
+        padding: 10,
     },
     orderItem: {
         flex: 8,
@@ -35,13 +42,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    infoDeatil: {
+    infoDetail: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
         paddingHorizontal: 25,
-        paddingVertical: 5
+        paddingVertical: 5,
+        marginBottom:2,
     }
     ,
     imgProduct: {
@@ -57,7 +65,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: '2%',
         borderRadius: 5,
-        marginBottom: 7
+        marginBottom: 7,
+        marginTop:5,
         
     },
     txtBtn: {
@@ -70,13 +79,20 @@ const styles = StyleSheet.create({
     txtProduct: {
         fontSize: 18,
         fontWeight: 400,
-        color: '#676161'
+        color: '#676161',
     },
     txtDetail: {
         color: '#676161',
-        fontSize: 15,
+        fontSize: 12,
         fontWeight: 300,
+        fontStyle: "italic"
     },
+    txtOrderDetail: {
+        fontSize:13,
+        color: '#00000',
+        fontWeight:"bold",
+        marginBottom:2,
+    }
 
 })
 function OrderHistoryScreen(props) {
@@ -147,6 +163,7 @@ function OrderHistoryScreen(props) {
                     data={dataNavBar}
                     renderItem={renderNav}
                     horizontal={true}
+                    showsHorizontalScrollIndicator={false}
                 />
             </View>
 
@@ -156,14 +173,16 @@ function OrderHistoryScreen(props) {
                     renderItem={renderOrders}
                     keyExtractor={(item) => item.id.toString()}
                 /> :
-                <Text>Không có đơn hàng nào!</Text>}
+                <View style={styles.noOrderView}>
+                    <Text style={{textAlign:'center'}}>Không có đơn hàng nào!</Text>
+                </View>}
         </View>
     )
 }
 
 const renderOrders = ({ item }) => (
     <View style={styles.orderContain}>
-        <Text style={styles.txtDetail}>{item.createdDate}</Text>
+        <Text style={styles.txtOrderDetail}>{Moment(item.createdDate).format('DD-MM-YYYY HH:mm')}</Text>
         <View style={styles.orderItem}>
             <FlatList
                 data={item.orderDetails}
@@ -181,14 +200,14 @@ const renderOrders = ({ item }) => (
 );
 
 const renderItem = ({ item }) => (
-    <View style={styles.infoDeatil}>
+    <View style={styles.infoDetail}>
         <Image
             style={styles.imgProduct}
             source={{
                 uri: `${item.productDetail.infoProduct.linkImg}`,
             }}
         />
-        <View >
+        <View style={{marginLeft:16}}>
             <Text style={styles.txtProduct}>{item.productDetail.infoProduct.name}</Text>
             <Text style={styles.txtDetail} >Màu: {item.productDetail.color} - Size: {item.productDetail.size} </Text>
             <View style={{ flexDirection: 'row' }}>
