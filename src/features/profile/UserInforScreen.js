@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 function UserInforScreen(props) {
     const [change, setChange] = useState({})
     const userInfo = (props.route.params)
-
+    const navigation = props.navigation
     handleChangeInfo = (title, newValue) => {
         if (title === "name") {
             const name = newValue.split(" ");
@@ -85,7 +85,7 @@ function UserInforScreen(props) {
     }
     return (
         <View style={styles.container}>
-            <MainHeader title={"Thông tin cá nhân"} />
+            <MainHeader title={"Thông tin cá nhân"} navigation={navigation} screen={'Profile'}/>
             <View style={styles.mainLayout}>
                 <KeyboardAvoidingView behavior="">
                     <Text style={styles.text}>Họ và Tên</Text>

@@ -6,16 +6,18 @@ import style from "../style/address";
 import { useEffect,useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LogBox } from "react-native";
+import { connect } from "react-redux";
 function AddressButton(props) {
-    const navigation =props.navigation
+    const navigation =props.navigation;
+    const Address =  props.state.AddressReducer;
     const [userInfo,setUserInfo] = useState({});
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
         (async ()=>{
-         setUserInfo(JSON.parse(await AsyncStorage.getItem('@userInfo')));
+        setUserInfo(JSON.parse(await AsyncStorage.getItem('@userInfo')));
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     })().catch(err=>console.log(err))
-    }, [])
+    }, [Address?.detailAddress])
 
     handleChangeAddress=()=>{
         navigation.navigate("AddressScreen",{navigation})
@@ -26,16 +28,16 @@ function AddressButton(props) {
                 Địa chỉ nhận hàng
             </Text>
             <Text style={style.text}>
-            {`${userInfo.firstName} ${userInfo.lastName}`} 
+            {Address?.address? Address.name:`${userInfo.firstName} ${userInfo.lastName}`} 
             </Text>
             <Text style={style.text}>
-            {userInfo.phone}
+            {Address?.address? Address.phone:userInfo.phone}
             </Text>
             <Text style={style.text}>
-                {userInfo.address}
+                {Address?.address? Address.address:userInfo.address}
             </Text >
         </View>
        <Icon name={'angle-right'} size={30} style={{ flex: 0.5, color: '#B9ADAD'}}></Icon>
     </TouchableOpacity>
 }
-export default AddressButton;
+export default connect((state)=>{return {state:state}})(AddressButton)

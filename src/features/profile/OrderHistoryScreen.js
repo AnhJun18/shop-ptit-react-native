@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 4,
         borderColor: '#ff0000',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
     },
     orderContain: {
         backgroundColor: '#DDF2F3',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 50,
+        paddingHorizontal: 25,
         paddingVertical: 5
     }
     ,
@@ -51,9 +51,31 @@ const styles = StyleSheet.create({
     },
     btn: {
         height: 30,
+        width: '96%',
         backgroundColor: '#4ACBD3',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: '2%',
+        borderRadius: 5,
+        marginBottom: 7
+        
+    },
+    txtBtn: {
+        fontSize: 20,
+        fontWeight: 450,
+        color: '#676161',
+        marginRight: 45,
+        marginLeft: 45,
+    },
+    txtProduct: {
+        fontSize: 18,
+        fontWeight: 400,
+        color: '#676161'
+    },
+    txtDetail: {
+        color: '#676161',
+        fontSize: 15,
+        fontWeight: 300,
     },
 
 })
@@ -110,7 +132,7 @@ function OrderHistoryScreen(props) {
     }
     const renderNav = ({ item }) =>
         <TouchableOpacity style={item.selected ? styles.itemNavSelected : styles.itemNav} onPress={() => handleNav(item.label)}>
-            <Text style={{ flexWrap: 'nowrap' }}>
+            <Text style={{ flexWrap: 'nowrap', color: '#676161' }}>
                 {item.label}
             </Text>
         </TouchableOpacity>
@@ -141,7 +163,7 @@ function OrderHistoryScreen(props) {
 
 const renderOrders = ({ item }) => (
     <View style={styles.orderContain}>
-        <Text>{item.createdDate}</Text>
+        <Text style={styles.txtDetail}>{item.createdDate}</Text>
         <View style={styles.orderItem}>
             <FlatList
                 data={item.orderDetails}
@@ -149,7 +171,7 @@ const renderOrders = ({ item }) => (
                 keyExtractor={(i) => i.id.toString()}
                 ListFooterComponent={
                     <TouchableOpacity style={styles.btn}>
-                        <Text>Hủy Đơn</Text>
+                        <Text style={styles.txtBtn}>Hủy Đơn</Text>
                     </TouchableOpacity>}
             />
 
@@ -166,17 +188,19 @@ const renderItem = ({ item }) => (
                 uri: `${item.productDetail.infoProduct.linkImg}`,
             }}
         />
-        <View>
-            <Text >{item.productDetail.infoProduct.name}</Text>
+        <View >
+            <Text style={styles.txtProduct}>{item.productDetail.infoProduct.name}</Text>
+            <Text style={styles.txtDetail} >Màu: {item.productDetail.color} - Size: {item.productDetail.size} </Text>
             <View style={{ flexDirection: 'row' }}>
-                <Text >Màu: {item.productDetail.color} - Size: {item.productDetail.size} </Text>
-                <View style={{ alignItems: 'flex-end', width: '53%' }}>
-                    <Text style={styles.totalPrice}>x {(item.productDetail.infoProduct.price * item.amount).toLocaleString('vi', {
+                <Text style={[styles.txtDetail, {width: '30%'}]}>Số lượng:  {item.amount} </Text>
+                <View style={{ alignItems: 'flex-end', width: '50%' }}>
+                    <Text style={styles.txtDetail}>x {(item.productDetail.infoProduct.price * item.amount).toLocaleString('vi', {
                         style: 'currency',
                         currency: 'VND'
                     })}</Text>
                 </View>
             </View>
+            
 
         </View>
 
