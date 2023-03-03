@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Background from "../../../common/components/Background";
 import ComponentsView from "../components/ComponentView";
 import Category from "../components/Category";
-import ListBestSeller from "../components/ListBestSeller";
+import ListBestSeller  from "../components/ListBestSeller";
 import ListBrand from "../components/ListBrand";
 import { useEffect } from "react";
 import { LogBox, RefreshControl } from 'react-native';
@@ -12,8 +12,13 @@ import axiosApiInstance from "../../../context/interceptor";
 import axios from "../../../context/axios";
 import { useState } from "react";
 import ProductItem from "../../../common/components/ProductItem";
-function ListAllProduct(props) {
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import * as Animatable from "react-native-animatable";
+import { SafeAreaView } from "react-native";
+const  ListAllProduct  = connect(state => { return { state: state } })((props) => {
   const [listAllProduct, setAllListProduct] = useState([]);
+  const refresh= props.state.RefreshHome;
   useEffect(() => {
     (async () => {
       const res = await axiosApiInstance.get(axios.defaults.baseURL + '/api/product/all')
@@ -21,7 +26,8 @@ function ListAllProduct(props) {
     })().then().catch(err => {
       console.log(err)
     })
-  }, [])
+  }, [refresh.refresh])
+
   return (
     <FlatList
       data={listAllProduct}
@@ -48,12 +54,16 @@ function ListAllProduct(props) {
         </TouchableOpacity>
       </View>)
   }
-}
+})
 function HomeScreen(props) {
+  const dispatch = useDispatch();
+  const navigation= props.navigation;
+  let num = 1;
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-  
+    dispatch({ type: 'REFRESH_HOME', payload: { refresh: num } })
+    num++;
     setRefreshing(false);
   }, []);
   useEffect(() => {
@@ -66,29 +76,34 @@ function HomeScreen(props) {
       }>
       <Background></Background>
       <Header></Header>
-      <ComponentsView
-        title={'DANH MỤC SẢN PHẨM'}
-        child={Category}
-      >
-      </ComponentsView>
-      <ComponentsView
-        title={'SẢN PHẨM BÁN CHẠY'}
-        child={ListBestSeller}
-        navigation={props.navigation}
-        refreshing={refreshing}
-        >
-      </ComponentsView>
+      <Animatable.View 
+        animation="fadeInUpBig"
+        style={[{color:'black',minHeight:100,backgroundColor:'#f5f5f5',padding:10,marginBottom:15}]}>
+            <Text style={{color:'#212121',marginBottom:5,fontSize:16}}>{'DANH MỤC SẢN PHẨM'}</Text>
+            <SafeAreaView>{Category({navigation:props.navigation,refreshing:refreshing})}</SafeAreaView>
+        </Animatable.View>
+      <View>
+      <Animatable.View 
+        animation="fadeInUpBig"
+        style={[{color:'black',minHeight:100,backgroundColor:'#f5f5f5',padding:10,marginBottom:15}]}>
+            <Text style={{color:'#212121',marginBottom:5,fontSize:16}}>{'DANH MỤC SẢN PHẨM'}</Text>
+            <SafeAreaView><ListBestSeller navigation={props.navigation}></ListBestSeller></SafeAreaView>
+        </Animatable.View>
+      </View>
       <ComponentsView
         child={ListBrand}
       >
       </ComponentsView>
-      <ComponentsView
-        title={'TẤT CẢ SẢN PHẨM'}
-        navigation={props.navigation}
-        child={ListAllProduct}
-      />
-      {/* <ListAllProduct/> */}
+      <View>
+      <Animatable.View 
+        animation="fadeInUpBig"
+        style={[{color:'black',minHeight:100,backgroundColor:'#f5f5f5',padding:10,marginBottom:15}]}>
+            <Text style={{color:'#212121',marginBottom:5,fontSize:16}}>{'TẤT CẢ SẢN PHẨM'}</Text>
+            <SafeAreaView><ListAllProduct navigation={props.navigation}></ListAllProduct></SafeAreaView>
+        </Animatable.View>
+      </View>
     </ScrollView>
+
   )
 }
 export default HomeScreen;
