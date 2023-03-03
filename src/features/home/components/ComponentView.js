@@ -5,8 +5,8 @@ function ComponentsView(props) {
     const title = props.title;
     const child= props.child;
     return (
-        <View style={[{color:'black',minHeight:100,backgroundColor:'white',marginBottom:20,paddingLeft:5, paddingBottom:5, paddingTop:3}]}>
-            <Text>{title?title:''}</Text>
+        <View style={[{color:'black',minHeight:100,backgroundColor:'#f5f5f5',padding:10,marginBottom:15}]}>
+            <Text style={{color:'#212121',marginBottom:title?5:0,fontSize:16}}>{title?title:''}</Text>
             <SafeAreaView>{child? child(props.navigation):null}</SafeAreaView>
         </View>
     )
