@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Linking } from "react-native";
+import { openInbox } from 'react-native-email-link';
 import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -12,7 +13,9 @@ function ForgotPass(props) {
     const [userEmail, setUserEmail] = useState(null)
     const [loading, setLoading] = useState(false)
     const [sended, setSended] = useState(false)
-
+    const openGmail = () => {
+        openInbox();
+      }
     submitSendEmail = async () => {
         setLoading(true)
        const apiResponse = await axios.post('/api/auth/user/forgot-password', { email: userEmail })
@@ -62,8 +65,17 @@ function ForgotPass(props) {
             :
                 <Animatable.View
                     animation="jello"
-                    style={styles.main}>
-                    <Text style={styles.txt_main}>Kiem tra email</Text>
+                    style={[styles.main]}>
+                    <Text style={styles.txt_main}>Chúng tôi đã gửi link xác nhận đến email của bạn. </Text>
+                    <TouchableOpacity style={styles.button} onPress={() => navigate("LoginNavigation")}>
+                        <Text style={styles.txt_btn}>Đi đến đăng nhập</Text>
+                    </TouchableOpacity>
+                    <View style={styles.bottom}>
+                        <TouchableOpacity onPress={openGmail}>
+                            <Text style={styles.textBlue}>Đi đến gmail</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </Animatable.View>  
             }
 
