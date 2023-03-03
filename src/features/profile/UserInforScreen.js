@@ -8,12 +8,11 @@ import axiosApiInstance from "../../context/interceptor";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-
+        backgroundColor:'#f5f5f5',
     },
     mainLayout: {
         alignItems: 'center',
+        paddingVertical:10
     },
     input: {
         width: 300,
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     txtBtn: {
         fontSize: 25,
         fontWeight: 600,
-        color: '#676161',
+        color: '#212121',
         marginRight: 45,
         marginLeft: 45,
     },
@@ -41,10 +40,10 @@ const styles = StyleSheet.create({
     },
     btn: {
         height: 50,
-        backgroundColor: '#4ACBD3',
+        backgroundColor: '#0e8ba9',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 15,
+        borderRadius: 5,
         marginTop: 20,
     },
 });
