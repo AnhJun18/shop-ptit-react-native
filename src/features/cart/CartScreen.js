@@ -149,7 +149,7 @@ const CartScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <MainHeader title="Giỏ hàng"></MainHeader>
+            <MainHeader title="Giỏ hàng" navigation={navigation}></MainHeader>
             <FlatList
                 data={listCart}
                 renderItem={renderItem}

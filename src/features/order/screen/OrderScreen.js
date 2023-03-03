@@ -32,7 +32,7 @@ function OrderScreen(props) {
     // }, [props.route.params.data[0].product.id]));
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: '#DDF2F3' }}>
-            <MainHeader title={'Đặt hàng'}></MainHeader>
+            <MainHeader title={'Đặt hàng'} navigation={navigation}></MainHeader>
             <AddressButton navigation={navigation}></AddressButton>
             <View style={style.container}>
                 <Text style={style.title}>Hình thức vận chuyển</Text>
