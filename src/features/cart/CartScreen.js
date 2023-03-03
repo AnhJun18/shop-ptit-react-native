@@ -150,7 +150,7 @@ const CartScreen = ({ navigation }) => {
             <MainHeader title="Giỏ hàng"></MainHeader>
             <FlatList
                 data={listCart}
-                style={{paddingHorizontal:2}}
+                style={{paddingHorizontal:2,marginBottom:50}}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.idCart.toString()
                 }
