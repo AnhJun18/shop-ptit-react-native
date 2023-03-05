@@ -162,6 +162,7 @@ const CartScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+           
             <MainHeader title="Giỏ hàng" navigation={navigation} screen={'HomeNavigation'}></MainHeader>
             <FlatList
                 data={listCart}
