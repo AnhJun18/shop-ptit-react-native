@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Image, ToastAndroid } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Animated, Image, ToastAndroid } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { RadioGroup } from "react-native-radio-buttons-group";
 import Moment from 'moment';
 import MainHeader from "../../common/components/MainHeader";
 import axiosApiInstance from "../../context/interceptor";
 function OrderHistoryScreen(props) {
     const navigation = props.navigation;
-    const [refresh,setRefresh]= useState(false)
+    const [refresh, setRefresh] = useState(false);
+
     const [dataNavBar, setDataNavBar] = useState([
         {
             id: '1',
@@ -35,7 +35,9 @@ function OrderHistoryScreen(props) {
         }
     ])
     const [listOrder, setlistOrder] = useState([])
-    const [status,setStatus] = useState('0')
+    const [status, setStatus] = useState('0')
+    const animation = useRef(new Animated.Value(0)).current;
+    const [notify, setNotify] = useState('')
     getCart = async () => {
         const statusSelected = (dataNavBar.filter((i) => {
             if (i.selected === true) return true
@@ -47,7 +49,7 @@ function OrderHistoryScreen(props) {
     }
     useEffect(() => {
         getCart()
-    }, [dataNavBar,status,refresh])
+    }, [dataNavBar, status, refresh])
 
     handleNav = (labelSelected) => {
         setDataNavBar(dataNavBar.map((i) => {
@@ -67,14 +69,45 @@ function OrderHistoryScreen(props) {
                     renderItem={renderItem}
                     keyExtractor={(i) => i.id.toString()}
                     ListFooterComponent={
-                        <TouchableOpacity style={styles.btn} onPress={()=>CancelOrder(item.id)}>
-                            <Text style={styles.txtBtn}>{status =='Đã Hủy'? 'Đặt lại':'Hủy Đơn'}</Text>
+                        <TouchableOpacity style={styles.btn} onPress={() => CancelOrder(item.id)}>
+                            <Text style={styles.txtBtn}>{status == 'Đã Hủy' ? 'Đặt lại' : 'Hủy Đơn'}</Text>
                         </TouchableOpacity>}
                 />
             </View>
         </View>
-    
+
     );
+    const openAnima = useRef(new Animated.Value(0)).current;
+    const ShowAnimation = () => {
+        Animated.timing(animation, {
+            toValue: 55,
+            duration: 500,
+            useNativeDriver: true
+        }).start()
+    }
+    const OpenAnimation = () => {
+        Animated.timing(openAnima, {
+            toValue: 10,
+            duration: 500,
+            useNativeDriver: true
+        }).start()
+    }
+    const HideAnimation = () => {
+        Animated.timing(animation, {
+            toValue: -50,
+            duration: 300,
+            useNativeDriver: true
+        }).start()
+    }
+  
+    const animatedStyle = {
+        transform: [
+            {
+                translateY: animation,
+            },
+        ],
+    }
+
     const renderNav = ({ item }) =>
         <TouchableOpacity style={item.selected ? styles.itemNavSelected : styles.itemNav} onPress={() => handleNav(item.label)}>
             <Text style={{ flexWrap: 'nowrap', color: '#676161' }}>
@@ -83,6 +116,9 @@ function OrderHistoryScreen(props) {
         </TouchableOpacity>
     return (
         <View style={styles.container}>
+            <Animated.View style={[styles.notify, animatedStyle]}>
+                <Text style={[styles.txtProduct, { color: 'black' }]}>{notify}</Text>
+            </Animated.View>
             <MainHeader title="Đơn mua" navigation={navigation} screen={'Profile'}></MainHeader>
             <View style={styles.nav}>
                 <FlatList
@@ -99,31 +135,47 @@ function OrderHistoryScreen(props) {
                     keyExtractor={(item) => item.id.toString()}
                 /> :
                 <View style={styles.noOrderView}>
-                    <Text style={{textAlign:'center'}}>Không có đơn hàng nào!</Text>
+                    <Text style={{ textAlign: 'center' }}>Không có đơn hàng nào!</Text>
                 </View>}
         </View>
     )
-  
-    function CancelOrder(id){
-            Alert.alert('Xác nhận','Are you sủe', [
-                {
-                  text: 'Hủy',
-                  style: 'cancel',
-                },
-                {
-                    text: 'Ok',
-                    onPress: ()=>{
-                        axiosApiInstance.delete(`/api/order/cancel_order?order_id=${id}`).then(
-                            data=> ToastAndroid.show('Xóa thành công',ToastAndroid.CENTER)
-                        )
-                        .catch(err=>{
-                            ToastAndroid.show('Có lỗi xảy ra',ToastAndroid.CENTER)
+
+    function CancelOrder(id) {
+        Alert.alert('Xác nhận', 'Bạn có muốn xóa đơn hàng không?', [
+            {
+                text: 'Hủy',
+                style: 'cancel',
+            },
+            {
+                text: 'Ok',
+                onPress: () => {
+                    axiosApiInstance.delete(`/api/order/cancel_order?order_id=${id}`).then(
+                        data => {
+                            ShowAnimation()
+                            setNotify('Thông báo! Hủy đơn thành công')
+                            setTimeout(() => {
+                                OpenAnimation()
+                                setTimeout(() => {
+                                    HideAnimation()
+                                }, 2000);
+                            }, 1000);
+                            // ToastAndroid.showWithGravity('Thông báo! Hủy thành công',ToastAndroid.SHORT,ToastAndroid.TOP)
+                        }
+                    )
+                        .catch(err => {
+                            {
+                                ShowAnimation()
+                                setNotify('Thông báo! Hủy đơn thất bại')
+                                setTimeout(() => {
+                                    HideAnimation()
+                                }, 2000);
+                            }
                         })
-                        .finally(()=>setRefresh(!refresh))
-                    },
-                    style: 'default',
-                  },
-              ],)  
+                        .finally(() => setRefresh(!refresh))
+                },
+                style: 'default',
+            },
+        ],)
     }
 
 }
@@ -138,11 +190,11 @@ const renderItem = ({ item }) => (
                 uri: `${item.productDetail.infoProduct.linkImg}`,
             }}
         />
-        <View style={{marginLeft:16}}>
+        <View style={{ marginLeft: 16 }}>
             <Text style={styles.txtProduct}>{item.productDetail.infoProduct.name}</Text>
             <Text style={styles.txtDetail} >Màu: {item.productDetail.color} - Size: {item.productDetail.size} </Text>
             <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.txtDetail, {width: '30%'}]}>Số lượng:  {item.amount} </Text>
+                <Text style={[styles.txtDetail, { width: '30%' }]}>Số lượng:  {item.amount} </Text>
                 <View style={{ alignItems: 'flex-end', width: '50%' }}>
                     <Text style={styles.txtDetail}>x {(item.productDetail.infoProduct.price * item.amount).toLocaleString('vi', {
                         style: 'currency',
@@ -172,10 +224,10 @@ const styles = StyleSheet.create({
         borderColor: '#ff0000',
         borderBottomWidth: 1,
     },
-    noOrderView:{
-        flex:1,
+    noOrderView: {
+        flex: 1,
         justifyContent: 'center',
-        textAlign:"center",
+        textAlign: "center",
     },
     orderContain: {
         backgroundColor: '#DDF2F3',
@@ -195,7 +247,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 25,
         paddingVertical: 5,
-        marginBottom:2,
+        marginBottom: 2,
     }
     ,
     imgProduct: {
@@ -212,12 +264,12 @@ const styles = StyleSheet.create({
         marginLeft: '2%',
         borderRadius: 5,
         marginBottom: 7,
-        marginTop:5,
-        
+        marginTop: 5,
+
     },
     txtBtn: {
         fontSize: 20,
-        fontWeight: '450',
+        fontWeight: '400',
         color: '#676161',
         marginRight: 45,
         marginLeft: 45,
@@ -234,11 +286,25 @@ const styles = StyleSheet.create({
         fontStyle: "italic"
     },
     txtOrderDetail: {
-        fontSize:13,
+        fontSize: 13,
         color: '#00000',
-        fontWeight:"bold",
-        marginBottom:2,
-    }
+        fontWeight: "bold",
+        marginBottom: 2,
+    },
+    notify: {
+        position: 'absolute',
+        zIndex: 10,
+        backgroundColor: 'rgba(255,255,255,0.9)',
+        height: 40,
+        width: '9%',
+        alignSelf: 'center',
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: -40
+    },
+    textNotify: {
 
+    }
 })
 export default OrderHistoryScreen;
