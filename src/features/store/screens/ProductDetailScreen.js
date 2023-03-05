@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'relative',
         height: '100%',
-        backgroundColor: '#CDF1F1',
+        backgroundColor: '#f5f5f5',
         position: 'relative'
     },
     tinyLogo: {
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     },
     txtPrices: {
         fontSize: 25,
-        fontWeight: 500,
-        color: '#5A5252',
+        fontWeight: 450,
+        color: '#901F1F',
     },
     txtDetail: {
         fontSize: 22,
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderBottomWidth: 6,
-        borderBottomColor: '#BBDADA',
+        borderBottomColor: '#D9D9D9',
     },
     productDetail: {
         paddingHorizontal: 20,
         paddingVertical: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#BBDADA',
+        borderBottomWidth: 2,
+        borderBottomColor: '#D9D9D9',
     },
     menu: {
         flex: 1,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     btn: {
         width: '50%',
         height: '100%',
-        backgroundColor: '#4ACBD3',
+        backgroundColor: '#0e8ba9',
         borderColor: '#B9D8E2',
         borderWidth: 1.5,
         borderStyle: 'solid',
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 25,
         fontWeight: 600,
-        color: '#676161'
+        color: '#353434'
     },
     txtHeader: {
         fontSize: 23,
@@ -131,6 +131,7 @@ function ProductDetailScreen(props) {
     const [quantity, setQuantity] = useState(1);
 
     function onPressColorButton(radioButtonsArray) {
+        
         const colorSelected = (radioButtonsArray.filter((i) => { return i.selected === true }))
         product.map((i) => {
             if (i === colorSelected.value)
@@ -145,7 +146,7 @@ function ProductDetailScreen(props) {
     getColor = () => {
         setRadioColor(Array.from(new Set(product.map((item) => {
             return item.color
-        }))).map((i) => { return { id: i, label: i, value: i } }))
+        }))).map((i) => { return { id: i, label: i, value: i, labelStyle:{ color: '#777474', fontSize: 19} } }))
     }
     getSize = (color) => {
         setRadioSize(product.filter((item) => {
@@ -153,7 +154,7 @@ function ProductDetailScreen(props) {
                 return true
             else
                 return false
-        }).map((i) => { return { id: i.size, label: i.size, value: i.size } }))
+        }).map((i) => { return { id: i.size, label: i.size, value: i.size, labelStyle:{ color: '#777474',fontSize: 19} } }))
     }
     getProduct = async () => {
         const apiResponse = await axiosApiInstance.get(axios.defaults.baseURL + `/api/product/detail/${itemID}`);
@@ -261,6 +262,7 @@ function ProductDetailScreen(props) {
                         </Text>
 
                         <RadioGroup
+                            
                             radioButtons={radioColor}
                             onPress={onPressColorButton}
                             layout='row'
@@ -281,7 +283,7 @@ function ProductDetailScreen(props) {
                                 Vui lòng chọn màu
                             </Text>
                         }
-                        <Text style={[styles.txttext]}>
+                        <Text style={[styles.txttext, {marginBottom: 7}]}>
                             Số lượng
                         </Text>
                         <InputSpinner
@@ -294,7 +296,7 @@ function ProductDetailScreen(props) {
                             skin={"square"}
                             height={40}
                             buttonFontSize={15}
-                            fontSize={12}
+                            fontSize={17}
                             fontWeight={500}
 
                         />
