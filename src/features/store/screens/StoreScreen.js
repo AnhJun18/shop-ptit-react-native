@@ -31,16 +31,22 @@ function StoreScreen(props) {
             </Menu>
             <Background />
             <View style={styleStore.searchBar}>
-                <Icon name="search" size={30}></Icon>
+                <Icon name="search" size={25} style={{textAlign:"center", justifyContent: "center",marginTop:5,marginLeft:2,marginRight:2,}}></Icon>
                 <TextInput style={styleStore.searchInput} onChangeText={value => {
                     setSearchText(value);
                     dispatch({ type: 'SEARCH', payload: value })
                 }} />
             </View>
             <View style={styleStore.navbar}>
-                <View style={{ flex: 1.5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Icon name={'filter'} size={35} style={{ backgroundColor: 'white' }}></Icon>
-                    <TouchableOpacity style={styleStore.buttonNav}
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-around" }}>
+                <TouchableOpacity style={styleStore.buttonNav}
+                        onPress={() => {
+                            setVisible(!visible)
+                        }}
+                    >
+                        <Icon name={'filter'} size={28} style={{ backgroundColor: 'white',marginTop:5 }}></Icon>                        
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styleStore.buttonNav,{marginRight:10}]}
                         onPress={() => {
                             setVisible(!visible)
                         }}

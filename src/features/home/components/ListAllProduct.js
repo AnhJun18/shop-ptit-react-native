@@ -41,6 +41,7 @@ function ListAllProduct(props) {
   return (
     search().length> 0 ? 
     <FlatList
+      style={{marginBottom:120, marginLeft:10}}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
@@ -55,14 +56,15 @@ function ListAllProduct(props) {
       numColumns={3}
       initialNumToRender={10}
     /> :
-    <ScrollView style={{height:500, flexDirection:'row'}}
+    <ScrollView style={{height:700, flexDirection:'row',}}
     refreshControl={
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }
-    ><View>
-      <Text>Không tìm thấy dữ liệu </Text>
-      <Icon name={'frown'} size={50} style={{color:'rgba(255,255,255,0.9)'}}/>
-    </View>   
+    >
+      <View style={{marginTop:250,alignItems: 'center',marginLeft:120}}>
+        <Text>Không tìm thấy dữ liệu </Text>
+        <Icon name={'frown'} size={50} style={{color:'rgba(255,255,255,0.9)'}}/>
+      </View>   
     </ScrollView>
   )
  
