@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import HomeNavigation from './HomeNavigation';
-import LoginNavigation from '../login/LoginNavigation';
 import OrderScreen from '../features/order/screen/OrderScreen';
 import OrderHistoryScreen from '../features/profile/OrderHistoryScreen';
 import ChangePassScreen from '../features/auth/screen/ChangePassScreen';
@@ -13,7 +12,7 @@ import ProductDetailScreen from '../features/store/screens/ProductDetailScreen';
 import ProfileScreen from '../features/profile/ProfileScreen';
 import CartScreen from '../features/cart/CartScreen';
 import AddressScreen from '../features/user/screens/AddressScreen';
-
+import LoginScreen from '../features/auth/screen/LoginScreen';
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
@@ -81,7 +80,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="LoginNavigation"
-        component={LoginNavigation}
+        component={LoginScreen}
         options={{
           tabBarLabel: 'Trang cá nhân',
           tabBarBadge: 3,
