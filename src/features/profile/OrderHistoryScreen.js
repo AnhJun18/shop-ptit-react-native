@@ -110,7 +110,7 @@ function OrderHistoryScreen(props) {
 
     const renderNav = ({ item }) =>
         <TouchableOpacity style={item.selected ? styles.itemNavSelected : styles.itemNav} onPress={() => handleNav(item.label)}>
-            <Text style={{ flexWrap: 'nowrap', color: '#676161' }}>
+            <Text style={item.selected?{color:'#ff0000', flexWrap: 'nowrap'}:{ flexWrap: 'nowrap', color: '#676161',}}>
                 {item.label}
             </Text>
         </TouchableOpacity>
