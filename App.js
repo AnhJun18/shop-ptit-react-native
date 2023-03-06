@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import MyTabs from './src/navigations/main/Main';
+import MyTabs from './src/navigations/Main';
 import { NavigationContainer } from '@react-navigation/native';
 import { store } from './src/reducer';
 import { Provider } from 'react-redux';
