@@ -1,6 +1,6 @@
-import HomeScreen from "../../features/home/screen/HomeScreen";
+import HomeScreen from "../features/home/screen/HomeScreen";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CartScreen from "../../features/cart/CartScreen";
+import CartScreen from "../features/cart/CartScreen";
 const Stack = createNativeStackNavigator();
 
 function HomeNavigation(){
