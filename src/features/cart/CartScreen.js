@@ -131,7 +131,7 @@ const CartScreen = ({ navigation }) => {
             <View style={styles.infoProduct}>
                 <Text style={styles.txtProduct}>{item.product.infoProduct.name}</Text>
                 <Text style={styles.txtDetail}>Màu: {item.product.color} - Size: {item.product.size} </Text>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginTop: 5 }}>
                     <InputSpinner
                         max={100}
                         min={0}
@@ -142,8 +142,8 @@ const CartScreen = ({ navigation }) => {
                         skin={"square"}
                         height={30}
                         buttonFontSize={12}
-                        fontSize={8}
-                        fontWeight={500}
+                        fontSize={9}
+                        fontWeight={200}
 
                     />
                     <View style={styles.disPrices}>
@@ -155,7 +155,7 @@ const CartScreen = ({ navigation }) => {
                 </View>
             </View>
             <TouchableOpacity style={styles.btn_delete} onPress={()=>handleDeleteItem(item.product.id)}>
-                <Icon name="close" color={"red"} fontSize={18}/>
+                <Icon name="close" color={"back"} fontSize={18}/>
             </TouchableOpacity>
         </Animatable.View>
     );
@@ -199,7 +199,7 @@ const { width, height } = Dimensions.get("screen")
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#F1EFEF',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 1,
-        shadowRadius: 2,
+        shadowRadius: 3,
         shadowColor: '#000',
     },
     imgProduct: {
@@ -237,18 +237,18 @@ const styles = StyleSheet.create({
     },
     txtProduct: {
         flexWrap: 'wrap',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 400,
         color: '#212121'
     },
     txtDetail: {
         color: '#676161',
-        fontSize: 12,
+        fontSize: 16,
         fontWeight: 400,
         fontStyle: 'italic'
     },
     totalPrice: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 400,
         color: '#434',
         fontStyle: 'italic'
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     spinner: {
-        marginLeft: 2,
+        marginLeft: 9,
         width: width * 0.2,
     },
     input_spinner: {

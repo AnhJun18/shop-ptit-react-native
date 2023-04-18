@@ -12,7 +12,7 @@ import MenuComponent from "../components/MenuComponent";
 import { RefreshControl } from "react-native";
 function StoreScreen(props) {
     const navigation = props.navigation;
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const [searchText, setSearchText] = useState('');
     const dispatch = useDispatch();
     const hideMenu = () => setVisible(false);

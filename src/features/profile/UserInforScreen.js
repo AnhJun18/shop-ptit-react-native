@@ -5,6 +5,8 @@ import { RadioGroup } from "react-native-radio-buttons-group";
 import Background from "../../common/components/Background";
 import MainHeader from "../../common/components/MainHeader";
 import axiosApiInstance from "../../context/interceptor";
+import { color } from "react-native-reanimated";
+import { navigate } from "../../navigations/RootNavigation";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
         fontWeight: 400,
     },
     txtBtn: {
-        fontSize: 25,
+        fontSize: 23,
         fontWeight: 600,
         color: '#212121',
         marginRight: 45,
@@ -67,10 +69,12 @@ function UserInforScreen(props) {
     const radioGender = [{
         id: "Nam",
         label: "Nam",
+        labelStyle:{ color: '#777474', fontSize: 19},
         selected: userInfo.userInfo?.gender === "Nam"
     }, {
         id: "Nu",
-        label: "Nu",
+        label: "Nữ",
+        labelStyle:{ color: '#777474', fontSize: 19},
         selected: userInfo.userInfo?.gender === "Nu"
     }
     ]
@@ -110,7 +114,7 @@ function UserInforScreen(props) {
                 <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
                     <Text style={styles.txtBtn}>Cập nhật thông tin</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ marginTop: 20, alignItems: 'center' }}>
+                <TouchableOpacity style={{ marginTop: 20, alignItems: 'center' }} onPress={() => navigate("ChangePass")}>
                     <Text style={styles.textBlue}>Đổi mật khẩu</Text>
                 </TouchableOpacity>
             </View>
