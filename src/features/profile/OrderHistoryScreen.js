@@ -8,7 +8,7 @@ import axiosApiInstance from "../../context/interceptor";
 function OrderHistoryScreen(props) {
     const navigation = props.navigation;
     const [refresh, setRefresh] = useState(false);
-
+    const [shouldShow, setShouldShow] = useState(true);
     const [dataNavBar, setDataNavBar] = useState([
         {
             id: '1',
@@ -16,23 +16,22 @@ function OrderHistoryScreen(props) {
             selected: true
         },
         {
+            id: '5',
+            label: 'Đang Chuẩn Bị Hàng',
+        },
+        {
             id: '2',
             label: 'Đang vận chuyển',
+        },
+        {
+            id: '4',
+            label: 'Đã Thanh Toán',
         },
         {
             id: '3',
             label: 'Đã Hủy',
         }
-        ,
-        {
-            id: '4',
-            label: 'Đã Thanh Toán',
-        }
-        ,
-        {
-            id: '5',
-            label: 'Đang Chuẩn Bị Hàng',
-        }
+        
     ])
     const [listOrder, setlistOrder] = useState([])
     const [status, setStatus] = useState('0')
@@ -69,8 +68,8 @@ function OrderHistoryScreen(props) {
                     renderItem={renderItem}
                     keyExtractor={(i) => i.id.toString()}
                     ListFooterComponent={
-                        <TouchableOpacity style={styles.btn} onPress={() => CancelOrder(item.id)}>
-                            <Text style={styles.txtBtn}>{status == 'Đã Hủy' ? 'Đặt lại' : 'Hủy Đơn'}</Text>
+                        <TouchableOpacity style={[styles.btn]} onPress={() => CancelOrder(item.id)}>
+                            <Text style={styles.txtBtn}>{['Đã Hủy', 'Đã Thanh Toán' ].includes(status) ? 'Đặt lại' : 'Hủy Đơn'}</Text>
                         </TouchableOpacity>}
                 />
             </View>
@@ -190,12 +189,12 @@ const renderItem = ({ item }) => (
                 uri: `${item.productDetail.infoProduct.linkImg}`,
             }}
         />
-        <View style={{ marginLeft: 16 }}>
+        <View style={{ marginLeft: 2 }}>
             <Text style={styles.txtProduct}>{item.productDetail.infoProduct.name}</Text>
             <Text style={styles.txtDetail} >Màu: {item.productDetail.color} - Size: {item.productDetail.size} </Text>
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={[styles.txtDetail, { width: '30%' }]}>Số lượng:  {item.amount} </Text>
-                <View style={{ alignItems: 'flex-end', width: '50%' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={[styles.txtDetail, { width: '40%' }]}>Số lượng: {item.amount} </Text>
+                <View style={{ alignItems: 'flex-end', width: '40%'  }}>
                     <Text style={styles.txtDetail}>x {(item.productDetail.infoProduct.price * item.amount).toLocaleString('vi', {
                         style: 'currency',
                         currency: 'VND'
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: '2%',
-        borderRadius: 5,
+        borderRadius: 3,
         marginBottom: 7,
         marginTop: 5,
 
@@ -281,13 +280,13 @@ const styles = StyleSheet.create({
     },
     txtDetail: {
         color: '#676161',
-        fontSize: 12,
+        fontSize: 17,
         fontWeight: 300,
         fontStyle: "italic"
     },
     txtOrderDetail: {
-        fontSize: 13,
-        color: '#00000',
+        fontSize: 17,
+        color: '#676161',
         fontWeight: "bold",
         marginBottom: 2,
     },

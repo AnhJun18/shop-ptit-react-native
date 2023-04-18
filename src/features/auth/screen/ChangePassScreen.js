@@ -8,6 +8,8 @@ import DataStorage from "../../../common/utility/DataStorage";
 import AuthContext from "../../../context/AuthProvider";
 import { navigate } from "../../../navigations/RootNavigation";
 function ChangePassScreen(props) {
+    const [hidePassNew, setHidePassNew] = useState(true)
+    const [hidePassConfirm, sethidePassConfirm] = useState(true)
     const [hidePass, setHidePass] = useState(true)
     return (
         <View style={styles.container}>
@@ -19,7 +21,7 @@ function ChangePassScreen(props) {
         <Animatable.View
             animation="fadeInUpBig"
             style={styles.main}>
-            <Text style={styles.txt_main}>Mật khẩu mới</Text>
+            <Text style={styles.txt_main}>Mật khẩu hiện tại</Text>
             <View style={styles.action}>
                 <FontAwesome
                     name="key"
@@ -27,7 +29,7 @@ function ChangePassScreen(props) {
                     size={20}
                 ></FontAwesome>
                 <TextInput style={styles.txt_input}
-                    placeholder="Nhập mật khẩu mới"
+                    placeholder="Mật khẩu hiện tại "
                     placeholderTextColor="#ccc"
                     autoCapitalize="none"
                     secureTextEntry={hidePass ? true : false}
@@ -44,6 +46,34 @@ function ChangePassScreen(props) {
                         color="#05375a"
                         size={20}
                         onPress={() => setHidePass(!hidePass)}
+                    />}
+
+            </View>
+            <Text style={styles.txt_main}>Mật khẩu mới</Text>
+            <View style={styles.action}>
+                <FontAwesome
+                    name="key"
+                    color="#05375a"
+                    size={20}
+                ></FontAwesome>
+                <TextInput style={styles.txt_input}
+                    placeholder="Nhập mật khẩu mới"
+                    placeholderTextColor="#ccc"
+                    autoCapitalize="none"
+                    secureTextEntry={hidePassNew ? true : false}
+                />
+                {hidePassNew ?
+                    <FontAwesome
+                        name="eye-slash"
+                        color="#05375a"
+                        size={20}
+                        onPress={() => setHidePassNew(!hidePassNew)}
+                    /> :
+                    <FontAwesome
+                        name="eye"
+                        color="#05375a"
+                        size={20}
+                        onPress={() => setHidePassNew(!hidePassNew)}
                     />}
 
             </View>
@@ -58,31 +88,27 @@ function ChangePassScreen(props) {
                     placeholder="Xác nhận mật khẩu "
                     placeholderTextColor="#ccc"
                     autoCapitalize="none"
-                    secureTextEntry={hidePass ? true : false}
+                    secureTextEntry={hidePassConfirm ? true : false}
                 />
-                {hidePass ?
+                {hidePassConfirm ?
                     <FontAwesome
                         name="eye-slash"
                         color="#05375a"
                         size={20}
-                        onPress={() => setHidePass(!hidePass)}
+                        onPress={() => sethidePassConfirm(!hidePassConfirm)}
                     /> :
                     <FontAwesome
                         name="eye"
                         color="#05375a"
                         size={20}
-                        onPress={() => setHidePass(!hidePass)}
+                        onPress={() => sethidePassConfirm(!hidePassConfirm)}
                     />}
 
             </View>
-            <TouchableOpacity style={styles.button} >
-                <Text style={styles.txt_btn}>Đổi mật khẩu</Text>
-            </TouchableOpacity>
-            <View style={styles.bottom}>
-                <TouchableOpacity onPress={() => navigate("LoginNavigation")}>
-                    <Text style={styles.textBlue}>Đăng nhập</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                    <Text style={{fontSize: 21, fontWeight: 400, color: '#000'}}>Đổi mật khẩu</Text>
+             </TouchableOpacity>
+            
         </Animatable.View>
 
     </View>

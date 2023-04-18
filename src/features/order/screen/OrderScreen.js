@@ -88,7 +88,7 @@ function OrderScreen(props) {
                     <TouchableOpacity style={{
                         backgroundColor: '#4ACBD3',
                         height: 45, width: '97%', justifyContent: "center", alignItems: 'center', marginBottom: 10,
-                        borderRadius: 10
+                        borderRadius: 5
                     }}
                         onPress={SendOrder}
                     >
