@@ -12,6 +12,7 @@ import axios from '../../../context/axios';
 import axiosApiInstance from '../../../context/interceptor';
 import { connect } from 'react-redux';
 import { Alert } from 'react-native';
+import { navigate } from '../../../navigations/RootNavigation';
 function OrderScreen(props) {
     const listItem = props.state.OrderReducer;
     const navigation = props.navigation;
@@ -175,6 +176,7 @@ function OrderScreen(props) {
                 console.log(res.data)
                 if (res.data.status) {
                     Alert.alert('Thông báo', 'Đặt hàng thành công');
+                    navigate("HomeNavigation")
                 } else {
                     Alert.alert('Thông báo', res.data.message);
                 }

@@ -46,7 +46,7 @@ const SliderContainer = (props) => {
 
     function createButtonCategory() {
         const [isRefresh, setIsRefresh] = useState(false);
-        const [listCategory, setListCategory] = useState(['Áo thun', 'Áo sơ mi', 'Áo mũ trùm', 'Áo mũ trùm', 'Đầm', 'Váy', 'Quần tây', 'Quần què']);
+        const [listCategory, setListCategory] = useState(['Áo thun', 'Áo sơ mi', 'Áo mũ trùm', 'Áo mũ trùm', 'Đầm', 'Váy', 'Quần tây']);
         const [listCategoryObj, setListCategoryObj] = useState(listCategory.map((item) => {
             return {
                 name: item,
