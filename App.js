@@ -13,18 +13,18 @@ import { store } from './src/reducer';
 import { Provider } from 'react-redux';
 import { AuthContextProvider } from './src/context/AuthProvider';
 import { navigationRef } from './src/navigations/RootNavigation';
-import { View } from 'react-native-animatable';
+
 
 function App() {
   return (
-    // <Provider store={store}>
-    //   <AuthContextProvider>
-    //     <NavigationContainer ref={navigationRef}>
-    //       <MyTabs></MyTabs>
-    //     </NavigationContainer>
-    //   </AuthContextProvider>
-    // </Provider>
-    <View></View>
+    <Provider store={store}>
+      <AuthContextProvider>
+        <NavigationContainer ref={navigationRef}>
+          <MyTabs></MyTabs>
+        </NavigationContainer>
+      </AuthContextProvider>
+    </Provider>
+    
   );
 
 

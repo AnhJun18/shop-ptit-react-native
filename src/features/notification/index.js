@@ -1,8 +1,7 @@
-import firestore from '@react-native-firebase/firestore';
-import PushNotification from 'react-native-push-notification'
-import BackgroundFetch from "react-native-background-fetch";
 
-// Thiết lập tác vụ background fetch
+import PushNotification from 'react-native-push-notification'
+import messaging from '@react-native-firebase/messaging';
+// // Thiết lập tác vụ background fetch
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -52,47 +51,25 @@ PushNotification.configure({
    */
   requestPermissions: true,
 });
-function Notification() {
-  console.log('call');
-  PushNotification.createChannel({ channelId: 'uzzapp', channelName: 'Uzzapp',
-   channelDescription: 'Notification for special message', importance: 4, vibrate: true, },
-    (created) => console.log()
-    );
-  const subscriber = firestore()
-    .collection('product').doc('123')
-    .onSnapshot(documentSnapshot => {
-      PushNotification.localNotification(
-        { channelId: 'uzzapp', channelName: 'Uzzapp', vibrate: true, allowWhileIdle: true, message:documentSnapshot.data().name }
-      )
-    }, err => console.log(err));
-}
-BackgroundFetch.configure({
-  minimumFetchInterval: 15,
-  stopOnTerminate: false,
-  startOnBoot: true,
-  enableHeadless: true, // Bật tính năng headless
-}, async (taskId) => {
-  console.log("[BackgroundFetch] Task #" + taskId);
-  // Thực hiện các tác vụ ở chế độ headless
-  Notification()
-  BackgroundFetch.finish(taskId);
-}, (error) => {
-  console.log("[BackgroundFetch] ", error);
-});
 
+(async ()=>{
+  await messaging().registerDeviceForRemoteMessages();
+  const token = await messaging().getToken();
+  console.log(token)
+})()
 
-// Đăng ký tác vụ background fetch
-const registerBackgroundTask = async () => {
-  try {
-    await BackgroundFetch.scheduleTask({
-      taskId: "com.shopptit",
-      forceAlarmManager: true,
-      delay: 5000
-    });
-  } catch (e) {
-    console.error("[BackgroundFetch] Failed to schedule task:", e);
-  }
-}
-
-// Gọi phương thức để đăng ký tác vụ
-registerBackgroundTask();
+// function Notification() {
+//   console.log('call');
+//   PushNotification.createChannel({ channelId: 'uzzapp', channelName: 'Uzzapp',
+//    channelDescription: 'Notification for special message', importance: 4, vibrate: true, },
+//     (created) => console.log()
+//     );
+//   const subscriber = firestore()
+//     .collection('product').doc('123')
+//     .onSnapshot(documentSnapshot => {
+//       PushNotification.localNotification(
+//         { channelId: 'uzzapp', channelName: 'Uzzapp', vibrate: true, allowWhileIdle: true, message:documentSnapshot.data().name }
+//       )
+//     }, err => console.log(err));
+// }
+// Notification()
