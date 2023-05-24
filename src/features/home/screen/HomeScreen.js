@@ -86,7 +86,7 @@ function HomeScreen(props) {
       <Animatable.View 
         animation="fadeInUpBig"
         style={[{color:'black',minHeight:100,backgroundColor:'#f5f5f5',padding:10,marginBottom:15}]}>
-            <Text style={{color:'#212121',marginBottom:5,fontSize:16}}>{'DANH MỤC SẢN PHẨM'}</Text>
+            <Text style={{color:'#212121',marginBottom:5,fontSize:16}}>{'TOP SẢN PHẨM BÁN CHẠY'}</Text>
             <SafeAreaView><ListBestSeller navigation={props.navigation}></ListBestSeller></SafeAreaView>
         </Animatable.View>
       </View>

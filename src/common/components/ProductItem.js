@@ -3,6 +3,7 @@ import React from "react";
 import { Image, View, Text, TouchableOpacity } from "react-native";
 import { navigate, navigationRef } from "../../navigations/RootNavigation";
 function ProductItem(props) {
+    const promotion = true;
     const name = props.name;
     const linkImg = props.linkImg;
     const id = props.id;
@@ -32,7 +33,11 @@ function ProductItem(props) {
                 ></Image>
                 <View style={{backgroundColor:'#ffffff',alignItems:'center',width:114,paddingVertical:6,paddingHorizontal:2}}>
                     <Text style={{ maxWidth: 114,color:'#756f6f' }} numberOfLines={1}>{name}</Text>
-                    <Text style={{ color:'#e47864' }}>{price.toLocaleString('vi', {
+                    <Text style={promotion? { color:'#575151', textDecorationLine: "line-through", fontSize: 12,  fontStyle: "italic"}:  { color:'#575151', fontSize: 16 }}>{price.toLocaleString('vi', {
+                        style: 'currency',
+                        currency: 'VND'
+                    })} </Text>
+                    <Text style={promotion? { color:'#e47864', fontSize: 16}: {display: "none"} } >{price.toLocaleString('vi', {
                         style: 'currency',
                         currency: 'VND'
                     })} </Text>
