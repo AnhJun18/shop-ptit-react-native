@@ -134,7 +134,7 @@ const CartScreen = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                     <InputSpinner
                         max={100}
-                        min={0}
+                        min={1}
                         step={1}
                         value={item.amount}
                         onChange={(num) => handleChangeAmount(num, item.idCart, item.product.id)}
