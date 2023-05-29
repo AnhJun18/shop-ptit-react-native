@@ -39,8 +39,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    txtPricesNoPromotion: {
+        fontSize: 18,
+        fontWeight: 350,
+        color: '#5A5252',
+        textDecorationLine: "line-through",
+        fontStyle: "italic"
+
+    },
     txtPrices: {
-        fontSize: 25,
+        fontSize: 23,
+        fontWeight: 450,
+        color: '#901F1F',
+    },
+    txtPricesPromotion: {
+        fontSize: 24,
         fontWeight: 450,
         color: '#901F1F',
     },
@@ -129,7 +142,7 @@ function ProductDetailScreen(props) {
     const [radioColor, setRadioColor] = useState([]);
     const [radioSize, setRadioSize] = useState([]);
     const [quantity, setQuantity] = useState(1);
-
+    const [promotion, setpromotion] = useState(true)
     function onPressColorButton(radioButtonsArray) {
         
         const colorSelected = (radioButtonsArray.filter((i) => { return i.selected === true }))
@@ -243,7 +256,13 @@ function ProductDetailScreen(props) {
                         <Text style={styles.txtName}>
                             {product?.[0]?.infoProduct.name}
                         </Text>
-                        <Text style={styles.txtPrices}>
+                        <Text style={promotion?  styles.txtPricesNoPromotion :styles.txtPrices }>
+                            {product?.[0]?.infoProduct.price.toLocaleString('vi', {
+                                style: 'currency',
+                                currency: 'VND'
+                            })}
+                        </Text>
+                        <Text style={promotion? styles.txtPricesPromotion: {display: "none"}}>
                             {product?.[0]?.infoProduct.price.toLocaleString('vi', {
                                 style: 'currency',
                                 currency: 'VND'
