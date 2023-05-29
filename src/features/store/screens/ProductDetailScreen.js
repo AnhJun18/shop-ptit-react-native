@@ -142,9 +142,10 @@ function ProductDetailScreen(props) {
     const [radioColor, setRadioColor] = useState([]);
     const [radioSize, setRadioSize] = useState([]);
     const [quantity, setQuantity] = useState(1);
-    const [promotion, setpromotion] = useState(true)
+    const [promotion, setpromotion] = useState(false);
+    const [promotionValue, setpromotionValue] = useState(0);
     function onPressColorButton(radioButtonsArray) {
-        
+
         const colorSelected = (radioButtonsArray.filter((i) => { return i.selected === true }))
         product.map((i) => {
             if (i === colorSelected.value)
@@ -159,7 +160,7 @@ function ProductDetailScreen(props) {
     getColor = () => {
         setRadioColor(Array.from(new Set(product.map((item) => {
             return item.color
-        }))).map((i) => { return { id: i, label: i, value: i, labelStyle:{ color: '#777474', fontSize: 19} } }))
+        }))).map((i) => { return { id: i, label: i, value: i, labelStyle: { color: '#777474', fontSize: 19 } } }))
     }
     getSize = (color) => {
         setRadioSize(product.filter((item) => {
@@ -167,7 +168,7 @@ function ProductDetailScreen(props) {
                 return true
             else
                 return false
-        }).map((i) => { return { id: i.size, label: i.size, value: i.size, labelStyle:{ color: '#777474',fontSize: 19} } }))
+        }).map((i) => { return { id: i.size, label: i.size, value: i.size, labelStyle: { color: '#777474', fontSize: 19 } } }))
     }
     getProduct = async () => {
         const apiResponse = await axiosApiInstance.get(axios.defaults.baseURL + `/api/product/detail/${itemID}`);
@@ -213,15 +214,21 @@ function ProductDetailScreen(props) {
                 ToastAndroid.show(`Lỗi: ${result.data.message}`, ToastAndroid.SHORT)
         }
         else
-            ToastAndroid.show("Vui long chọn thông tin sp", ToastAndroid.SHORT)
+            ToastAndroid.show("Vui lòng chọn thông tin sp", ToastAndroid.SHORT)
 
 
     }
 
     useEffect(() => {
         setLoad(false)
-        getProduct()
-
+        getProduct().then(data => {
+            const promotions = product?.[0].infoProduct.promotions || [];
+            if (promotions.length > 0) for (i of promotions) {
+                console.log(i) 
+                setpromotionValue(Math.max(promotionValue, i.value))  
+            }
+            setpromotion(true)
+        }).catch(err => console.log(err))
     }, [itemID])
 
     useFocusEffect(() => {
@@ -237,7 +244,7 @@ function ProductDetailScreen(props) {
                 onPress={() => { navigate("Cart") }}>
                 <FontAwesome5Icon
                     name="shopping-cart"
-                    style={{ fontSize: 15,color:"#fff" }}
+                    style={{ fontSize: 15, color: "#fff" }}
                 />
 
             </TouchableOpacity>
@@ -256,18 +263,17 @@ function ProductDetailScreen(props) {
                         <Text style={styles.txtName}>
                             {product?.[0]?.infoProduct.name}
                         </Text>
-                        <Text style={promotion?  styles.txtPricesNoPromotion :styles.txtPrices }>
+                        <Text style={promotion ? styles.txtPricesNoPromotion : styles.txtPrices}>
                             {product?.[0]?.infoProduct.price.toLocaleString('vi', {
                                 style: 'currency',
                                 currency: 'VND'
                             })}
                         </Text>
-                        <Text style={promotion? styles.txtPricesPromotion: {display: "none"}}>
-                            {product?.[0]?.infoProduct.price.toLocaleString('vi', {
+                        <Text style={promotion ? styles.txtPricesPromotion : { display: "none" }}>
+                            {(Number(product?.[0]?.infoProduct.price) * (promotionValue!=0 ? (100-promotionValue)/100:1)).toLocaleString('vi', {
                                 style: 'currency',
                                 currency: 'VND'
                             })}
-
                         </Text>
                     </View>
 
@@ -281,7 +287,7 @@ function ProductDetailScreen(props) {
                         </Text>
 
                         <RadioGroup
-                            
+
                             radioButtons={radioColor}
                             onPress={onPressColorButton}
                             layout='row'
@@ -302,7 +308,7 @@ function ProductDetailScreen(props) {
                                 Vui lòng chọn màu
                             </Text>
                         }
-                        <Text style={[styles.txttext, {marginBottom: 7}]}>
+                        <Text style={[styles.txttext, { marginBottom: 7 }]}>
                             Số lượng
                         </Text>
                         <InputSpinner

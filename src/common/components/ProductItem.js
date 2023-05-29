@@ -3,12 +3,19 @@ import React from "react";
 import { Image, View, Text, TouchableOpacity } from "react-native";
 import { navigate, navigationRef } from "../../navigations/RootNavigation";
 function ProductItem(props) {
-    const promotion = true;
+    
     const name = props.name;
     const linkImg = props.linkImg;
     const id = props.id;
     const price = props.price;
     const navigation = props.navigation;
+    var promotion = false;
+    const promotions = props.promotions||[];
+    var promotionValue =0;
+    if(promotions.length>0) for(i of promotions){
+        promotionValue= Math.max(promotionValue,i.value)
+        promotion=true
+    }
     return (
         <TouchableOpacity
             onPress={() => navigate('ProductDetail', { itemID: id })}
@@ -37,7 +44,7 @@ function ProductItem(props) {
                         style: 'currency',
                         currency: 'VND'
                     })} </Text>
-                    <Text style={promotion? { color:'#e47864', fontSize: 16}: {display: "none"} } >{price.toLocaleString('vi', {
+                    <Text style={promotion? { color:'#e47864', fontSize: 16}: {display: "none"} } >{ (price*(100-promotionValue)/100).toLocaleString('vi', {
                         style: 'currency',
                         currency: 'VND'
                     })} </Text>

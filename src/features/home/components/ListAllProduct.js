@@ -17,8 +17,7 @@ function ListAllProduct(props) {
     (async () => {
       const res = await axiosApiInstance.get(axios.defaults.baseURL + '/api/product/all')
       setAllListProduct([...res.data])
-    })().then(()=>{0
-    }).catch(err=>{
+    })().catch(err=>{
       Alert.alert('Thông báo','Có lỗi xảy ra')
     }).finally( ()=> setRefreshing(false))
   }, []);
@@ -51,6 +50,7 @@ function ListAllProduct(props) {
         price={item.price}
         linkImg={item.linkImg}
         navigation={props}
+        promotions= {item.promotions}
       />}
       horizontal={false}
       numColumns={3}
