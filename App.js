@@ -28,7 +28,9 @@ function App() {
         </NavigationContainer>
       </AuthContextProvider>
     </Provider>
+    
   );
+
 
 }
 

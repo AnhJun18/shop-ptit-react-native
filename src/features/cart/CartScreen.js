@@ -20,13 +20,25 @@ const CartScreen = ({ navigation }) => {
     const [totalMoney, setTotalMoney] = useState(0);
     getCart = async () => {
         const result = await axiosApiInstance.get(axios.defaults.baseURL + '/api/cart/all')
-        setListCart(result.data)
+        const newData= result.data.map(item=>{
+            var promotionValue= findMax(item.product.infoProduct.promotions)
+            console.log(promotionValue)
+            return {...item,price:Number(item.product.infoProduct.price)*(100-promotionValue)/100}
+        })
+        setListCart(newData)
+    }
+    function findMax(li){
+        var max= li[0]?.value|| 0;
+        for(i of li){
+            max= max>i.value ? max : i.value;
+        }
+        return max
     }
     useEffect(() => {
         let tmpMoney = 0
         listCart.forEach((item) => {
             if (item.selected === true) {
-                tmpMoney += item.amount * item.product.infoProduct.price
+                tmpMoney += item.amount * item.price
             }
             setTotalMoney(tmpMoney.toLocaleString('vi', {
                 style: 'currency',
@@ -40,7 +52,7 @@ const CartScreen = ({ navigation }) => {
             let tmpMoney = 0
             listCart.forEach((item) => {
                 if (item.selected === true) {
-                    tmpMoney += item.amount * item.product.infoProduct.price
+                    tmpMoney += item.amount * item.price
                 }
                 setTotalMoney(tmpMoney.toLocaleString('vi', {
                     style: 'currency',
@@ -148,7 +160,7 @@ const CartScreen = ({ navigation }) => {
                     />
                     <View style={styles.disPrices}>
                         <Text>x</Text>
-                        <Text style={styles.totalPrice}> {(item.product.infoProduct.price * item.amount).toLocaleString('vi', {
+                        <Text style={styles.totalPrice}> {(item.price * item.amount).toLocaleString('vi', {
                             style: 'currency',
                             currency: 'VND'
                         })}</Text></View>

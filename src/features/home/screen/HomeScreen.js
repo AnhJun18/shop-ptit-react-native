@@ -36,6 +36,7 @@ const  ListAllProduct  = connect(state => { return { state: state } })((props) =
         price={item.price}
         linkImg={item.linkImg}
         navigation={props}
+        promotions= {item.promotions}
       />}
       horizontal={false}
       numColumns={3}

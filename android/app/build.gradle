@@ -154,6 +154,15 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+ // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
+
+
+  // TODO: Add the dependencies for Firebase products you want to use
+  // When using the BoM, don't specify versions in Firebase dependencies
+  implementation 'com.google.firebase:firebase-analytics'
+  implementation project(path: ":@react-native-firebase_messaging")
+
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {

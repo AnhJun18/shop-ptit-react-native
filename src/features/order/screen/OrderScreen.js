@@ -18,7 +18,7 @@ function OrderScreen(props) {
     const navigation = props.navigation;
     const Address =  props.state.AddressReducer;
     let money=0
-    listItem.forEach((item=> money += item.amount * item.product.infoProduct.price))
+    listItem.forEach((item=> money += item.amount * item.price))
     const [userInfo, setUserInfo] = useState({});
     const [note, setNote] = useState({});    
     useEffect(() => {
@@ -106,7 +106,7 @@ function OrderScreen(props) {
         const linkImg = info.linkImg;
         const amout = item.amount;
         const id = item.product.id;
-        const price = info.price;
+        const price = item.price;
         const size = item.product.size;
         const color = item.product.color;
         return (
